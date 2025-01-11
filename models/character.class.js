@@ -35,7 +35,7 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/3.Swim/6.png",
   ];
   world;
-  swimming_sound = new Audio('audio/swimming.mp3');
+  swimming_sound = new Audio("audio/swimming.mp3");
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
@@ -45,28 +45,31 @@ class Character extends MovableObject {
   }
 
   animate() {
-
     setInterval(() => {
       this.swimming_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
-        this.x += this.speed;
+        this.moveRight();
         this.otherDirection = false;
         this.swimming_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
-        this.x -= this.speed;
+        this.moveLeft();
         this.otherDirection = true;
         this.swimming_sound.play();
       }
-      if(this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
-        this.speedY = 15;
+      if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
+        this.moveUp();
         this.swimming_sound.play();
       }
       this.world.cameraX = -this.x;
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
+      if (
+        this.world.keyboard.RIGHT ||
+        this.world.keyboard.LEFT ||
+        this.world.keyboard.UP
+      ) {
         this.playAnimation(this.IMAGES_SWIM);
       }
     }, 50);
