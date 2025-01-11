@@ -3,7 +3,7 @@ class Character extends MovableObject {
   width = 300;
   speed = 10;
 
-  y = 150;
+  y = 50;
   x = 0;
 
   IMAGES_IDLE = [
@@ -40,6 +40,7 @@ class Character extends MovableObject {
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.IMAGES_SWIM);
+    this.applyGravity();
     this.animate();
   }
 
