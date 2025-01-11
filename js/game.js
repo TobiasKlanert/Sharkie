@@ -5,14 +5,9 @@ let keyboard = new Keyboard();
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-
-  console.log("My Character is", world.character);
-  console.log("My Enemies are", world.enemies);
 }
 
 window.addEventListener("keydown", (event) => {
-  console.log(event.code);
-
   switch (event.code) {
     case "ArrowLeft":
       keyboard.LEFT = true;

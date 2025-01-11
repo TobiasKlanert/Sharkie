@@ -58,11 +58,15 @@ class Character extends MovableObject {
         this.otherDirection = true;
         this.swimming_sound.play();
       }
+      if(this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
+        this.speedY = 15;
+        this.swimming_sound.play();
+      }
       this.world.cameraX = -this.x;
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
         this.playAnimation(this.IMAGES_SWIM);
       }
     }, 50);

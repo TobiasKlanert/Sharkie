@@ -3,6 +3,7 @@ class Level {
     lights;
     backgroundObjects;
     levelEndX = 13680;
+    levelEndY = 0;
 
     constructor(enemies, lights, backgroundObjects) {
         this.enemies = enemies;
