@@ -37,8 +37,20 @@ class MovableObject {
     });
   }
 
+  drawObject(ctx) {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+
+  drawFrame(ctx) {
+    ctx.beginPath();
+    ctx.lineWidth = '5';
+    ctx.strokeStyle = 'green';
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.stroke();
+  }
+
   moveRight() {
-    this.x += this.speed;
+    this.x += this.speed;   
   }
 
   moveLeft() {
