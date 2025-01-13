@@ -1,7 +1,14 @@
 class Endboss extends MovableObject {
-    height = 500;
-    width = 400;
-    y = 0;
+  height = 500;
+  width = 400;
+  y = 0;
+
+  offset = {
+    top: 150,
+    left: 25,
+    right: 52,
+    bottom: 215,
+  };
 
   IMAGES_FLOATING = [
     "graphics/2.Enemy/3 Final Enemy/2.floating/1.png",

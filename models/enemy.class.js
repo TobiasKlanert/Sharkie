@@ -1,6 +1,14 @@
 class Enemy extends MovableObject {
   height = 150;
   width = 150;
+
+  offset = {
+    top: 10,
+    left: 5,
+    right: 10,
+    bottom: 40,
+  };
+
   IMAGES_SWIM = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png",

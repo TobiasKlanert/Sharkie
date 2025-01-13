@@ -10,6 +10,12 @@ class MovableObject {
   otherDirection = false;
   speedY = 0;
   acceleration = 1;
+  offset = {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
 
   applyGravity() {
     setInterval(() => {
@@ -42,15 +48,26 @@ class MovableObject {
   }
 
   drawFrame(ctx) {
-    ctx.beginPath();
-    ctx.lineWidth = '5';
-    ctx.strokeStyle = 'green';
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.stroke();
+    if (
+      this instanceof Character ||
+      this instanceof Enemy ||
+      this instanceof Endboss
+    ) {
+      ctx.beginPath();
+      ctx.lineWidth = "3";
+      ctx.strokeStyle = "green";
+      ctx.rect(
+        this.x + this.offset.left,
+        this.y + this.offset.top,
+        this.width - this.offset.right,
+        this.height - this.offset.bottom
+      );
+      ctx.stroke();
+    }
   }
 
   moveRight() {
-    this.x += this.speed;   
+    this.x += this.speed;
   }
 
   moveLeft() {
@@ -66,5 +83,14 @@ class MovableObject {
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
+  }
+
+  isColliding(mo) {
+    return (
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+    );
   }
 }
