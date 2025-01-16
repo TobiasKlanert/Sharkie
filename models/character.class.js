@@ -10,9 +10,8 @@ class Character extends MovableObject {
     top: 140,
     left: 60,
     right: 120,
-    bottom: 215
+    bottom: 215,
   };
-
 
   IMAGES_IDLE = [
     "graphics/1.Sharkie/1.IDLE/1.png",
@@ -42,12 +41,52 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/3.Swim/5.png",
     "graphics/1.Sharkie/3.Swim/6.png",
   ];
+  IMAGES_HURT_POISONED = [
+    "graphics/1.Sharkie/5.Hurt/1.Poisoned/1.png",
+    "graphics/1.Sharkie/5.Hurt/1.Poisoned/2.png",
+    "graphics/1.Sharkie/5.Hurt/1.Poisoned/3.png",
+    "graphics/1.Sharkie/5.Hurt/1.Poisoned/4.png",
+  ];
+  IMAGES_HURT_ELECTRO_SHOCK = [
+    "graphics/1.Sharkie/5.Hurt/2.Electric shock/o1.png",
+    "graphics/1.Sharkie/5.Hurt/2.Electric shock/o2.png",
+  ];
+  IMAGES_DEAD_POISONED = [
+    "graphics/1.Sharkie/6.dead/1.Poisoned/1.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/2.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/3.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/4.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/5.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/6.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/7.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/8.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/8.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/10.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/11.png",
+    "graphics/1.Sharkie/6.dead/1.Poisoned/12.png",
+  ];
+  IMAGES_DEAD_ELECTRO_SHOCK = [
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/1.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/2.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/3.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/4.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/5.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/6.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/7.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/8.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/9.png",
+    "graphics/1.Sharkie/6.dead/2.Electro_shock/10.png",
+  ];
   world;
   swimming_sound = new Audio("audio/swimming.mp3");
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.IMAGES_SWIM);
+    this.loadImages(this.IMAGES_HURT_POISONED);
+    this.loadImages(this.IMAGES_HURT_ELECTRO_SHOCK);
+    this.loadImages(this.IMAGES_DEAD_POISONED);
+    this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
     this.applyGravity();
     this.animate();
   }
@@ -73,7 +112,11 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (
+      if (this.isDead()) {
+        this.playAnimation(this.IMAGES_DEAD_POISONED);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT_POISONED);
+      } else if (
         this.world.keyboard.RIGHT ||
         this.world.keyboard.LEFT ||
         this.world.keyboard.UP
