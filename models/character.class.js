@@ -3,6 +3,8 @@ class Character extends MovableObject {
   width = 300;
   speed = 10;
   idleTime = 0;
+  currentAnimationInterval;
+  currentAnimationImages;
 
   y = 50;
   x = 0;
@@ -107,10 +109,12 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD_POISONED);
     this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
     this.applyGravity();
+    this.currentAnimationInterval = null;
+    this.currentAnimationImages = null;
     this.animate();
   }
 
-  animate() {
+  /*   animate() {
     setInterval(() => {
       this.swimming_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
@@ -156,5 +160,76 @@ class Character extends MovableObject {
     } else {
       this.playAnimation(this.IMAGES_IDLE);
     }
+  } */
+
+  animate() {
+    // Bewegung (60 FPS)
+    setInterval(() => {
+      this.swimming_sound.pause();
+      if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
+        this.moveRight();
+        this.otherDirection = false;
+        this.swimming_sound.play();
+        this.idleTime = 0;
+      }
+      if (this.world.keyboard.LEFT && this.x > 0) {
+        this.moveLeft();
+        this.otherDirection = true;
+        this.swimming_sound.play();
+        this.idleTime = 0;
+      }
+      if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
+        this.moveUp();
+        this.swimming_sound.play();
+        this.idleTime = 0;
+      }
+      this.world.cameraX = -this.x;
+    }, 1000 / 60);
+
+    // Animationen (200ms bei Bewegung, 1000ms bei Idle)
+    this.startAnimationLoop();
+  }
+
+  startAnimationLoop() {
+    setInterval(() => {
+      if (this.isDead()) {
+        this.setAnimation(this.IMAGES_DEAD_POISONED, 200);
+      } else if (this.isHurt()) {
+        this.setAnimation(this.IMAGES_HURT_POISONED, 200);
+        this.idleTime = 0;
+      } else if (
+        this.world.keyboard.RIGHT ||
+        this.world.keyboard.LEFT ||
+        this.world.keyboard.UP
+      ) {
+        this.setAnimation(this.IMAGES_SWIM, 200);
+        this.idleTime = 0;
+      } else {
+        this.idleTime += 0.2;
+        if (this.idleTime > 15) {
+          this.setAnimation(this.IMAGES_SLEEP, 1000);
+        } else {
+          this.setAnimation(this.IMAGES_IDLE, 1000);
+        }
+      }
+    }, 1000 / 5);
+  }
+
+  setAnimation(imageArray, frameRate) {
+    // Falls die Animation bereits läuft, tue nichts
+    if (this.currentAnimationImages === imageArray) return;
+
+    // Speichere die neue Animation als aktuell
+    this.currentAnimationImages = imageArray;
+
+    // Stoppe das vorherige Intervall
+    if (this.currentAnimationInterval) {
+      clearInterval(this.currentAnimationInterval);
+    }
+
+    // Starte das neue Animationsintervall
+    this.currentAnimationInterval = setInterval(() => {
+      this.playAnimation(imageArray);
+    }, frameRate);
   }
 }
