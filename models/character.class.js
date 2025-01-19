@@ -3,8 +3,8 @@ class Character extends MovableObject {
   width = 300;
   speed = 10;
   idleTime = 0;
-  currentAnimationInterval;
-  currentAnimationImages;
+  currentAnimationInterval = null;
+  currentAnimationImages = null;
 
   y = 50;
   x = 0;
@@ -109,9 +109,8 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD_POISONED);
     this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
     this.applyGravity();
-    this.currentAnimationInterval = null;
-    this.currentAnimationImages = null;
     this.animate();
+    this.startIdleTimer();
   }
 
   /*   animate() {
@@ -170,7 +169,7 @@ class Character extends MovableObject {
         this.moveRight();
         this.otherDirection = false;
         this.swimming_sound.play();
-        this.idleTime = 0;
+        this.idleTime = 0; // Bewegung setzt Idle-Zeit zurück
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
@@ -184,50 +183,66 @@ class Character extends MovableObject {
         this.idleTime = 0;
       }
       this.world.cameraX = -this.x;
-    }, 1000 / 60);
+    }, 1000 / 60); // 60 FPS Bewegung
 
-    // Animationen (200ms bei Bewegung, 1000ms bei Idle)
+    // Animationen (60 FPS)
     this.startAnimationLoop();
+  }
+
+  startIdleTimer() {
+    setInterval(() => {
+      this.idleTime += 1; // Exakt jede Sekunde +1
+    }, 1000);
   }
 
   startAnimationLoop() {
     setInterval(() => {
       if (this.isDead()) {
-        this.setAnimation(this.IMAGES_DEAD_POISONED, 200);
+        this.setAnimation(
+          this.IMAGES_DEAD_POISONED,
+          (1000 / 60) * this.IMAGES_DEAD_POISONED.length
+        );
       } else if (this.isHurt()) {
-        this.setAnimation(this.IMAGES_HURT_POISONED, 200);
+        this.setAnimation(
+          this.IMAGES_HURT_POISONED,
+          (1000 / 60) * this.IMAGES_HURT_POISONED.length
+        );
         this.idleTime = 0;
       } else if (
         this.world.keyboard.RIGHT ||
         this.world.keyboard.LEFT ||
         this.world.keyboard.UP
       ) {
-        this.setAnimation(this.IMAGES_SWIM, 200);
+        this.setAnimation(
+          this.IMAGES_SWIM,
+          (1000 / 60) * this.IMAGES_SWIM.length
+        );
         this.idleTime = 0;
       } else {
-        this.idleTime += 0.2;
         if (this.idleTime > 15) {
-          this.setAnimation(this.IMAGES_SLEEP, 1000);
+          this.setAnimation(
+            this.IMAGES_SLEEP,
+            (1000 / 60) * this.IMAGES_SLEEP.length
+          );
         } else {
-          this.setAnimation(this.IMAGES_IDLE, 1000);
+          this.setAnimation(
+            this.IMAGES_IDLE,
+            (1000 / 60) * this.IMAGES_IDLE.length
+          );
         }
       }
-    }, 1000 / 5);
+    }, 1000 / 60);
   }
 
   setAnimation(imageArray, frameRate) {
-    // Falls die Animation bereits läuft, tue nichts
     if (this.currentAnimationImages === imageArray) return;
 
-    // Speichere die neue Animation als aktuell
     this.currentAnimationImages = imageArray;
 
-    // Stoppe das vorherige Intervall
     if (this.currentAnimationInterval) {
       clearInterval(this.currentAnimationInterval);
     }
 
-    // Starte das neue Animationsintervall
     this.currentAnimationInterval = setInterval(() => {
       this.playAnimation(imageArray);
     }, frameRate);
