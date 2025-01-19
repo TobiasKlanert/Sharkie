@@ -8,7 +8,7 @@ class World {
   statusBarBottles = new StatusBar("bottles", 20, 0, 0);
   statusBarLife = new StatusBar("life", 20, 50, 100);
   statusBarCoins = new StatusBar("coins", 20, 100, 0);
-  
+
   throwableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -35,7 +35,10 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
-        this.statusBarLife.setPercentage(this.character.energy);
+        this.statusBarLife.setPercentage(
+          this.character.energy,
+          this.statusBarLife.IMAGES_LIFE
+        );
         if (this.character.isDead(this.character)) {
         }
       }
@@ -44,7 +47,10 @@ class World {
 
   checkThrowObjects() {
     if (this.keyboard.SPACE) {
-      let bottle = new ThrowableObject(this.character.x + 200, this.character.y);
+      let bottle = new ThrowableObject(
+        this.character.x + 200,
+        this.character.y
+      );
       this.throwableObjects.push(bottle);
     }
   }
