@@ -27,7 +27,7 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
-      this.checkThrowObjects();
+      this.checkAttacks();
     }, 200);
   }
 
@@ -45,13 +45,13 @@ class World {
     });
   }
 
-  checkThrowObjects() {
-    if (this.keyboard.SPACE) {
-      let bottle = new ThrowableObject(
+  checkAttacks() {
+    if (this.keyboard.D) {
+      let bubble = new ThrowableObject(
         this.character.x + 200,
-        this.character.y
+        this.character.y + 100
       );
-      this.throwableObjects.push(bottle);
+      this.throwableObjects.push(bubble);
     }
   }
 

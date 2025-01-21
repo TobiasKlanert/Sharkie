@@ -96,11 +96,52 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/6.dead/2.Electro_shock/9.png",
     "graphics/1.Sharkie/6.dead/2.Electro_shock/10.png",
   ];
+  IMAGES_ATTACK_BUBBLES = [
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
+  ];
+  IMAGES_ATTACK_POISONED_BUBBLES = [
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
+  ];
+  IMAGES_BUBBLES = [
+    "graphics/1.Sharkie/4.Attack/Bubble trap/Bubble.png",
+    "graphics/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png",
+  ];
+  IMAGES_ATTACK_FIN_SLAP = [
+    "graphics/1.Sharkie/4.Attack/Fin slap/1.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/2.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/3.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/4.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/5.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/6.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/7.png",
+    "graphics/1.Sharkie/4.Attack/Fin slap/8.png",
+  ];
   world;
   swimming_sound = new Audio("audio/swimming.mp3");
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
+    this.loadImagesToConstructor();
+    this.applyGravity();
+    this.animate();
+    this.startIdleTimer();
+  }
+
+  loadImagesToConstructor() {
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_SLEEP);
     this.loadImages(this.IMAGES_SWIM);
@@ -108,9 +149,9 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_HURT_ELECTRO_SHOCK);
     this.loadImages(this.IMAGES_DEAD_POISONED);
     this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
-    this.applyGravity();
-    this.animate();
-    this.startIdleTimer();
+    this.loadImages(this.IMAGES_ATTACK_BUBBLES);
+    this.loadImages(this.IMAGES_ATTACK_POISONED_BUBBLES);
+    this.loadImages(this.IMAGES_BUBBLES);
   }
 
   /*   animate() {
