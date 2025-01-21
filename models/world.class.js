@@ -9,7 +9,7 @@ class World {
   statusBarLife = new StatusBar("life", 20, 50, 100);
   statusBarCoins = new StatusBar("coins", 20, 100, 0);
 
-  throwableObjects = [];
+  bubbles = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -47,11 +47,11 @@ class World {
 
   checkAttacks() {
     if (this.keyboard.D) {
-      let bubble = new ThrowableObject(
-        this.character.x + 200,
-        this.character.y + 100
+      let bubble = new Bubble(
+        this.character.x + 250,
+        this.character.y + 150
       );
-      this.throwableObjects.push(bubble);
+      this.bubbles.push(bubble);
     }
   }
 
@@ -71,7 +71,7 @@ class World {
 
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.throwableObjects);
+    this.addObjectsToMap(this.bubbles);
 
     this.ctx.translate(-this.cameraX, 0);
 

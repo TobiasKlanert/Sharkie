@@ -22,7 +22,7 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    if (this instanceof ThrowableObject) {
+    if (this instanceof Bubble) {
       return true;
     } else {
       return this.y < 180;

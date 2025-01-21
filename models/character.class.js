@@ -116,10 +116,6 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
     "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
   ];
-  IMAGES_BUBBLES = [
-    "graphics/1.Sharkie/4.Attack/Bubble trap/Bubble.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png",
-  ];
   IMAGES_ATTACK_FIN_SLAP = [
     "graphics/1.Sharkie/4.Attack/Fin slap/1.png",
     "graphics/1.Sharkie/4.Attack/Fin slap/2.png",
@@ -151,10 +147,10 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
     this.loadImages(this.IMAGES_ATTACK_BUBBLES);
     this.loadImages(this.IMAGES_ATTACK_POISONED_BUBBLES);
-    this.loadImages(this.IMAGES_BUBBLES);
+    this.loadImages(this.IMAGES_ATTACK_FIN_SLAP);
   }
 
-  /*   animate() {
+  /*     animate() {
     setInterval(() => {
       this.swimming_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
@@ -187,6 +183,9 @@ class Character extends MovableObject {
       ) {
         this.playAnimation(this.IMAGES_SWIM);
         this.idleTime = 0;
+      } else if (this.world.keyboard.D) {
+        this.playAnimation(this.IMAGES_ATTACK_BUBBLES);
+        this.idleTime = 0;
       } else {
         this.setIdleAnimation();
       }
@@ -203,36 +202,30 @@ class Character extends MovableObject {
   } */
 
   animate() {
-    // Bewegung (60 FPS)
     setInterval(() => {
       this.swimming_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight();
         this.otherDirection = false;
         this.swimming_sound.play();
-        this.idleTime = 0; // Bewegung setzt Idle-Zeit zurück
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
         this.swimming_sound.play();
-        this.idleTime = 0;
       }
       if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
         this.moveUp();
         this.swimming_sound.play();
-        this.idleTime = 0;
       }
       this.world.cameraX = -this.x;
-    }, 1000 / 60); // 60 FPS Bewegung
-
-    // Animationen (60 FPS)
+    }, 1000 / 60);
     this.startAnimationLoop();
   }
 
   startIdleTimer() {
     setInterval(() => {
-      this.idleTime += 1; // Exakt jede Sekunde +1
+      this.idleTime += 1;
     }, 1000);
   }
 
@@ -257,6 +250,18 @@ class Character extends MovableObject {
         this.setAnimation(
           this.IMAGES_SWIM,
           (1000 / 60) * this.IMAGES_SWIM.length
+        );
+        this.idleTime = 0;
+      } else if (this.world.keyboard.D) {
+        this.setAnimation(
+          this.IMAGES_ATTACK_BUBBLES,
+          (1000 / 60) * this.IMAGES_ATTACK_BUBBLES.length
+        );
+        this.idleTime = 0;
+      } else if (this.world.keyboard.SPACE) {
+        this.setAnimation(
+          this.IMAGES_ATTACK_FIN_SLAP,
+          (1000 / 60) * this.IMAGES_ATTACK_FIN_SLAP.length
         );
         this.idleTime = 0;
       } else {
