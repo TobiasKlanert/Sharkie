@@ -13,6 +13,6 @@ class Bubble extends MovableObject {
     throw() {
         setInterval( () => {
            this.x += 10; 
-        }, 50);
+        }, 1000 / 60);
     }
 }
