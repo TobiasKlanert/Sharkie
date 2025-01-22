@@ -3,12 +3,9 @@ class Character extends MovableObject {
   width = 300;
   speed = 3;
   idleTime = 0;
-  currentAnimationInterval = null;
-  currentAnimationImages = null;
-  isPlayingAttackAnimation = false;
 
-  lastFrameTime = 0; // Speichert die Zeit des letzten Frames
-  frameDuration = 100; // Dauer pro Frame in ms (z. B. 100ms für 10 FPS)
+  lastFrameTime = 0;
+  frameDuration = 125;
   currentFrame = 0;
 
   y = 50;
