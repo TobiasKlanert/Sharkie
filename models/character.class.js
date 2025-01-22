@@ -1,11 +1,15 @@
 class Character extends MovableObject {
   height = 300;
   width = 300;
-  speed = 10;
+  speed = 3;
   idleTime = 0;
   currentAnimationInterval = null;
   currentAnimationImages = null;
   isPlayingAttackAnimation = false;
+
+  lastFrameTime = 0; // Speichert die Zeit des letzten Frames
+  frameDuration = 100; // Dauer pro Frame in ms (z. B. 100ms für 10 FPS)
+  currentFrame = 0;
 
   y = 50;
   x = 0;
@@ -134,7 +138,9 @@ class Character extends MovableObject {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImagesToConstructor();
     this.applyGravity();
-    this.animate();
+    requestAnimationFrame(this.moveCharacter.bind(this));
+    requestAnimationFrame(this.characterAttack.bind(this));
+    requestAnimationFrame((time) => this.animate(time));
     this.startIdleTimer();
   }
 
@@ -151,30 +157,36 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_ATTACK_FIN_SLAP);
   }
 
-  animate() {
-    setInterval(() => {
-      this.swimming_sound.pause();
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
-        this.moveRight();
-        this.otherDirection = false;
-        this.swimming_sound.play();
-        this.idleTime = 0;
-      }
-      if (this.world.keyboard.LEFT && this.x > 0) {
-        this.moveLeft();
-        this.otherDirection = true;
-        this.swimming_sound.play();
-        this.idleTime = 0;
-      }
-      if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
-        this.moveUp();
-        this.swimming_sound.play();
-        this.idleTime = 0;
-      }
-      this.world.cameraX = -this.x;
-    }, 1000 / 60);
+  moveCharacter() {
+    this.swimming_sound.pause();
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
+      this.moveRight();
+      this.otherDirection = false;
+      this.swimming_sound.play();
+      this.idleTime = 0;
+    }
+    if (this.world.keyboard.LEFT && this.x > 0) {
+      this.moveLeft();
+      this.otherDirection = true;
+      this.swimming_sound.play();
+      this.idleTime = 0;
+    }
+    if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
+      this.moveUp();
+      this.swimming_sound.play();
+      this.idleTime = 0;
+    }
+    this.world.cameraX = -this.x;
 
-    this.startAnimationLoop();
+    requestAnimationFrame(this.moveCharacter.bind(this));
+  }
+
+  characterAttack() {
+    if (this.world.keyboard.D || this.world.keyboard.SPACE) {
+      this.idleTime = 0;
+    }
+
+    requestAnimationFrame(this.characterAttack.bind(this));
   }
 
   startIdleTimer() {
@@ -183,95 +195,44 @@ class Character extends MovableObject {
     }, 1000);
   }
 
-  startAnimationLoop() {
-    setInterval(() => {
-      if (this.isPlayingAttackAnimation) return; // Blockiert Animationen, wenn ein Angriff läuft
-
-      if (this.isDead()) {
-        this.setAnimation(
-          this.IMAGES_DEAD_POISONED,
-          (1000 / 60) * this.IMAGES_DEAD_POISONED.length
-        );
-      } else if (this.isHurt()) {
-        this.setAnimation(
-          this.IMAGES_HURT_POISONED,
-          (1000 / 60) * this.IMAGES_HURT_POISONED.length
-        );
-        this.idleTime = 0;
-      } else if (
-        this.world.keyboard.RIGHT ||
-        this.world.keyboard.LEFT ||
-        this.world.keyboard.UP
-      ) {
-        this.setAnimation(
-          this.IMAGES_SWIM,
-          (1000 / 60) * this.IMAGES_SWIM.length
-        );
-        this.idleTime = 0;
-      } else if (this.world.keyboard.D) {
-        this.playOneTimeAnimation(this.IMAGES_ATTACK_BUBBLES);
-        this.idleTime = 0;
-      } else if (this.world.keyboard.SPACE) {
-        this.playOneTimeAnimation(this.IMAGES_ATTACK_FIN_SLAP);
-        this.idleTime = 0;
+  getAnimationImages() {
+    if (this.isDead()) {
+      return this.IMAGES_DEAD_POISONED;
+    } else if (this.isHurt()) {
+      return this.IMAGES_HURT_POISONED;
+    } else if (
+      this.world.keyboard.RIGHT ||
+      this.world.keyboard.LEFT ||
+      this.world.keyboard.UP
+    ) {
+      return this.IMAGES_SWIM;
+    } else if (this.world.keyboard.D) {
+      return this.IMAGES_ATTACK_BUBBLES;
+    } else if (this.world.keyboard.SPACE) {
+      return this.IMAGES_ATTACK_FIN_SLAP;
+    } else {
+      if (this.idleTime >= 15) {
+        return this.IMAGES_SLEEP;
       } else {
-        if (this.idleTime > 15) {
-          this.setAnimation(
-            this.IMAGES_SLEEP,
-            (1000 / 60) * this.IMAGES_SLEEP.length
-          );
-        } else {
-          this.setAnimation(
-            this.IMAGES_IDLE,
-            (1000 / 60) * this.IMAGES_IDLE.length
-          );
-        }
+        return this.IMAGES_IDLE;
       }
-    }, 1000 / 60);
-  }
-
-  setAnimation(imageArray, frameRate) {
-    if (this.currentAnimationImages === imageArray) return;
-
-    this.currentAnimationImages = imageArray;
-
-    if (this.currentAnimationInterval) {
-      clearInterval(this.currentAnimationInterval);
     }
-
-    this.currentAnimationInterval = setInterval(() => {
-      this.playAnimation(imageArray);
-    }, frameRate);
   }
 
-  playOneTimeAnimation(imageArray) {
-    if (this.isPlayingAttackAnimation) return; // Verhindert doppeltes Starten
+  animate(currentTime) {
+    requestAnimationFrame((time) => this.animate(time));
 
-    this.isPlayingAttackAnimation = true;
-    this.currentAnimationImages = imageArray;
+    let imageArray = this.getAnimationImages();
 
-    let frameIndex = 0;
-    let frameDuration = 1000 / 8; // 125 ms pro Bild für 8 FPS
-    let lastFrameTime = performance.now();
+    if (!this.lastFrameTime) this.lastFrameTime = currentTime;
 
-    const animateFrame = (currentTime) => {
-      if (!this.isPlayingAttackAnimation) return; // Falls Animation gestoppt wird
+    let deltaTime = currentTime - this.lastFrameTime;
 
-      let elapsed = currentTime - lastFrameTime;
+    if (deltaTime >= this.frameDuration) {
+      this.lastFrameTime = currentTime;
 
-      if (elapsed >= frameDuration) {
-        this.playAnimation(imageArray);
-        frameIndex++;
-        lastFrameTime = currentTime;
-      }
-
-      if (frameIndex < imageArray.length) {
-        requestAnimationFrame(animateFrame);
-      } else {
-        this.isPlayingAttackAnimation = false; // Angriff ist beendet
-      }
-    };
-
-    requestAnimationFrame(animateFrame);
+      this.currentFrame = (this.currentFrame + 1) % imageArray.length;
+      this.playAnimation(imageArray);
+    }
   }
 }
