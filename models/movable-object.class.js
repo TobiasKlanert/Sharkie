@@ -30,12 +30,20 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  moveRight() {
-    this.x += this.speed;
+  moveRight(deltaTime) {
+    if (!deltaTime) {
+      this.x += this.speed;
+    } else {
+      this.x += this.speed * (deltaTime / 16);
+    }
   }
 
-  moveLeft() {
-    this.x -= this.speed;
+  moveLeft(deltaTime) {
+    if(!deltaTime) {
+      this.x -= this.speed;
+    } else {
+      this.x -= this.speed * (deltaTime / 16);
+    }
   }
 
   moveUp() {

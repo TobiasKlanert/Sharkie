@@ -1,11 +1,15 @@
 class Character extends MovableObject {
   height = 300;
   width = 300;
-  speed = 3;
+  speed = 10;
   idleTime = 0;
 
-  lastFrameTime = 0;
-  frameDuration = 125;
+  lastMoveFrameTime = 0;
+  lastAnimateFrameTime = 0;
+  moveFrameDuration = 16;
+  animateFrameDuration = 125;
+  animateIntervalReached = false;
+  moveIntervalReached = false;
 
   y = 50;
   x = 0;
@@ -134,7 +138,9 @@ class Character extends MovableObject {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImagesToConstructor();
     this.applyGravity();
-    requestAnimationFrame(this.moveCharacter.bind(this));
+    this.lastMoveFrameTime = performance.now();
+    requestAnimationFrame((time) => this.getTimeInterval(time));
+    requestAnimationFrame((time) => this.moveCharacter(time));
     requestAnimationFrame(this.characterAttack.bind(this));
     requestAnimationFrame((time) => this.animate(time));
     this.startIdleTimer();
@@ -153,28 +159,33 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_ATTACK_FIN_SLAP);
   }
 
-  moveCharacter() {
-    this.swimming_sound.pause();
-    if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
-      this.moveRight();
-      this.otherDirection = false;
-      this.swimming_sound.play();
-      this.idleTime = 0;
-    }
-    if (this.world.keyboard.LEFT && this.x > 0) {
-      this.moveLeft();
-      this.otherDirection = true;
-      this.swimming_sound.play();
-      this.idleTime = 0;
-    }
-    if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
-      this.moveUp();
-      this.swimming_sound.play();
-      this.idleTime = 0;
-    }
-    this.world.cameraX = -this.x;
+  moveCharacter(currentTime) {
+    let deltaTime = this.setTimeInterval(currentTime);
 
-    requestAnimationFrame(this.moveCharacter.bind(this));
+    if (deltaTime) {
+      this.swimming_sound.pause();
+      if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
+        this.moveRight(deltaTime);
+        this.handleMovementStart(false);
+      }
+      if (this.world.keyboard.LEFT && this.x > 0) {
+        this.moveLeft(deltaTime);
+        this.handleMovementStart(true);
+      }
+      if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
+        this.moveUp();
+        this.swimming_sound.play();
+        this.idleTime = 0;
+      }
+      this.world.cameraX = -this.x;
+    }
+    requestAnimationFrame((time) => this.moveCharacter(time));
+  }
+
+  handleMovementStart(direction) {
+    this.otherDirection = direction;
+    this.swimming_sound.play();
+    this.idleTime = 0;
   }
 
   characterAttack() {
@@ -218,21 +229,39 @@ class Character extends MovableObject {
   animate(currentTime) {
     let imageArray = this.getAnimationImages();
 
-    if (this.setTimeInterval(currentTime)) {
-      this.lastFrameTime = currentTime;
+    if (this.animateIntervalReached) {
+      this.lastAnimateFrameTime = currentTime;
       this.playAnimation(imageArray);
       this.stopAttackAnimation(imageArray);
     }
-    
+
     requestAnimationFrame((time) => this.animate(time));
   }
 
+  getTimeInterval(currentTime) {
+    if (!this.lastMoveFrameTime) this.lastMoveFrameTime = currentTime;
+    if (!this.lastAnimateFrameTime) this.lastAnimateFrameTime = currentTime;
+
+    let moveDeltaTime = currentTime - this.lastMoveFrameTime;
+    let animateDeltaTime = currentTime - this.lastAnimateFrameTime;
+
+    this.moveIntervalReached = moveDeltaTime >= this.moveFrameDuration;
+    this.animateIntervalReached = animateDeltaTime >= this.animateFrameDuration;
+
+    if (this.animateIntervalReached) {
+      this.lastAnimateFrameTime = currentTime;
+    }
+
+    requestAnimationFrame((time) => this.getTimeInterval(time));
+  }
+
   setTimeInterval(currentTime) {
-    if (!this.lastFrameTime) this.lastFrameTime = currentTime;
-
-    let deltaTime = currentTime - this.lastFrameTime;
-
-    return deltaTime >= this.frameDuration;
+    let deltaTime = currentTime - this.lastMoveFrameTime;
+    if (this.moveIntervalReached) {
+      this.lastMoveFrameTime = currentTime;
+      return deltaTime;
+    }
+    return null;
   }
 
   stopAttackAnimation(imageArray) {
