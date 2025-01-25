@@ -218,16 +218,21 @@ class Character extends MovableObject {
   animate(currentTime) {
     let imageArray = this.getAnimationImages();
 
-    if (!this.lastFrameTime) this.lastFrameTime = currentTime;
-
-    let deltaTime = currentTime - this.lastFrameTime;
-
-    if (deltaTime >= this.frameDuration) {
+    if (this.setTimeInterval(currentTime)) {
       this.lastFrameTime = currentTime;
       this.playAnimation(imageArray);
       this.stopAttackAnimation(imageArray);
     }
+    
     requestAnimationFrame((time) => this.animate(time));
+  }
+
+  setTimeInterval(currentTime) {
+    if (!this.lastFrameTime) this.lastFrameTime = currentTime;
+
+    let deltaTime = currentTime - this.lastFrameTime;
+
+    return deltaTime >= this.frameDuration;
   }
 
   stopAttackAnimation(imageArray) {
