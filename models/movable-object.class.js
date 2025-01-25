@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 1;
   energy = 100;
   lastHit = 0;
+  previousImages = null;
   offset = {
     top: 0,
     left: 0,
@@ -42,10 +43,30 @@ class MovableObject extends DrawableObject {
   }
 
   playAnimation(images) {
-    let i = this.currentImage % images.length;
-    let path = images[i];
+    this.proofArr(images);
+    let path = images[this.currentImage];
     this.img = this.imageCache[path];
     this.currentImage++;
+    if (this.currentImage >= images.length) {
+      this.currentImage = 0;
+    }
+  }
+
+  proofArr(images) {
+    if (!this.previousImages) {
+      this.previousImages = [...images];
+      return;
+    }
+
+    if (!this.arraysAreEqual(this.previousImages, images)) {
+      this.currentImage = 0;
+      this.previousImages = [...images];
+    }
+  }
+
+  arraysAreEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every((value, index) => value === arr2[index]);
   }
 
   isColliding(mo) {

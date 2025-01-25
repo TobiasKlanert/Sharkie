@@ -44,11 +44,5 @@ window.addEventListener("keyup", (event) => {
     case "ArrowDown":
       keyboard.DOWN = false;
       break;
-    case "Space":
-      keyboard.SPACE = false;
-      break;
-    case "KeyD":
-      keyboard.D = false;
-      break;
   }
 });

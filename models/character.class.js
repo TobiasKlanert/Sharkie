@@ -6,7 +6,6 @@ class Character extends MovableObject {
 
   lastFrameTime = 0;
   frameDuration = 125;
-  currentFrame = 0;
 
   y = 50;
   x = 0;
@@ -217,8 +216,6 @@ class Character extends MovableObject {
   }
 
   animate(currentTime) {
-    requestAnimationFrame((time) => this.animate(time));
-
     let imageArray = this.getAnimationImages();
 
     if (!this.lastFrameTime) this.lastFrameTime = currentTime;
@@ -227,9 +224,20 @@ class Character extends MovableObject {
 
     if (deltaTime >= this.frameDuration) {
       this.lastFrameTime = currentTime;
-
-      this.currentFrame = (this.currentFrame + 1) % imageArray.length;
       this.playAnimation(imageArray);
+      this.stopAttackAnimation(imageArray);
+    }
+    requestAnimationFrame((time) => this.animate(time));
+  }
+
+  stopAttackAnimation(imageArray) {
+    if (this.currentImage == imageArray.length - 1) {
+      if (this.world.keyboard.D) {
+        this.world.keyboard.D = false;
+      }
+      if (this.world.keyboard.SPACE) {
+        this.world.keyboard.SPACE = false;
+      }
     }
   }
 }
