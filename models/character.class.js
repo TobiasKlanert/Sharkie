@@ -41,7 +41,7 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/1.IDLE/17.png",
     "graphics/1.Sharkie/1.IDLE/18.png",
   ];
-  IMAGES_SLEEP = [
+  IMAGES_FALL_ASLEEP = [
     "graphics/1.Sharkie/2.Long_IDLE/I1.png",
     "graphics/1.Sharkie/2.Long_IDLE/I2.png",
     "graphics/1.Sharkie/2.Long_IDLE/I3.png",
@@ -51,10 +51,16 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/2.Long_IDLE/I7.png",
     "graphics/1.Sharkie/2.Long_IDLE/I8.png",
     "graphics/1.Sharkie/2.Long_IDLE/I9.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I10.png",
+    "graphics/1.Sharkie/2.Long_IDLE/I10.png"
+  ];
+  IMAGES_SLEEP = [
+    "graphics/1.Sharkie/2.Long_IDLE/I11.png",
     "graphics/1.Sharkie/2.Long_IDLE/I11.png",
     "graphics/1.Sharkie/2.Long_IDLE/I12.png",
+    "graphics/1.Sharkie/2.Long_IDLE/I12.png",
     "graphics/1.Sharkie/2.Long_IDLE/I13.png",
+    "graphics/1.Sharkie/2.Long_IDLE/I13.png",
+    "graphics/1.Sharkie/2.Long_IDLE/I14.png",
     "graphics/1.Sharkie/2.Long_IDLE/I14.png",
   ];
   IMAGES_SWIM = [
@@ -148,6 +154,7 @@ class Character extends MovableObject {
 
   loadImagesToConstructor() {
     this.loadImages(this.IMAGES_IDLE);
+    this.loadImages(this.IMAGES_FALL_ASLEEP);
     this.loadImages(this.IMAGES_SLEEP);
     this.loadImages(this.IMAGES_SWIM);
     this.loadImages(this.IMAGES_HURT_POISONED);
@@ -199,7 +206,7 @@ class Character extends MovableObject {
   startIdleTimer() {
     setInterval(() => {
       this.idleTime += 1;
-    }, 1000);
+    }, 100);
   }
 
   getAnimationImages() {
@@ -218,7 +225,9 @@ class Character extends MovableObject {
     ) {
       return this.IMAGES_SWIM;
     } else {
-      if (this.idleTime >= 15) {
+      if (this.idleTime >= 150 && this.idleTime < 164) {
+        return this.IMAGES_FALL_ASLEEP;
+      } else if (this.idleTime >= 164) {
         return this.IMAGES_SLEEP;
       } else {
         return this.IMAGES_IDLE;
