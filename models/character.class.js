@@ -267,12 +267,24 @@ class Character extends MovableObject {
   stopAttackAnimation(imageArray) {
     if (this.currentImage == imageArray.length - 1) {
       if (this.world.keyboard.D) {
+        const { x, y, speed } = this.getCharacterMovement();
         this.world.keyboard.D = false;
-        this.world.checkAttacks();
+        this.world.checkAttacks(x, y, speed);
       }
       if (this.world.keyboard.SPACE) {
         this.world.keyboard.SPACE = false;
       }
     }
+  }
+
+  getCharacterMovement() {
+    if (this.world.keyboard.RIGHT) {
+      return { x: 250, y: 150, speed: 10 };
+    } else if (this.world.keyboard.LEFT) {
+      return { x: 0, y: 150, speed: -30 };
+    } else if (this.otherDirection) {
+      return { x: 0, y: 150, speed: -20 }
+    }
+    return { x: 250, y: 150, speed: 0 };
   }
 }

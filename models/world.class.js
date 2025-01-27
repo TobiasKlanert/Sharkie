@@ -45,8 +45,8 @@ class World {
     });
   }
 
-  checkAttacks() {
-    let bubble = new Bubble(this.character.x + 250, this.character.y + 150);
+  checkAttacks(x, y, speed) {
+    let bubble = new Bubble(this.character.x + x, this.character.y + y, speed);
     this.bubbles.push(bubble);
   }
 
