@@ -27,7 +27,7 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
-      this.checkAttacks();
+      /* this.checkAttacks(); */
     }, 200);
   }
 
@@ -46,13 +46,8 @@ class World {
   }
 
   checkAttacks() {
-    if (this.keyboard.D) {
-      let bubble = new Bubble(
-        this.character.x + 250,
-        this.character.y + 150
-      );
-      this.bubbles.push(bubble);
-    }
+    let bubble = new Bubble(this.character.x + 250, this.character.y + 150);
+    this.bubbles.push(bubble);
   }
 
   draw() {

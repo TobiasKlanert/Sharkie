@@ -207,16 +207,16 @@ class Character extends MovableObject {
       return this.IMAGES_DEAD_POISONED;
     } else if (this.isHurt()) {
       return this.IMAGES_HURT_POISONED;
+    } else if (this.world.keyboard.D) {
+      return this.IMAGES_ATTACK_BUBBLES;
+    } else if (this.world.keyboard.SPACE) {
+      return this.IMAGES_ATTACK_FIN_SLAP;
     } else if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
       this.world.keyboard.UP
     ) {
       return this.IMAGES_SWIM;
-    } else if (this.world.keyboard.D) {
-      return this.IMAGES_ATTACK_BUBBLES;
-    } else if (this.world.keyboard.SPACE) {
-      return this.IMAGES_ATTACK_FIN_SLAP;
     } else {
       if (this.idleTime >= 15) {
         return this.IMAGES_SLEEP;
@@ -268,6 +268,7 @@ class Character extends MovableObject {
     if (this.currentImage == imageArray.length - 1) {
       if (this.world.keyboard.D) {
         this.world.keyboard.D = false;
+        this.world.checkAttacks();
       }
       if (this.world.keyboard.SPACE) {
         this.world.keyboard.SPACE = false;
