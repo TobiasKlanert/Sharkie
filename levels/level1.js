@@ -1,3 +1,6 @@
+let x = 0;
+let y = 0;
+
 const level1 = new Level(
   [
     new Enemy(),
@@ -55,15 +58,33 @@ const level1 = new Level(
     }).flat(),
   ],
   [
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
-    new COINS(),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(x + 75, y - 60),
+    new COINS(x + 150, y - 90),
+    new COINS(x + 225, y - 90),
+    new COINS(x + 300, y - 60),
+    new COINS(x + 375, y),
+    /* new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")),
+    new COINS(randomize("x"), randomize("y")), */
   ]
 );
+
+function randomize(coordinates) {
+  switch (coordinates) {
+    case "x":
+      x = 300 + Math.random() * 12000;
+      return x;
+    case "y":
+      y = 100 + Math.floor(Math.random() * 251);
+      return y;
+    default:
+      break;
+  }
+}
