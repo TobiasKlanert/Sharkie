@@ -53,5 +53,17 @@ const level1 = new Level(
         ),
       ];
     }).flat(),
+  ],
+  [
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
+    new COINS(),
   ]
 );
