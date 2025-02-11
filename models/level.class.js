@@ -26,7 +26,7 @@ class Level {
       let startX, startY, validPosition;
       do {
         startX = 300 + Math.random() * 12000;
-        startY = 100 + Math.floor(Math.random() * 251);
+        startY = 200 + Math.floor(Math.random() * 101);
         validPosition = positions.every(
           (pos) => Math.hypot(pos.x - startX, pos.y - startY) >= 500
         );
