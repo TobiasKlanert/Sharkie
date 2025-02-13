@@ -57,5 +57,6 @@ const level1 = new Level(
       ];
     }).flat(),
   ],
-  Level.generateCoinGroups().flat()
+  Level.generateCoinGroups().flat(),
+  Level.generateBottles().flat()
 );

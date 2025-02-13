@@ -61,17 +61,13 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);
 
     this.ctx.translate(-this.cameraX, 0);
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarLife);
     this.addToMap(this.statusBarCoins);
-    this.ctx.translate(this.cameraX, 0);
-
-   
-
-    this.ctx.translate(-this.cameraX, 0);
 
     let self = this;
     requestAnimationFrame(function () {
