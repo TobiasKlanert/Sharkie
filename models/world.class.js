@@ -59,6 +59,7 @@ class World {
     this.addObjectsToMap(this.level.lights);
 
     this.addToMap(this.character);
+    this.addObjectsToMap(this.level.barriers);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);

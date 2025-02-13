@@ -2,17 +2,58 @@ class Level {
   enemies;
   lights;
   backgroundObjects;
+  barriers;
   coins;
   bottles;
   levelEndX = 13680;
   levelEndY = 0;
 
-  constructor(enemies, lights, backgroundObjects, coins, bottles) {
+  constructor(enemies, lights, backgroundObjects, barriers, coins, bottles) {
     this.enemies = enemies;
     this.lights = lights;
     this.backgroundObjects = backgroundObjects;
+    this.barriers = barriers;
     this.coins = coins;
     this.bottles = bottles;
+  }
+
+  static generateBarriers() {
+    let barriers = [];
+    let positions = [];
+    const barrierData = {
+      "graphics/3. Background/Barrier/1.png": {
+        y: 0,
+        width: 500,
+        height: 480,
+      },
+      "graphics/3. Background/Barrier/2.png": {
+        y: 300,
+        width: 436,
+        height: 200,
+      },
+      "graphics/3. Background/Barrier/3.png": {
+        y: 200,
+        width: 150,
+        height: 307,
+      },
+    };
+
+    for (let i = 0; i < 5; i++) {
+      let x, validPosition;
+      do {
+        x = 300 + Math.random() * 12000;
+        validPosition = positions.every((pos) => Math.abs(pos - x) >= 600);
+      } while (!validPosition);
+
+      positions.push(x);
+
+      let randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
+      let { y, width, height } = barrierData[randomImage];
+
+      barriers.push(new BARRIERS(x, y, width, height, randomImage));
+    }
+
+    return barriers;
   }
 
   static generateCoinGroups() {
@@ -61,9 +102,7 @@ class Level {
       let x, validPosition;
       do {
         x = 300 + Math.random() * 12000;
-        validPosition = positions.every(
-          (pos) => Math.hypot(pos.x - x) >= 500
-        );
+        validPosition = positions.every((pos) => Math.hypot(pos.x - x) >= 500);
       } while (!validPosition);
 
       positions.push({ x });
