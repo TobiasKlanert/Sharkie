@@ -11,7 +11,7 @@ class Character extends MovableObject {
   animateIntervalReached = false;
   moveIntervalReached = false;
 
-  y = 50;
+  y = 150;
   x = 0;
 
   offset = {
@@ -143,7 +143,7 @@ class Character extends MovableObject {
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImagesToConstructor();
-    this.applyGravity();
+    /* this.applyGravity(); */
     this.lastMoveFrameTime = performance.now();
     requestAnimationFrame((time) => this.getTimeInterval(time));
     requestAnimationFrame((time) => this.moveCharacter(time));
@@ -173,16 +173,19 @@ class Character extends MovableObject {
       this.swimming_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight(deltaTime);
-        this.handleMovementStart(false);
+        this.handleMovementStart("right");
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft(deltaTime);
-        this.handleMovementStart(true);
+        this.handleMovementStart("left");
       }
-      if (this.world.keyboard.UP && this.y > this.world.level.levelEndY) {
-        this.moveUp();
-        this.swimming_sound.play();
-        this.idleTime = 0;
+      if (this.world.keyboard.UP && this.y > this.world.level.levelStartY) {
+        this.moveUp(deltaTime);
+        this.handleMovementStart();
+      }
+      if (this.world.keyboard.DOWN && this.y < this.world.level.levelEndY) {
+        this.moveDown();
+        this.handleMovementStart();
       }
       this.world.cameraX = -this.x;
     }
@@ -190,9 +193,18 @@ class Character extends MovableObject {
   }
 
   handleMovementStart(direction) {
-    this.otherDirection = direction;
     this.swimming_sound.play();
     this.idleTime = 0;
+    switch (direction) {
+      case "right":
+        this.otherDirection = false;
+        break;
+      case "left":
+        this.otherDirection = true;
+        break;
+      default:
+        break;
+    }
   }
 
   characterAttack() {
@@ -221,7 +233,8 @@ class Character extends MovableObject {
     } else if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
-      this.world.keyboard.UP
+      this.world.keyboard.UP ||
+      this.world.keyboard.DOWN
     ) {
       return this.IMAGES_SWIM;
     } else {

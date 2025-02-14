@@ -46,8 +46,20 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  moveUp() {
-    this.speedY = 15;
+  moveUp(deltaTime) {
+    if(!deltaTime) {
+      this.y -= this.speed;
+    } else {
+      this.y -= this.speed * (deltaTime / 16);
+    }
+  }
+
+  moveDown(deltaTime) {
+    if(!deltaTime) {
+      this.y += this.speed;
+    } else {
+      this.y += this.speed * (deltaTime / 16);
+    }
   }
 
   hit() {
