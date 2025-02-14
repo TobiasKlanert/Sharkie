@@ -1,6 +1,10 @@
 let x = 0;
 let y = 0;
 
+let barriers = Level.generateBarriers().flat();
+let coins = Level.generateCoinGroups(barriers).flat();
+let bottles = Level.generateBottles(barriers, coins).flat();
+
 const level1 = new Level(
   [
     new Enemy(),
@@ -57,7 +61,7 @@ const level1 = new Level(
       ];
     }).flat(),
   ],
-  Level.generateBarriers().flat(),
-  Level.generateCoinGroups().flat(),
-  Level.generateBottles().flat()
+  barriers,
+  coins,
+  bottles
 );

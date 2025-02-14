@@ -17,6 +17,13 @@ class Level {
     this.bottles = bottles;
   }
 
+  static isOverlapping(newItem, existingItems, minDistance) {   
+    return existingItems.some(
+      (item) =>
+        Math.hypot(item.x - newItem.x, item.y - (newItem.y || 0)) < minDistance
+    );
+  }
+
   static generateBarriers() {
     let barriers = [];
     let positions = [];
@@ -42,31 +49,29 @@ class Level {
       let x, validPosition;
       do {
         x = 300 + Math.random() * 12000;
-        validPosition = positions.every((pos) => Math.abs(pos - x) >= 600);
+        validPosition = !this.isOverlapping({ x }, positions, 600);
       } while (!validPosition);
 
-      positions.push(x);
-
+      positions.push({ x });
       let randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
       let { y, width, height } = barrierData[randomImage];
-
       barriers.push(new BARRIERS(x, y, width, height, randomImage));
     }
-
     return barriers;
   }
 
-  static generateCoinGroups() {
+  static generateCoinGroups(existingBarriers) {
     let coinGroups = [];
     let positions = [];
+
     for (let i = 0; i < 8; i++) {
       let startX, startY, validPosition;
       do {
         startX = 300 + Math.random() * 12000;
         startY = 150 + Math.floor(Math.random() * 101);
-        validPosition = positions.every(
-          (pos) => Math.hypot(pos.x - startX, pos.y - startY) >= 500
-        );
+        validPosition =
+          !this.isOverlapping({ x: startX, y: startY }, positions, 500) &&
+          !this.isOverlapping({ x: startX, y: startY }, existingBarriers, 500);
       } while (!validPosition);
 
       positions.push({ x: startX, y: startY });
@@ -94,7 +99,7 @@ class Level {
     return coinGroups;
   }
 
-  static generateBottles() {
+  static generateBottles(existingBarriers, existingCoins) {
     let bottles = [];
     let positions = [];
 
@@ -102,13 +107,15 @@ class Level {
       let x, validPosition;
       do {
         x = 300 + Math.random() * 12000;
-        validPosition = positions.every((pos) => Math.hypot(pos.x - x) >= 500);
+        validPosition =
+          !this.isOverlapping({ x }, positions, 500) &&
+          !this.isOverlapping({ x }, existingBarriers, 500) &&
+          !this.isOverlapping({ x }, existingCoins.flat(), 500);
       } while (!validPosition);
 
       positions.push({ x });
       bottles.push(new BOTTLES(x));
     }
-
     return bottles;
   }
 }
