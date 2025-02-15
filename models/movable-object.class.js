@@ -65,17 +65,19 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.energy -= 5;
-    if (this.energy < 0) {
-      this.energy = 0;
-    } else {
+    if (!this.isHurt()) {
+      this.energy -= 20;
       this.lastHit = new Date().getTime();
+
+      if (this.energy < 0) {
+        this.energy = 0;
+      }
     }
   }
 
   isHurt() {
-    let timePassed = new Date().getTime() - this.lastHit;
-    timePassed = timePassed / 1000;
+    if (!this.lastHit) return false;
+    let timePassed = (new Date().getTime() - this.lastHit) / 1000;
     return timePassed < 1.5;
   }
 
@@ -85,7 +87,8 @@ class MovableObject extends DrawableObject {
 
   countCoins() {
     if (this.coins <= 100) {
-      this.coins += 3.33;
+      this.coins += 1;
+      console.log(this.coins);
     }
   }
 

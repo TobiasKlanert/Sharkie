@@ -31,7 +31,7 @@ class World {
       this.checkCollisions(this.level.coins);
       this.checkCollisions(this.level.bottles);
       /* this.checkAttacks(); */
-    }, 200);
+    }, 100);
   }
 
   checkCollisions(asset) {
