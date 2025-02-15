@@ -4,6 +4,8 @@ class MovableObject extends DrawableObject {
   speedY = 0;
   acceleration = 0.00001;
   energy = 100;
+  coins = 0;
+  bottles = 0;
   lastHit = 0;
   previousImages = null;
   offset = {
@@ -79,5 +81,17 @@ class MovableObject extends DrawableObject {
 
   isDead() {
     return this.energy == 0;
+  }
+
+  collectCoins() {
+    if (this.coins <= 100) {
+      this.coins += 3.33;
+    }
+  }
+
+  collectBottles() {
+    if (this.bottles <= 100) {
+      this.bottles += 20;
+    }
   }
 }

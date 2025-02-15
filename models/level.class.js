@@ -8,7 +8,7 @@ class Level {
   levelStartX = 230;
   levelEndX = 13680;
   levelStartY = -100;
-  levelEndY = 200;
+  levelEndY = 210;
 
   constructor(enemies, lights, backgroundObjects, barriers, coins, bottles) {
     this.enemies = enemies;
@@ -53,7 +53,7 @@ class Level {
       ({ y } = barrierData[randomImage]);
 
       do {
-        x = 300 + Math.random() * 12000;
+        x = 500 + Math.random() * 12000;
         validPosition = !this.isOverlapping({ x, y }, positions, 1000);
       } while (!validPosition);
 
@@ -71,7 +71,7 @@ class Level {
     for (let i = 0; i < 5; i++) {
       let startX, startY, validPosition;
       do {
-        startX = 300 + Math.random() * 12000;
+        startX = 500 + Math.random() * 12000;
         startY = 150 + Math.floor(Math.random() * 101);
         validPosition =
           !this.isOverlapping({ x: startX, y: startY }, positions, 1000) &&
@@ -110,7 +110,7 @@ class Level {
     for (let i = 0; i < 5; i++) {
       let x, y , validPosition;
       do {
-        x = 300 + Math.random() * 12000;
+        x = 500 + Math.random() * 12000;
         validPosition =
           !this.isOverlapping({ x, y }, positions, 500) &&
           !this.isOverlapping({ x, y }, existingBarriers, 500) &&

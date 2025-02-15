@@ -26,23 +26,61 @@ class World {
 
   run() {
     setInterval(() => {
-      this.checkCollisions();
+      this.checkCollisions(this.level.enemies);
+      this.checkCollisions(this.level.barriers);
+      this.checkCollisions(this.level.coins);
+      this.checkCollisions(this.level.bottles);
       /* this.checkAttacks(); */
     }, 200);
   }
 
-  checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBarLife.setPercentage(
-          this.character.energy,
-          this.statusBarLife.IMAGES_LIFE
-        );
-        if (this.character.isDead(this.character)) {
+  checkCollisions(asset) {
+    asset.forEach((element) => {
+      if (this.character.isColliding(element)) {
+        switch (asset) {
+          case this.level.enemies:
+            this.enemyCollisions();
+            break;
+          case this.level.barriers:
+            break;
+          case this.level.coins:
+            this.coinCollisions();
+            break;
+          case this.level.bottles:
+            console.log("Bottle");
+            this.bottleCollisions();
+            break;
+          default:
+            break;
         }
       }
     });
+  }
+
+  enemyCollisions() {
+    this.character.hit();
+    this.statusBarLife.setPercentage(
+      this.character.energy,
+      this.statusBarLife.IMAGES_LIFE
+    );
+    if (this.character.isDead(this.character)) {
+    }
+  }
+
+  coinCollisions() {
+    this.character.collectCoins();
+    this.statusBarCoins.setPercentage(
+      this.character.coins,
+      this.statusBarCoins.IMAGES_COINS
+    );
+  }
+
+  bottleCollisions() {
+    this.character.collectBottles();
+    this.statusBarBottles.setPercentage(
+      this.character.bottles,
+      this.statusBarBottles.IMAGES_BOTTLES
+    );
   }
 
   checkAttacks(x, y, speed) {

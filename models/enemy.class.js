@@ -65,7 +65,8 @@ class Enemy extends MovableObject {
     super().loadImage(
       "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png"
     );
-    this.x = 300 + Math.random() * 12000;
+    this.x = 500 + Math.random() * 12000;
+    this.y = Math.random() * 350;
     this.speed = 0.15 + Math.random() * 0.25;
     let randomEnemy = this.randomizeEnemy();
     this.loadImages(randomEnemy);

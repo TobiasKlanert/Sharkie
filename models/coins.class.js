@@ -6,6 +6,13 @@ class COINS extends DrawableObject {
     "graphics/4. Marcadores/1. Coins/4.png",
   ];
 
+  offset = {
+    top: -30,
+    left: -30,
+    right: -30,
+    bottom: -30,
+  };
+
   constructor(x, y) {
     super().loadImage("graphics/4. Marcadores/1. Coins/1.png");
     this.loadImages(this.IMAGES_COINS);
