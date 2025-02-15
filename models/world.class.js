@@ -45,10 +45,10 @@ class World {
             this.barrierCollisions();
             break;
           case this.level.coins:
-            this.collectCoin(element);
+            this.collectCoins(element);
             break;
           case this.level.bottles:
-            this.collectBottle(element);
+            this.collectBottles(element);
             break;
           default:
             break;
@@ -71,30 +71,22 @@ class World {
     console.log("kabumm");
   }
 
-  collectCoin(coin) {
-    this.coinCollisions();
-    this.level.coins = this.level.coins.filter((c) => c !== coin);
-  }
-
-  coinCollisions() {
+  collectCoins(coin) {
     this.character.countCoins();
     this.statusBarCoins.setPercentage(
       this.character.coins,
       this.statusBarCoins.IMAGES_COINS
     );
+    this.level.coins = this.level.coins.filter((c) => c !== coin);
   }
 
-  collectBottle(bottle) {
-    this.bottleCollisions();
-    this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
-  }
-
-  bottleCollisions() {
+  collectBottles(bottle) {
     this.character.countBottles();
     this.statusBarBottles.setPercentage(
       this.character.bottles,
       this.statusBarBottles.IMAGES_BOTTLES
     );
+    this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
   }
 
   checkAttacks(x, y, speed) {

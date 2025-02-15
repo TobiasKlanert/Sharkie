@@ -10,18 +10,11 @@ class BOTTLES extends DrawableObject {
     "graphics/4. Marcadores/Posión/Animada/8.png",
   ];
 
-  /* offset = {
+  offset = {
     top: 50,
     left: 10,
     right: 20,
     bottom: 50,
-  }; */
-
-  offset = {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   };
 
   constructor(x) {
