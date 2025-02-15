@@ -5,6 +5,7 @@ class Level {
   barriers;
   coins;
   bottles;
+  levelStartX = 230;
   levelEndX = 13680;
   levelStartY = -100;
   levelEndY = 200;

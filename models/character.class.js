@@ -12,7 +12,7 @@ class Character extends MovableObject {
   moveIntervalReached = false;
 
   y = 150;
-  x = 0;
+  x = 220;
 
   offset = {
     top: 140,
@@ -175,7 +175,7 @@ class Character extends MovableObject {
         this.moveRight(deltaTime);
         this.handleMovementStart("right");
       }
-      if (this.world.keyboard.LEFT && this.x > 0) {
+      if (this.world.keyboard.LEFT && this.x > this.world.level.levelStartX) {
         this.moveLeft(deltaTime);
         this.handleMovementStart("left");
       }
@@ -187,12 +187,16 @@ class Character extends MovableObject {
         this.moveDown();
         this.handleMovementStart();
       }
-      this.world.cameraX = -this.x;
+      if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
+        this.moveDown(deltaTime / 5);
+      }
+      this.world.cameraX = -this.x + 220;
     }
     requestAnimationFrame((time) => this.moveCharacter(time));
   }
 
   handleMovementStart(direction) {
+    clearInterval(this.gravityInterval);
     this.swimming_sound.play();
     this.idleTime = 0;
     switch (direction) {
