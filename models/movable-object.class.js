@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 0.00001;
   energy = 100;
   coins = 0;
-  bottles = 0;
+  bottles = 1;
   lastHit = 0;
   previousImages = null;
   offset = {
@@ -83,13 +83,13 @@ class MovableObject extends DrawableObject {
     return this.energy == 0;
   }
 
-  collectCoins() {
+  countCoins() {
     if (this.coins <= 100) {
       this.coins += 3.33;
     }
   }
 
-  collectBottles() {
+  countBottles() {
     if (this.bottles <= 100) {
       this.bottles += 20;
     }

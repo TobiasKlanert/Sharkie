@@ -42,13 +42,13 @@ class World {
             this.enemyCollisions();
             break;
           case this.level.barriers:
+            this.barrierCollisions();
             break;
           case this.level.coins:
-            this.coinCollisions();
+            this.collectCoin(element);
             break;
           case this.level.bottles:
-            console.log("Bottle");
-            this.bottleCollisions();
+            this.collectBottle(element);
             break;
           default:
             break;
@@ -67,16 +67,30 @@ class World {
     }
   }
 
+  barrierCollisions() {
+    console.log("kabumm");
+  }
+
+  collectCoin(coin) {
+    this.coinCollisions();
+    this.level.coins = this.level.coins.filter((c) => c !== coin);
+  }
+
   coinCollisions() {
-    this.character.collectCoins();
+    this.character.countCoins();
     this.statusBarCoins.setPercentage(
       this.character.coins,
       this.statusBarCoins.IMAGES_COINS
     );
   }
 
+  collectBottle(bottle) {
+    this.bottleCollisions();
+    this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
+  }
+
   bottleCollisions() {
-    this.character.collectBottles();
+    this.character.countBottles();
     this.statusBarBottles.setPercentage(
       this.character.bottles,
       this.statusBarBottles.IMAGES_BOTTLES
