@@ -46,16 +46,16 @@ class DrawableObject {
     }
   }
 
-  drawSecondFrame(ctx) {
-    if (this instanceof BARRIERS && this.tunnel) {
+  drawSecondFrame(ctx) {    
+    if (this instanceof BARRIERS) {
       ctx.beginPath();
       ctx.lineWidth = "3";
       ctx.strokeStyle = "red";
       ctx.rect(
-        this.x + this.secondOffset.left,
-        this.y + this.secondOffset.top,
-        this.width - this.secondOffset.right,
-        this.height - this.secondOffset.bottom
+        this.x + this.offsetBottom.left,
+        this.y + this.offsetBottom.top,
+        this.width - this.offsetBottom.right,
+        this.height - this.offsetBottom.bottom
       );
       ctx.stroke();
     }
@@ -90,10 +90,29 @@ class DrawableObject {
 
   isColliding(mo) {
     return (
-      (this.x + this.offset.left) + (this.width - this.offset.right) >= (mo.x + mo.offset.left) &&
-      (this.x + this.offset.left) <= (mo.x + mo.offset.left) + (mo.width - mo.offset.right) &&
-      (this.y + this.offset.top) + (this.height - this.offset.bottom) >= (mo.y + mo.offset.top) &&
-      (this.y + this.offset.top) <= (mo.y + mo.offset.top) + (mo.height - mo.offset.bottom)
+      this.x + this.offset.left + (this.width - this.offset.right) >=
+        mo.x + mo.offset.left &&
+      this.x + this.offset.left <=
+        mo.x + mo.offset.left + (mo.width - mo.offset.right) &&
+      this.y + this.offset.top + (this.height - this.offset.bottom) >=
+        mo.y + mo.offset.top &&
+      this.y + this.offset.top <=
+        mo.y + mo.offset.top + (mo.height - mo.offset.bottom)
     );
+  }
+
+  secondIsColliding(mo) {
+    if (this.tunnel) {
+      return (
+        this.x + this.offset.left + (this.width - this.offset.right) >=
+          mo.x + mo.secondOffset.left &&
+        this.x + this.offset.left <=
+          mo.x + mo.secondOffset.left + (mo.width - mo.secondOffset.right) &&
+        this.y + this.offset.top + (this.height - this.offset.bottom) >=
+          mo.y + mo.secondOffset.top &&
+        this.y + this.offset.top <=
+          mo.y + mo.secondOffset.top + (mo.height - mo.secondOffset.bottom)
+      );
+    }
   }
 }

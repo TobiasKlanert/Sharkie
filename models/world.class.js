@@ -27,9 +27,9 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions(this.level.enemies);
-      this.checkCollisions(this.level.barriers);
       this.checkCollisions(this.level.coins);
       this.checkCollisions(this.level.bottles);
+      this.checkBarrierCollisions();
       /* this.checkAttacks(); */
     }, 100);
   }
@@ -53,6 +53,14 @@ class World {
           default:
             break;
         }
+      }
+    });
+  }
+
+  checkBarrierCollisions() {
+    this.level.barriers.forEach((barrier) => {
+      if (this.character.isColliding(barrier)) {
+        this.barrierCollisions();
       }
     });
   }

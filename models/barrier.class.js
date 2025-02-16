@@ -6,14 +6,12 @@ class BARRIERS extends DrawableObject {
     bottom: 0,
   };
 
-  secondOffset = {
-    top: 350,
+  offsetBottom = {
+    top: 0,
     left: 0,
-    right: 10,
+    right: 0,
     bottom: 0,
   }
-
-  tunnel = false;
 
   constructor(x, y, width, height, image) {
     super();
@@ -27,12 +25,17 @@ class BARRIERS extends DrawableObject {
 
   setBarrierOffset(image) {
     if (image === "graphics/3. Background/Barrier/1.png") {
-      this.tunnel = true;
       this.offset = {
         top: 0,
         left: 4,
         right: 7,
         bottom: 330,
+      }
+      this.offsetBottom = {
+        top: 350,
+        left: 0,
+        right: 10,
+        bottom: 0,
       }
     }
   }
