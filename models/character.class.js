@@ -190,6 +190,7 @@ class Character extends MovableObject {
       if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
         this.moveDown(deltaTime / 5);
       }
+      /* this.checkBarrierCollisions(); */
       this.world.cameraX = -this.x + 220;
     }
     requestAnimationFrame((time) => this.moveCharacter(time));
@@ -218,6 +219,13 @@ class Character extends MovableObject {
 
     requestAnimationFrame(this.characterAttack.bind(this));
   }
+
+  checkBarrierCollisions() {
+    this.world.level.barriers.forEach((barrier) => {
+      this.world.barrierCollisions(barrier);
+    });
+  }
+  
 
   startIdleTimer() {
     setInterval(() => {

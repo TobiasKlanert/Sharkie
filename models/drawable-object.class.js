@@ -108,18 +108,10 @@ class DrawableObject {
 
   isBarrierCollidingTop(barrier) {
     return (
-      this.x + this.offset.left + (this.width - this.offset.right) >=
-        barrier.x + barrier.offsetTop.left &&
-      this.x + this.offset.left <=
-        barrier.x +
-          barrier.offsetTop.left +
-          (barrier.width - barrier.offsetTop.right) &&
-      this.y + this.offset.top + (this.height - this.offset.bottom) >=
-        barrier.y + barrier.offsetTop.top &&
-      this.y + this.offset.top <=
-        barrier.y +
-          barrier.offsetTop.top +
-          (barrier.height - barrier.offsetTop.bottom)
+      this.x + this.offset.left + (this.width - this.offset.right) >= barrier.x + barrier.offsetTop.left &&
+      this.x + this.offset.left <= barrier.x + barrier.offsetTop.left + (barrier.width - barrier.offsetTop.right) &&
+      this.y + this.offset.top + (this.height - this.offset.bottom) >= barrier.y + barrier.offsetTop.top &&
+      this.y + this.offset.top <= barrier.y + barrier.offsetTop.top + (barrier.height - barrier.offsetTop.bottom)
     );
   }
 

@@ -63,7 +63,7 @@ class World {
         this.character.isBarrierCollidingTop(barrier) ||
         this.character.isBarrierCollidingBottom(barrier)
       ) {
-        this.barrierCollisions();
+        this.barrierCollisions(barrier);
       }
     });
   }
@@ -78,8 +78,88 @@ class World {
     }
   }
 
-  barrierCollisions() {
-    console.log("kabumm");
+  barrierCollisions(barrier) {
+    //funktioniert
+    let fromLeft = this.getBarrierCollisionLeft(barrier);
+    //funktioniert
+    let fromRight = this.getBarrierCollisionRight(barrier);
+    //funktioniert
+    let fromTop = this.getBarrierCollisionTop(barrier);
+
+    let fromBottom = this.getBarrierCollisionBottom(barrier);
+
+    // Bewegung je nach Kollisionsrichtung blockieren
+    if (fromLeft) {
+      console.log("from left");
+    }
+    if (fromRight) {
+      console.log("from right");
+    }
+    if (fromTop) {
+      console.log("from top");
+    }
+    if (fromBottom) {
+      console.log("from bottom");
+    }
+  }
+
+  getBarrierCollisionLeft(barrier) {
+    return (
+      this.character.x +
+        this.character.offset.left +
+        (this.character.width - this.character.offset.right) >=
+        barrier.x + barrier.offsetTop.left &&
+      this.character.x +
+        this.character.offset.left +
+        (this.character.width - this.character.offset.right) <
+        barrier.x + barrier.width + barrier.offsetTop.left - 50
+    );
+  }
+
+  getBarrierCollisionRight(barrier) {
+    return (
+      this.character.x + this.character.offset.left <=
+        barrier.x +
+          barrier.offsetTop.left +
+          (barrier.width - barrier.offsetTop.right) &&
+      this.character.x + this.character.offset.left >
+        barrier.x + barrier.offsetTop.left + 50
+    );
+  }
+
+  getBarrierCollisionTop(barrier) {
+    return (
+      (this.character.y +
+        this.character.offset.top +
+        (this.character.height - this.character.offset.bottom) >=
+        barrier.y + barrier.offsetTop.top &&
+        this.character.y +
+          this.character.offset.top +
+          (this.character.height - this.character.offset.bottom) <
+          barrier.y + barrier.offsetTop.top + 50) ||
+      (this.character.y +
+        this.character.offset.top +
+        (this.character.height - this.character.offset.bottom) >=
+        barrier.y + barrier.offsetBottom.top &&
+        this.character.y +
+          this.character.offset.top +
+          (this.character.height - this.character.offset.bottom) <
+          barrier.y + barrier.offsetBottom.top + 50)
+    );
+  }
+
+  getBarrierCollisionBottom(barrier) {
+    return (
+      this.character.y + this.character.offset.top <=
+        barrier.y +
+          barrier.offsetTop.top +
+          (barrier.height - barrier.offsetTop.bottom) &&
+      this.character.y + this.character.offset.top >
+        barrier.y +
+          barrier.offsetTop.top +
+          (barrier.height - barrier.offsetTop.bottom) -
+          50
+    );
   }
 
   collectCoins(coin) {
