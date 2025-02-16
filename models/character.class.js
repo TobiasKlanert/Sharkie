@@ -231,7 +231,7 @@ class Character extends MovableObject {
     } else if (this.isHurt()) {
       return this.IMAGES_HURT_POISONED;
     } else if (this.world.keyboard.D) {
-      return this.IMAGES_ATTACK_BUBBLES;
+      return this.getBubbleAttackImages();
     } else if (this.world.keyboard.SPACE) {
       return this.IMAGES_ATTACK_FIN_SLAP;
     } else if (
@@ -249,6 +249,14 @@ class Character extends MovableObject {
       } else {
         return this.IMAGES_IDLE;
       }
+    }
+  }
+
+  getBubbleAttackImages() {
+    if (this.bottles > 0) {
+      return this.IMAGES_ATTACK_POISONED_BUBBLES;
+    } else {
+      return this.IMAGES_ATTACK_BUBBLES;
     }
   }
 
@@ -295,11 +303,26 @@ class Character extends MovableObject {
       if (this.world.keyboard.D) {
         const { x, y, speed } = this.getCharacterMovement();
         this.world.keyboard.D = false;
-        this.world.checkAttacks(x, y, speed);
+        this.world.checkAttacks(x, y, speed, this.getBubbleImages());
+        if (this.bottles > 0) {
+          this.bottles -= 20;
+        }
+        this.world.statusBarBottles.setPercentage(
+          this.bottles,
+          this.world.statusBarBottles.IMAGES_BOTTLES
+        );
       }
       if (this.world.keyboard.SPACE) {
         this.world.keyboard.SPACE = false;
       }
+    }
+  }
+
+  getBubbleImages() {
+    if (this.bottles > 0) {
+      return "poisoned";
+    } else {
+      return "normal";
     }
   }
 

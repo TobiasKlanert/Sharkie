@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
   energy = 100;
   coins = 0;
   coinPercentage = 0;
-  bottles = 1;
+  bottles = 0;
   lastHit = 0;
   previousImages = null;
   offset = {
@@ -89,7 +89,6 @@ class MovableObject extends DrawableObject {
   countCoins() {
     if (this.coins <= 100) {
       this.coins += 1;
-      console.log("Coins: ", this.coins);
       if (this.coins == 25) {
         this.coinPercentage = 100;
       } else if (this.coins >= 20) {
@@ -101,7 +100,6 @@ class MovableObject extends DrawableObject {
       } else if (this.coins >= 5) {
         this.coinPercentage = 20;
       }
-      console.log("Percentage: ", this.coinPercentage);
     }
   }
 

@@ -89,8 +89,8 @@ class World {
     this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
   }
 
-  checkAttacks(x, y, speed) {
-    let bubble = new Bubble(this.character.x + x, this.character.y + y, speed);
+  checkAttacks(x, y, speed, bubbleType) {
+    let bubble = new Bubble(this.character.x + x, this.character.y + y, speed, bubbleType);
     this.bubbles.push(bubble);
   }
 
