@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 0.00001;
   energy = 100;
   coins = 0;
+  coinPercentage = 0;
   bottles = 1;
   lastHit = 0;
   previousImages = null;
@@ -41,7 +42,7 @@ class MovableObject extends DrawableObject {
   }
 
   moveLeft(deltaTime) {
-    if(!deltaTime) {
+    if (!deltaTime) {
       this.x -= this.speed;
     } else {
       this.x -= this.speed * (deltaTime / 16);
@@ -49,7 +50,7 @@ class MovableObject extends DrawableObject {
   }
 
   moveUp(deltaTime) {
-    if(!deltaTime) {
+    if (!deltaTime) {
       this.y -= this.speed;
     } else {
       this.y -= this.speed * (deltaTime / 16);
@@ -57,7 +58,7 @@ class MovableObject extends DrawableObject {
   }
 
   moveDown(deltaTime) {
-    if(!deltaTime) {
+    if (!deltaTime) {
       this.y += this.speed;
     } else {
       this.y += this.speed * (deltaTime / 16);
@@ -88,7 +89,19 @@ class MovableObject extends DrawableObject {
   countCoins() {
     if (this.coins <= 100) {
       this.coins += 1;
-      console.log(this.coins);
+      console.log("Coins: ", this.coins);
+      if (this.coins == 25) {
+        this.coinPercentage = 100;
+      } else if (this.coins >= 20) {
+        this.coinPercentage = 80;
+      } else if (this.coins >= 15) {
+        this.coinPercentage = 60;
+      } else if (this.coins >= 10) {
+        this.coinPercentage = 40;
+      } else if (this.coins >= 5) {
+        this.coinPercentage = 20;
+      }
+      console.log("Percentage: ", this.coinPercentage);
     }
   }
 

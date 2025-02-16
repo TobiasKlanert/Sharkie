@@ -82,18 +82,18 @@ class Level {
       let formation = Math.floor(Math.random() * 5);
       let coins = [];
 
-      for (let j = 0; j < 6; j++) {
+      for (let j = 0; j < 5; j++) {
         let xOffset = j * 75;
         let yOffset = 0;
 
         if (formation === 1) {
-          yOffset = [0, -60, -90, -90, -60, 0][j];
+          yOffset = [0, -60, -90, -60, 0][j];
         } else if (formation === 2) {
           yOffset = -j * 30;
         } else if (formation === 3) {
           yOffset = j * 30;
         } else {
-          yOffset = [0, 60, 90, 90, 60, 0][j];
+          yOffset = [0, 60, 90, 60, 0][j];
         }
 
         coins.push(new COINS(startX + xOffset, startY + yOffset));

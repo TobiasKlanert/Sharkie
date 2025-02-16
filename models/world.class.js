@@ -74,7 +74,7 @@ class World {
   collectCoins(coin) {
     this.character.countCoins();
     this.statusBarCoins.setPercentage(
-      this.character.coins,
+      this.character.coinPercentage,
       this.statusBarCoins.IMAGES_COINS
     );
     this.level.coins = this.level.coins.filter((c) => c !== coin);
