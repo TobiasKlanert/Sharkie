@@ -46,6 +46,21 @@ class DrawableObject {
     }
   }
 
+  drawSecondFrame(ctx) {
+    if (this instanceof BARRIERS && this.tunnel) {
+      ctx.beginPath();
+      ctx.lineWidth = "3";
+      ctx.strokeStyle = "red";
+      ctx.rect(
+        this.x + this.secondOffset.left,
+        this.y + this.secondOffset.top,
+        this.width - this.secondOffset.right,
+        this.height - this.secondOffset.bottom
+      );
+      ctx.stroke();
+    }
+  }
+
   playAnimation(images) {
     this.proofArr(images);
     let path = images[this.currentImage];

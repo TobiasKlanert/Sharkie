@@ -132,6 +132,7 @@ class World {
     }
     mo.drawObject(this.ctx);
     mo.drawFrame(this.ctx);
+    mo.drawSecondFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
