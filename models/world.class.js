@@ -59,7 +59,10 @@ class World {
 
   checkBarrierCollisions() {
     this.level.barriers.forEach((barrier) => {
-      if (this.character.isColliding(barrier)) {
+      if (
+        this.character.isBarrierCollidingTop(barrier) ||
+        this.character.isBarrierCollidingBottom(barrier)
+      ) {
         this.barrierCollisions();
       }
     });
@@ -98,7 +101,12 @@ class World {
   }
 
   checkAttacks(x, y, speed, bubbleType) {
-    let bubble = new Bubble(this.character.x + x, this.character.y + y, speed, bubbleType);
+    let bubble = new Bubble(
+      this.character.x + x,
+      this.character.y + y,
+      speed,
+      bubbleType
+    );
     this.bubbles.push(bubble);
   }
 
@@ -140,7 +148,7 @@ class World {
     }
     mo.drawObject(this.ctx);
     mo.drawFrame(this.ctx);
-    mo.drawSecondFrame(this.ctx);
+    mo.drawBarrierFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

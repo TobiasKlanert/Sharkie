@@ -29,7 +29,6 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof Enemy ||
       this instanceof Endboss ||
-      this instanceof BARRIERS ||
       this instanceof COINS ||
       this instanceof BOTTLES
     ) {
@@ -46,11 +45,17 @@ class DrawableObject {
     }
   }
 
-  drawSecondFrame(ctx) {    
+  drawBarrierFrame(ctx) {
     if (this instanceof BARRIERS) {
       ctx.beginPath();
       ctx.lineWidth = "3";
       ctx.strokeStyle = "red";
+      ctx.rect(
+        this.x + this.offsetTop.left,
+        this.y + this.offsetTop.top,
+        this.width - this.offsetTop.right,
+        this.height - this.offsetTop.bottom
+      );
       ctx.rect(
         this.x + this.offsetBottom.left,
         this.y + this.offsetBottom.top,
@@ -101,18 +106,37 @@ class DrawableObject {
     );
   }
 
-  secondIsColliding(mo) {
-    if (this.tunnel) {
-      return (
-        this.x + this.offset.left + (this.width - this.offset.right) >=
-          mo.x + mo.secondOffset.left &&
-        this.x + this.offset.left <=
-          mo.x + mo.secondOffset.left + (mo.width - mo.secondOffset.right) &&
-        this.y + this.offset.top + (this.height - this.offset.bottom) >=
-          mo.y + mo.secondOffset.top &&
-        this.y + this.offset.top <=
-          mo.y + mo.secondOffset.top + (mo.height - mo.secondOffset.bottom)
-      );
-    }
+  isBarrierCollidingTop(barrier) {
+    return (
+      this.x + this.offset.left + (this.width - this.offset.right) >=
+        barrier.x + barrier.offsetTop.left &&
+      this.x + this.offset.left <=
+        barrier.x +
+          barrier.offsetTop.left +
+          (barrier.width - barrier.offsetTop.right) &&
+      this.y + this.offset.top + (this.height - this.offset.bottom) >=
+        barrier.y + barrier.offsetTop.top &&
+      this.y + this.offset.top <=
+        barrier.y +
+          barrier.offsetTop.top +
+          (barrier.height - barrier.offsetTop.bottom)
+    );
+  }
+
+  isBarrierCollidingBottom(barrier) {
+    return (
+      this.x + this.offset.left + (this.width - this.offset.right) >=
+        barrier.x + barrier.offsetBottom.left &&
+      this.x + this.offset.left <=
+        barrier.x +
+          barrier.offsetBottom.left +
+          (barrier.width - barrier.offsetBottom.right) &&
+      this.y + this.offset.top + (this.height - this.offset.bottom) >=
+        barrier.y + barrier.offsetBottom.top &&
+      this.y + this.offset.top <=
+        barrier.y +
+          barrier.offsetBottom.top +
+          (barrier.height - barrier.offsetBottom.bottom)
+    );
   }
 }

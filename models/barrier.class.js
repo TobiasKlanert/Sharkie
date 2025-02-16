@@ -1,5 +1,5 @@
 class BARRIERS extends DrawableObject {
-  offset = {
+  offsetTop = {
     top: 0,
     left: 0,
     right: 0,
@@ -25,7 +25,7 @@ class BARRIERS extends DrawableObject {
 
   setBarrierOffset(image) {
     if (image === "graphics/3. Background/Barrier/1.png") {
-      this.offset = {
+      this.offsetTop = {
         top: 0,
         left: 4,
         right: 7,
