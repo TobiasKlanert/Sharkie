@@ -29,7 +29,6 @@ class World {
       this.checkCollisions(this.level.enemies);
       this.checkCollisions(this.level.coins);
       this.checkCollisions(this.level.bottles);
-      this.checkBarrierCollisions();
       /* this.checkAttacks(); */
     }, 100);
   }
@@ -40,9 +39,6 @@ class World {
         switch (asset) {
           case this.level.enemies:
             this.enemyCollisions();
-            break;
-          case this.level.barriers:
-            this.barrierCollisions();
             break;
           case this.level.coins:
             this.collectCoins(element);
@@ -79,27 +75,22 @@ class World {
   }
 
   barrierCollisions(barrier) {
-    //funktioniert
     let fromLeft = this.getBarrierCollisionLeft(barrier);
-    //funktioniert
     let fromRight = this.getBarrierCollisionRight(barrier);
-    //funktioniert
     let fromTop = this.getBarrierCollisionTop(barrier);
-
     let fromBottom = this.getBarrierCollisionBottom(barrier);
 
-    // Bewegung je nach Kollisionsrichtung blockieren
     if (fromLeft) {
-      console.log("from left");
+      this.character.canMoveRight = false;
     }
     if (fromRight) {
-      console.log("from right");
+      this.character.canMoveLeft = false;
     }
     if (fromTop) {
-      console.log("from top");
+      this.character.canMoveDown = false;
     }
     if (fromBottom) {
-      console.log("from bottom");
+      this.character.canMoveUp = false;
     }
   }
 

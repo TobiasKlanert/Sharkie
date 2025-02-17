@@ -14,6 +14,11 @@ class Character extends MovableObject {
   y = 150;
   x = 220;
 
+  canMoveRight = true;
+  canMoveLeft = true;
+  canMoveUp = true;
+  canMoveDown = true;
+
   offset = {
     top: 140,
     left: 60,
@@ -51,7 +56,7 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/2.Long_IDLE/I7.png",
     "graphics/1.Sharkie/2.Long_IDLE/I8.png",
     "graphics/1.Sharkie/2.Long_IDLE/I9.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I10.png"
+    "graphics/1.Sharkie/2.Long_IDLE/I10.png",
   ];
   IMAGES_SLEEP = [
     "graphics/1.Sharkie/2.Long_IDLE/I11.png",
@@ -170,27 +175,43 @@ class Character extends MovableObject {
     let deltaTime = this.setTimeInterval(currentTime);
 
     if (deltaTime) {
+      this.checkBarrierCollisions();
       this.swimming_sound.pause();
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
+      if (
+        this.world.keyboard.RIGHT &&
+        this.x < this.world.level.levelEndX &&
+        this.canMoveRight
+      ) {
         this.moveRight(deltaTime);
         this.handleMovementStart("right");
       }
-      if (this.world.keyboard.LEFT && this.x > this.world.level.levelStartX) {
+      if (
+        this.world.keyboard.LEFT &&
+        this.x > this.world.level.levelStartX &&
+        this.canMoveLeft
+      ) {
         this.moveLeft(deltaTime);
         this.handleMovementStart("left");
       }
-      if (this.world.keyboard.UP && this.y > this.world.level.levelStartY) {
+      if (
+        this.world.keyboard.UP &&
+        this.y > this.world.level.levelStartY &&
+        this.canMoveUp
+      ) {
         this.moveUp(deltaTime);
         this.handleMovementStart();
       }
-      if (this.world.keyboard.DOWN && this.y < this.world.level.levelEndY) {
+      if (
+        this.world.keyboard.DOWN &&
+        this.y < this.world.level.levelEndY &&
+        this.canMoveDown
+      ) {
         this.moveDown();
         this.handleMovementStart();
       }
       if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
         this.moveDown(deltaTime / 5);
       }
-      /* this.checkBarrierCollisions(); */
       this.world.cameraX = -this.x + 220;
     }
     requestAnimationFrame((time) => this.moveCharacter(time));
@@ -212,6 +233,15 @@ class Character extends MovableObject {
     }
   }
 
+  checkBarrierCollisions() {
+    this.canMoveRight = true;
+    this.canMoveLeft = true;
+    this.canMoveUp = true;
+    this.canMoveDown = true;
+
+    this.world.checkBarrierCollisions();
+  }
+
   characterAttack() {
     if (this.world.keyboard.D || this.world.keyboard.SPACE) {
       this.idleTime = 0;
@@ -219,13 +249,6 @@ class Character extends MovableObject {
 
     requestAnimationFrame(this.characterAttack.bind(this));
   }
-
-  checkBarrierCollisions() {
-    this.world.level.barriers.forEach((barrier) => {
-      this.world.barrierCollisions(barrier);
-    });
-  }
-  
 
   startIdleTimer() {
     setInterval(() => {
@@ -340,7 +363,7 @@ class Character extends MovableObject {
     } else if (this.world.keyboard.LEFT) {
       return { x: 0, y: 150, speed: -30 };
     } else if (this.otherDirection) {
-      return { x: 0, y: 150, speed: -20 }
+      return { x: 0, y: 150, speed: -20 };
     }
     return { x: 250, y: 150, speed: 0 };
   }
