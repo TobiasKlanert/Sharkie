@@ -127,7 +127,7 @@ class World {
         this.character.y +
           this.character.offset.top +
           (this.character.height - this.character.offset.bottom) <
-          barrier.y + barrier.offsetTop.top + 50) ||
+          barrier.y + barrier.offsetTop.top + 10) ||
       (this.character.y +
         this.character.offset.top +
         (this.character.height - this.character.offset.bottom) >=
@@ -135,7 +135,7 @@ class World {
         this.character.y +
           this.character.offset.top +
           (this.character.height - this.character.offset.bottom) <
-          barrier.y + barrier.offsetBottom.top + 50)
+          barrier.y + barrier.offsetBottom.top + 10)
     );
   }
 
@@ -149,7 +149,7 @@ class World {
         barrier.y +
           barrier.offsetTop.top +
           (barrier.height - barrier.offsetTop.bottom) -
-          50
+          10
     );
   }
 
