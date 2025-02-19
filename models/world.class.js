@@ -38,6 +38,7 @@ class World {
       if (this.character.isColliding(element)) {
         switch (asset) {
           case this.level.enemies:
+            this.character.collisionWithEnemy(element);
             this.enemyCollisions();
             break;
           case this.level.coins:

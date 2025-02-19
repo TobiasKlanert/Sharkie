@@ -26,6 +26,8 @@ class Character extends MovableObject {
     bottom: 215,
   };
 
+  enemyType = null;
+
   IMAGES_IDLE = [
     "graphics/1.Sharkie/1.IDLE/1.png",
     "graphics/1.Sharkie/1.IDLE/2.png",
@@ -260,7 +262,7 @@ class Character extends MovableObject {
     if (this.isDead()) {
       return this.IMAGES_DEAD_POISONED;
     } else if (this.isHurt()) {
-      return this.IMAGES_HURT_POISONED;
+      return this.getHurtImages();
     } else if (this.world.keyboard.D) {
       return this.getBubbleAttackImages();
     } else if (this.world.keyboard.SPACE) {
@@ -280,6 +282,19 @@ class Character extends MovableObject {
       } else {
         return this.IMAGES_IDLE;
       }
+    }
+  }
+
+  collisionWithEnemy(enemy) {
+    this.enemyType = enemy.enemyType;
+  }
+
+  getHurtImages() {
+    switch (this.enemyType) {
+      case "pufferFish":
+        return this.IMAGES_HURT_POISONED;
+      case "jellyFish":
+        return this.IMAGES_HURT_ELECTRO_SHOCK;
     }
   }
 

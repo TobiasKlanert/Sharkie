@@ -9,6 +9,8 @@ class Enemy extends MovableObject {
     bottom: 40,
   };
 
+  enemyType = null;
+
   IMAGES_PUFFER_FISH_GREEN_SWIM = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png",
@@ -77,18 +79,25 @@ class Enemy extends MovableObject {
     let randomIndex = Math.floor(Math.random() * 7);
     switch (randomIndex) {
       case 0:
+        this.enemyType = "jellyFish";
         return this.IMAGES_JELLY_FISH_GREEN_SWIM;
       case 1:
+        this.enemyType = "pufferFish";
         return this.IMAGES_PUFFER_FISH_ORANGE_SWIM;
       case 2:
+        this.enemyType = "pufferFish";
         return this.IMAGES_PUFFER_FISH_PINK_SWIM;
       case 3:
+        this.enemyType = "jellyFish";
         return this.IMAGES_JELLY_FISH_LILA_SWIM;
       case 4:
+        this.enemyType = "jellyFish";
         return this.IMAGES_JELLY_FISH_YELLOW_SWIM;
       case 5:
+        this.enemyType = "pufferFish";
         return this.IMAGES_PUFFER_FISH_GREEN_SWIM;
       case 6:
+        this.enemyType = "pufferFish";
         return this.IMAGES_PUFFER_FISH_PINK_SWIM;
       default:
         break;
