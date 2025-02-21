@@ -26,14 +26,14 @@ class World {
 
   run() {
     setInterval(() => {
-      this.checkCollisions(this.level.enemies);
-      this.checkCollisions(this.level.coins);
-      this.checkCollisions(this.level.bottles);
-      /* this.checkAttacks(); */
+      this.checkCharacterCollisions(this.level.enemies);
+      this.checkCharacterCollisions(this.level.coins);
+      this.checkCharacterCollisions(this.level.bottles);
+      this.checkAttackCollisions();
     }, 100);
   }
 
-  checkCollisions(asset) {
+  checkCharacterCollisions(asset) {
     asset.forEach((element) => {
       if (this.character.isColliding(element)) {
         switch (asset) {
@@ -51,6 +51,21 @@ class World {
             break;
         }
       }
+    });
+  }
+
+  checkAttackCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      this.bubbles.forEach((bubble) => {
+        if (enemy.isColliding(bubble)) {
+          console.log("before attack: ", enemy.life);
+          // TODO: nur einen punkt -> mit cooldown arbeiten
+          enemy.life -= 1;
+          // TODO: wenn life = 0 -> enemy verschwindet
+          // TODO: blase verschwindet
+          console.log("after attack: ", enemy.life);
+        }
+      });
     });
   }
 
