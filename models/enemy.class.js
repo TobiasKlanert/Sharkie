@@ -38,6 +38,12 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png",
   ];
 
+  IMAGES_PUFFER_FISH_GREEN_DYING = [
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3.png"
+  ];
+
   IMAGES_PUFFER_FISH_ORANGE = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim2.png",

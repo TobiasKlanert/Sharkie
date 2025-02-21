@@ -59,10 +59,15 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
           console.log("before attack: ", enemy.life);
-          // TODO: nur einen punkt -> mit cooldown arbeiten
+          // TODO: wenn gift bubble -> 2 abziehen, sonst 1
           enemy.life -= 1;
-          // TODO: wenn life = 0 -> enemy verschwindet
-          // TODO: blase verschwindet
+          if (enemy.life === 0) {
+            // TODO: Animation funktioniert noch nicht
+            enemy.loadImages(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
+            enemy.playAnimation(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
+            this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+          }
+          this.bubbles = this.bubbles.filter((b) => b !== bubble);
           console.log("after attack: ", enemy.life);
         }
       });
