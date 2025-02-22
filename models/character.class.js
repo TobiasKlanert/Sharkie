@@ -19,6 +19,8 @@ class Character extends MovableObject {
   canMoveUp = true;
   canMoveDown = true;
 
+  executeAttack = false;
+
   offset = {
     top: 140,
     left: 60,

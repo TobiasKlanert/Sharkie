@@ -41,9 +41,10 @@ class World {
           case this.level.enemies:
             this.character.collisionWithEnemy(element);
             if (this.keyboard.SPACE) {
+              this.character.executeAttack = true;
               this.character.attack(element);
               this.killEnemy(element);
-            } else {
+            } else if (!this.character.executeAttack) {
               this.enemyCollisions();
             }
             break;
@@ -85,23 +86,21 @@ class World {
 
   killEnemy(enemy) {
     if (enemy.life <= 0) {
-        enemy.loadImages(enemy.enemyDyingImages);
-        let animationInterval = setInterval(() => {
-            enemy.playAnimation(enemy.enemyDyingImages);
-        }, enemy.animationTime);
+      enemy.loadImages(enemy.enemyDyingImages);
+      let animationInterval = setInterval(() => {
+        enemy.playAnimation(enemy.enemyDyingImages);
+      }, enemy.animationTime);
 
-        clearInterval(enemy.moveInterval);
-        clearInterval(enemy.animationInterval);
+      clearInterval(enemy.moveInterval);
+      clearInterval(enemy.animationInterval);
 
-        setTimeout(() => {
-            clearInterval(animationInterval);
-            this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
-            console.log(enemy.enemyDyingImages);
-            
-        }, enemy.enemyDyingImages.length * enemy.animationTime);
+      setTimeout(() => {
+        clearInterval(animationInterval);
+        this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+        this.character.executeAttack = false;
+      }, enemy.enemyDyingImages.length * enemy.animationTime);
     }
-}
-
+  }
 
   checkBarrierCollisions() {
     this.level.barriers.forEach((barrier) => {
