@@ -252,6 +252,12 @@ class Character extends MovableObject {
     requestAnimationFrame(this.characterAttack.bind(this));
   }
 
+  attack(enemy) {
+    // TODO: fin slap only hits puffer fish
+    // TODO: bubble only hits jelly fish
+    enemy.life -= this.world.attackDamage;
+  }
+
   startIdleTimer() {
     setInterval(() => {
       this.idleTime += 1;
@@ -266,6 +272,7 @@ class Character extends MovableObject {
     } else if (this.world.keyboard.D) {
       return this.getBubbleAttackImages();
     } else if (this.world.keyboard.SPACE) {
+      this.world.attackDamage = 2;
       return this.IMAGES_ATTACK_FIN_SLAP;
     } else if (
       this.world.keyboard.RIGHT ||
@@ -351,7 +358,10 @@ class Character extends MovableObject {
         this.world.keyboard.D = false;
         this.world.checkAttacks(x, y, speed, this.getBubbleImages());
         if (this.bottles > 0) {
+          this.world.attackDamage = 2;
           this.bottles -= 20;
+        } else {
+          this.world.attackDamage = 1;
         }
         this.world.statusBarBottles.setPercentage(
           this.bottles,
@@ -359,6 +369,7 @@ class Character extends MovableObject {
         );
       }
       if (this.world.keyboard.SPACE) {
+        this.world.attackDamage = 1;
         this.world.keyboard.SPACE = false;
       }
     }

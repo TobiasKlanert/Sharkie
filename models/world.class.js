@@ -10,6 +10,7 @@ class World {
   statusBarCoins = new StatusBar("coins", 20, 100, 0);
 
   bubbles = [];
+  attackDamage = 1;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -29,7 +30,7 @@ class World {
       this.checkCharacterCollisions(this.level.enemies);
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
-      this.checkAttackCollisions();
+      this.checkBubbleAttackCollisions();
     }, 100);
   }
 
@@ -39,7 +40,12 @@ class World {
         switch (asset) {
           case this.level.enemies:
             this.character.collisionWithEnemy(element);
-            this.enemyCollisions();
+            if (this.keyboard.SPACE) {
+              this.character.attack(element);
+              this.killEnemy(element);
+            } else {
+              this.enemyCollisions();
+            }
             break;
           case this.level.coins:
             this.collectCoins(element);
@@ -54,24 +60,36 @@ class World {
     });
   }
 
-  checkAttackCollisions() {
+  checkBubbleAttackCollisions() {
     this.level.enemies.forEach((enemy) => {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
-          console.log("before attack: ", enemy.life);
-          // TODO: wenn gift bubble -> 2 abziehen, sonst 1
-          enemy.life -= 1;
-          if (enemy.life === 0) {
-            // TODO: Animation funktioniert noch nicht
-            enemy.loadImages(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
-            enemy.playAnimation(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
-            this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
-          }
+          this.character.attack(enemy);
+          this.killEnemy(enemy);
           this.bubbles = this.bubbles.filter((b) => b !== bubble);
-          console.log("after attack: ", enemy.life);
         }
       });
     });
+  }
+
+  enemyCollisions() {
+    this.character.hit();
+    this.statusBarLife.setPercentage(
+      this.character.energy,
+      this.statusBarLife.IMAGES_LIFE
+    );
+    if (this.character.isDead(this.character)) {
+      // TODO: show Game Over screen
+    }
+  }
+
+  killEnemy(enemy) {
+    if (enemy.life <= 0) {
+      // TODO: animation doesn't work yet
+      enemy.loadImages(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
+      enemy.playAnimation(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
+      this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+    }
   }
 
   checkBarrierCollisions() {
@@ -83,16 +101,6 @@ class World {
         this.barrierCollisions(barrier);
       }
     });
-  }
-
-  enemyCollisions() {
-    this.character.hit();
-    this.statusBarLife.setPercentage(
-      this.character.energy,
-      this.statusBarLife.IMAGES_LIFE
-    );
-    if (this.character.isDead(this.character)) {
-    }
   }
 
   barrierCollisions(barrier) {
