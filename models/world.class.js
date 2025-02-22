@@ -34,6 +34,7 @@ class World {
     }, 100);
   }
 
+  // TODO: if character is hurt -> no attack executable
   checkCharacterCollisions(asset) {
     asset.forEach((element) => {
       if (this.character.isColliding(element)) {
@@ -85,7 +86,8 @@ class World {
   }
 
   killEnemy(enemy) {
-    if (enemy.life <= 0) {
+    if (enemy.life <= 0 && !enemy.isDying) {
+      enemy.isDying = true;
       enemy.loadImages(enemy.enemyDyingImages);
       let animationInterval = setInterval(() => {
         enemy.playAnimation(enemy.enemyDyingImages);

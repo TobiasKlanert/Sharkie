@@ -12,6 +12,7 @@ class Enemy extends MovableObject {
   enemyType = null;
   enemyDyingImages = null;
   life = 0;
+  isDying = false;
 
   moveInterval;
   animationInterval;
