@@ -13,6 +13,10 @@ class Enemy extends MovableObject {
   enemyDyingImages = null;
   life = 0;
 
+  moveInterval;
+  animationInterval;
+  animationTime;
+
   IMAGES_PUFFER_FISH_GREEN = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png",
@@ -173,6 +177,7 @@ class Enemy extends MovableObject {
     this.y = Math.random() * 350;
     this.speed = 0.15 + Math.random() * 0.25;
     let randomEnemy = this.randomizeEnemy();
+    this.getAnimationTime();
     this.getEnemyLife();
     this.loadImages(randomEnemy);
     this.animate(randomEnemy);
@@ -214,6 +219,19 @@ class Enemy extends MovableObject {
     }
   }
 
+  getAnimationTime() {
+    switch (this.enemyType) {
+      case "jellyFish":
+        this.animationTime = 120;
+        break;
+      case "pufferFish":
+        this.animationTime = 500;
+        break;
+      default:
+        break;
+    }
+  }
+
   getEnemyLife() {
     switch (this.enemyType) {
       case "jellyFish":
@@ -228,10 +246,11 @@ class Enemy extends MovableObject {
   }
 
   animate(randomEnemy) {
-    setInterval(() => {
+    this.moveInterval = setInterval(() => {
       this.moveLeft();
     }, 1000 / 60);
-    setInterval(() => {
+
+    this.animationInterval = setInterval(() => {
       this.playAnimation(randomEnemy);
     }, 200);
   }

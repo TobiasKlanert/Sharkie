@@ -88,13 +88,17 @@ class World {
         enemy.loadImages(enemy.enemyDyingImages);
         let animationInterval = setInterval(() => {
             enemy.playAnimation(enemy.enemyDyingImages);
-        }, 200); // Animation alle 100ms wechseln
+        }, enemy.animationTime);
 
-        // Entferne den Gegner erst nach der Dauer der Animation
+        clearInterval(enemy.moveInterval);
+        clearInterval(enemy.animationInterval);
+
         setTimeout(() => {
             clearInterval(animationInterval);
             this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
-        }, enemy.enemyDyingImages.length * 200); // Wartezeit basiert auf der Anzahl der Bilder
+            console.log(enemy.enemyDyingImages);
+            
+        }, enemy.enemyDyingImages.length * enemy.animationTime);
     }
 }
 
