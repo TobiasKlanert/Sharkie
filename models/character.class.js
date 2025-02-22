@@ -253,9 +253,12 @@ class Character extends MovableObject {
   }
 
   attack(enemy) {
-    // TODO: fin slap only hits puffer fish
-    // TODO: bubble only hits jelly fish
-    enemy.life -= this.world.attackDamage;
+    if (
+      (enemy.enemyType == "pufferFish" && this.world.keyboard.SPACE) ||
+      (enemy.enemyType == "jellyFish" && !this.world.keyboard.SPACE)
+    ) {
+      enemy.life -= this.world.attackDamage;
+    }
   }
 
   startIdleTimer() {

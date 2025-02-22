@@ -85,12 +85,19 @@ class World {
 
   killEnemy(enemy) {
     if (enemy.life <= 0) {
-      // TODO: animation doesn't work yet
-      enemy.loadImages(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
-      enemy.playAnimation(enemy.IMAGES_PUFFER_FISH_GREEN_DYING);
-      this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+        enemy.loadImages(enemy.enemyDyingImages);
+        let animationInterval = setInterval(() => {
+            enemy.playAnimation(enemy.enemyDyingImages);
+        }, 200); // Animation alle 100ms wechseln
+
+        // Entferne den Gegner erst nach der Dauer der Animation
+        setTimeout(() => {
+            clearInterval(animationInterval);
+            this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+        }, enemy.enemyDyingImages.length * 200); // Wartezeit basiert auf der Anzahl der Bilder
     }
-  }
+}
+
 
   checkBarrierCollisions() {
     this.level.barriers.forEach((barrier) => {
@@ -247,8 +254,8 @@ class World {
       this.flipImage(mo);
     }
     mo.drawObject(this.ctx);
-    mo.drawFrame(this.ctx);
-    mo.drawBarrierFrame(this.ctx);
+    /* mo.drawFrame(this.ctx);
+    mo.drawBarrierFrame(this.ctx); */
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

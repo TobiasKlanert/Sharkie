@@ -10,6 +10,7 @@ class Enemy extends MovableObject {
   };
 
   enemyType = null;
+  enemyDyingImages = null;
   life = 0;
 
   IMAGES_PUFFER_FISH_GREEN = [
@@ -41,7 +42,7 @@ class Enemy extends MovableObject {
   IMAGES_PUFFER_FISH_GREEN_DYING = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2.png",
-    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3.png"
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3.png",
   ];
 
   IMAGES_PUFFER_FISH_ORANGE = [
@@ -70,6 +71,12 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition1.png",
   ];
 
+  IMAGES_PUFFER_FISH_ORANGE_DYING = [
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.Dead 1.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.Dead 2.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.Dead 3.png",
+  ];
+
   IMAGES_PUFFER_FISH_PINK = [
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png",
     "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim2.png",
@@ -96,11 +103,24 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition1.png",
   ];
 
+  IMAGES_PUFFER_FISH_PINK_DYING = [
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.Dead 1.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.Dead 2.png",
+    "graphics/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.Dead 3.png",
+  ];
+
   IMAGES_JELLY_FISH_LILA = [
     "graphics/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
     "graphics/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png",
     "graphics/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png",
     "graphics/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png",
+  ];
+
+  IMAGES_JELLY_FISH_LILA_DYING = [
+    "graphics/2.Enemy/2 Jelly fish/Dead/Lila/L1.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Lila/L2.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Lila/L3.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
   ];
 
   IMAGES_JELLY_FISH_YELLOW = [
@@ -110,6 +130,13 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png",
   ];
 
+  IMAGES_JELLY_FISH_YELLOW_DYING = [
+    "graphics/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
+  ];
+
   IMAGES_JELLY_FISH_GREEN = [
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png",
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Green 2.png",
@@ -117,11 +144,25 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Green 4.png",
   ];
 
+  IMAGES_JELLY_FISH_GREEN_DYING = [
+    "graphics/2.Enemy/2 Jelly fish/Dead/green/g1.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/green/g2.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/green/g3.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/green/g4.png",
+  ];
+
   IMAGES_JELLY_FISH_PINK = [
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png",
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Pink 2.png",
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png",
     "graphics/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png",
+  ];
+
+  IMAGES_JELLY_FISH_PINK_DYING = [
+    "graphics/2.Enemy/2 Jelly fish/Dead/Pink/P1.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Pink/P2.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Pink/P3.png",
+    "graphics/2.Enemy/2 Jelly fish/Dead/Pink/P4.png",
   ];
 
   constructor() {
@@ -138,25 +179,35 @@ class Enemy extends MovableObject {
   }
 
   randomizeEnemy() {
-    let randomIndex = Math.floor(Math.random() * 6);
+    let randomIndex = Math.floor(Math.random() * 7);
     switch (randomIndex) {
       case 0:
         this.enemyType = "jellyFish";
+        this.enemyDyingImages = this.IMAGES_JELLY_FISH_GREEN_DYING;
         return this.IMAGES_JELLY_FISH_GREEN;
       case 1:
         this.enemyType = "jellyFish";
+        this.enemyDyingImages = this.IMAGES_JELLY_FISH_LILA_DYING;
         return this.IMAGES_JELLY_FISH_LILA;
       case 2:
         this.enemyType = "jellyFish";
-        return this.IMAGES_JELLY_FISH_YELLOW;
+        this.enemyDyingImages = this.IMAGES_JELLY_FISH_PINK_DYING;
+        return this.IMAGES_JELLY_FISH_PINK;
       case 3:
-        this.enemyType = "pufferFish";
-        return this.IMAGES_PUFFER_FISH_ORANGE;
+        this.enemyType = "jellyFish";
+        this.enemyDyingImages = this.IMAGES_JELLY_FISH_YELLOW_DYING;
+        return this.IMAGES_JELLY_FISH_YELLOW;
       case 4:
         this.enemyType = "pufferFish";
-        return this.IMAGES_PUFFER_FISH_PINK;
+        this.enemyDyingImages = this.IMAGES_PUFFER_FISH_ORANGE_DYING;
+        return this.IMAGES_PUFFER_FISH_ORANGE;
       case 5:
         this.enemyType = "pufferFish";
+        this.enemyDyingImages = this.IMAGES_PUFFER_FISH_PINK_DYING;
+        return this.IMAGES_PUFFER_FISH_PINK;
+      case 6:
+        this.enemyType = "pufferFish";
+        this.enemyDyingImages = this.IMAGES_PUFFER_FISH_GREEN_DYING;
         return this.IMAGES_PUFFER_FISH_GREEN;
       default:
         break;
