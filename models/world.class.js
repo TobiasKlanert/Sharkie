@@ -104,7 +104,9 @@ class World {
         enemy.playAnimation(enemy.enemyDyingImages);
       }, enemy.animationTime);
 
-      clearInterval(enemy.moveInterval);
+      if (enemy.moveInterval) {
+        clearInterval(enemy.moveInterval);
+      }
       clearInterval(enemy.animationInterval);
 
       setTimeout(() => {

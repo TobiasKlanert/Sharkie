@@ -16,6 +16,9 @@ class Endboss extends MovableObject {
   firstContact = false;
   enemyType = "endboss";
   isHurt = false;
+  isDying = false;
+  animationInterval;
+  animationTime = 200;
 
   IMAGES_INTRODUCE = [
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -71,6 +74,8 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/Dead/5.png",
   ];
 
+  enemyDyingImages = this.IMAGES_DEAD;
+
   constructor() {
     super().loadImage(this.IMAGES_INTRODUCE[0]);
     this.loadImages(this.IMAGES_INTRODUCE);
@@ -82,7 +87,7 @@ class Endboss extends MovableObject {
 
   animate() {
     let i = 0;
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       if (this.isHurt) {
         this.playAnimation(this.IMAGES_HURT);
       } else {
@@ -102,6 +107,6 @@ class Endboss extends MovableObject {
   handleHurt() {
     setTimeout(() => {
       this.isHurt = false;
-    }, this.IMAGES_HURT.length * 150); // Warte, bis die Hurt-Animation vorbei ist
+    }, this.IMAGES_HURT.length * 150);
   }
 }
