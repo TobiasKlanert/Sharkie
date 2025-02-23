@@ -1,7 +1,7 @@
 class World {
   character = new Character();
   level = level1;
-  endboss = this.level.endboss.find((boss) => boss instanceof Endboss);
+  endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
   canvas;
   ctx;
   keyboard;
@@ -30,7 +30,6 @@ class World {
     setInterval(() => {
       this.checkCharacterPosition();
       this.checkCharacterCollisions(this.level.enemies);
-      this.checkCharacterCollisions(this.level.endboss);
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
@@ -54,12 +53,9 @@ class World {
               this.character.attack(element);
               this.killEnemy(element);
             } else if (!this.character.executeAttack) {
-              this.enemyCollisions(element.attackPower);
+              this.enemyCollisions(element.collisionDamage);
             }
             break;
-          case this.level.endboss:
-            this.character.collisionWithEnemy(element);
-            this.enemyCollisions(20);
           case this.level.coins:
             this.collectCoins(element);
             break;
@@ -85,8 +81,8 @@ class World {
     });
   }
 
-  enemyCollisions(attackPower) {
-    this.character.hit(attackPower);
+  enemyCollisions(collisionDamage) {
+    this.character.hit(collisionDamage);
     this.statusBarLife.setPercentage(
       this.character.energy,
       this.statusBarLife.IMAGES_LIFE
@@ -244,7 +240,6 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.barriers);
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.level.endboss);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);

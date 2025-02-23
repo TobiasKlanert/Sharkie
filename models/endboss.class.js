@@ -11,6 +11,7 @@ class Endboss extends MovableObject {
   };
 
   life = 10;
+  collisionDamage = 20;
   attackPower = 40;
   firstContact = false;
   enemyType = "endboss";

@@ -13,7 +13,7 @@ class Enemy extends MovableObject {
   enemyDyingImages = null;
   life = 0;
   isDying = false;
-  attackPower = 20;
+  collisionDamage = 20;
 
   moveInterval;
   animationInterval;

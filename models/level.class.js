@@ -11,9 +11,8 @@ class Level {
   levelStartY = -100;
   levelEndY = 210;
 
-  constructor(enemies, endboss, lights, backgroundObjects, barriers, coins, bottles) {
+  constructor(enemies, lights, backgroundObjects, barriers, coins, bottles) {
     this.enemies = enemies;
-    this.endboss = endboss;
     this.lights = lights;
     this.backgroundObjects = backgroundObjects;
     this.barriers = barriers;
