@@ -261,7 +261,6 @@ class Character extends MovableObject {
       ((enemy.enemyType == "jellyFish" || enemy.enemyType == "endboss") && !this.world.keyboard.SPACE))
     ) {
       enemy.health -= this.world.attackDamage;
-      console.log(enemy.health);
     }
   }
 
