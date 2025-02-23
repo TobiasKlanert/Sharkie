@@ -34,7 +34,6 @@ class World {
     }, 100);
   }
 
-  // TODO: if character is hurt -> no attack executable
   checkCharacterCollisions(asset) {
     asset.forEach((element) => {
       if (this.character.isColliding(element)) {

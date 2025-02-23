@@ -256,8 +256,9 @@ class Character extends MovableObject {
 
   attack(enemy) {
     if (
-      (enemy.enemyType == "pufferFish" && this.world.keyboard.SPACE) ||
-      (enemy.enemyType == "jellyFish" && !this.world.keyboard.SPACE)
+      !this.isHurt() &&
+      ((enemy.enemyType == "pufferFish" && this.world.keyboard.SPACE) ||
+      (enemy.enemyType == "jellyFish" && !this.world.keyboard.SPACE))
     ) {
       enemy.life -= this.world.attackDamage;
     }
@@ -358,7 +359,7 @@ class Character extends MovableObject {
 
   stopAttackAnimation(imageArray) {
     if (this.currentImage == imageArray.length - 1) {
-      if (this.world.keyboard.D) {
+      if (this.world.keyboard.D && !this.isHurt()) {
         const { x, y, speed } = this.getCharacterMovement();
         this.world.keyboard.D = false;
         this.world.checkAttacks(x, y, speed, this.getBubbleImages());

@@ -226,7 +226,7 @@ class Enemy extends MovableObject {
         this.animationTime = 120;
         break;
       case "pufferFish":
-        this.animationTime = 500;
+        this.animationTime = 300;
         break;
       default:
         break;
