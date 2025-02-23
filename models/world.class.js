@@ -54,11 +54,12 @@ class World {
               this.character.attack(element);
               this.killEnemy(element);
             } else if (!this.character.executeAttack) {
-              this.enemyCollisions();
+              this.enemyCollisions(element.attackPower);
             }
             break;
           case this.level.endboss:
-            this.enemyCollisions();
+            this.character.collisionWithEnemy(element);
+            this.enemyCollisions(20);
           case this.level.coins:
             this.collectCoins(element);
             break;
@@ -84,8 +85,8 @@ class World {
     });
   }
 
-  enemyCollisions() {
-    this.character.hit();
+  enemyCollisions(attackPower) {
+    this.character.hit(attackPower);
     this.statusBarLife.setPercentage(
       this.character.energy,
       this.statusBarLife.IMAGES_LIFE

@@ -10,7 +10,10 @@ class Endboss extends MovableObject {
     bottom: 215,
   };
 
+  life = 10;
+  attackPower = 40;
   firstContact = false;
+  enemyType = "endboss";
 
   IMAGES_INTRODUCE = [
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",

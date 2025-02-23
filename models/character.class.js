@@ -306,6 +306,8 @@ class Character extends MovableObject {
     switch (this.enemyType) {
       case "pufferFish":
         return this.IMAGES_HURT_POISONED;
+      case "endboss":
+        return this.IMAGES_HURT_POISONED;
       case "jellyFish":
         return this.IMAGES_HURT_ELECTRO_SHOCK;
     }
