@@ -10,6 +10,21 @@ class Endboss extends MovableObject {
     bottom: 215,
   };
 
+  firstContact = false;
+
+  IMAGES_INTRODUCE = [
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/2.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/3.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/4.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/5.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/6.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/7.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/8.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/9.png",
+    "graphics/2.Enemy/3 Final Enemy/1.Introduce/10.png",
+  ];
+
   IMAGES_FLOATING = [
     "graphics/2.Enemy/3 Final Enemy/2.floating/1.png",
     "graphics/2.Enemy/3 Final Enemy/2.floating/2.png",
@@ -26,16 +41,51 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
 
+  IMAGES_ATTACK = [
+    "graphics/2.Enemy/3 Final Enemy/Attack/1.png",
+    "graphics/2.Enemy/3 Final Enemy/Attack/2.png",
+    "graphics/2.Enemy/3 Final Enemy/Attack/3.png",
+    "graphics/2.Enemy/3 Final Enemy/Attack/4.png",
+    "graphics/2.Enemy/3 Final Enemy/Attack/5.png",
+    "graphics/2.Enemy/3 Final Enemy/Attack/6.png",
+  ];
+
+  IMAGES_HURT = [
+    "graphics/2.Enemy/3 Final Enemy/Hurt/1.png",
+    "graphics/2.Enemy/3 Final Enemy/Hurt/2.png",
+    "graphics/2.Enemy/3 Final Enemy/Hurt/3.png",
+    "graphics/2.Enemy/3 Final Enemy/Hurt/4.png",
+  ];
+
+  IMAGES_DEAD = [
+    "graphics/2.Enemy/3 Final Enemy/Dead/0.png",
+    "graphics/2.Enemy/3 Final Enemy/Dead/1.png",
+    "graphics/2.Enemy/3 Final Enemy/Dead/2.png",
+    "graphics/2.Enemy/3 Final Enemy/Dead/3.png",
+    "graphics/2.Enemy/3 Final Enemy/Dead/4.png",
+    "graphics/2.Enemy/3 Final Enemy/Dead/5.png",
+  ];
+
   constructor() {
-    super().loadImage(this.IMAGES_FLOATING[0]);
+    super().loadImage(this.IMAGES_INTRODUCE[0]);
+    this.loadImages(this.IMAGES_INTRODUCE);
     this.loadImages(this.IMAGES_FLOATING);
     this.x = 13000;
     this.animate();
   }
 
   animate() {
+    let i = 0;
     setInterval(() => {
-      this.playAnimation(this.IMAGES_FLOATING);
-    }, 200);
+      if (i < 10 && this.firstContact) {
+        this.playAnimation(this.IMAGES_INTRODUCE);
+      } else if (i >= 10) {
+        this.playAnimation(this.IMAGES_FLOATING);
+      }
+      i++;
+      if (!this.firstContact) {
+        i = 0;
+      }
+    }, 150);
   }
 }

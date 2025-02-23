@@ -27,11 +27,20 @@ class World {
 
   run() {
     setInterval(() => {
+      this.checkCharacterPosition();
       this.checkCharacterCollisions(this.level.enemies);
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
     }, 100);
+  }
+
+  checkCharacterPosition() {
+    let endboss = this.level.endboss.find((boss) => boss instanceof Endboss);
+
+    if (endboss && this.character.x > 12000) {
+      endboss.firstContact = true;
+    }
   }
 
   checkCharacterCollisions(asset) {
@@ -232,6 +241,7 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.barriers);
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.endboss);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);
