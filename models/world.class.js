@@ -1,6 +1,7 @@
 class World {
   character = new Character();
   level = level1;
+  endboss = this.level.endboss.find((boss) => boss instanceof Endboss);
   canvas;
   ctx;
   keyboard;
@@ -29,6 +30,7 @@ class World {
     setInterval(() => {
       this.checkCharacterPosition();
       this.checkCharacterCollisions(this.level.enemies);
+      this.checkCharacterCollisions(this.level.endboss);
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
@@ -36,10 +38,8 @@ class World {
   }
 
   checkCharacterPosition() {
-    let endboss = this.level.endboss.find((boss) => boss instanceof Endboss);
-
-    if (endboss && this.character.x > 12000) {
-      endboss.firstContact = true;
+    if (this.endboss && this.character.x > 12000) {
+      this.endboss.firstContact = true;
     }
   }
 
@@ -49,7 +49,7 @@ class World {
         switch (asset) {
           case this.level.enemies:
             this.character.collisionWithEnemy(element);
-            if (this.keyboard.SPACE) {
+            if (this.keyboard.SPACE && this.character.enemyType == "pufferFish") {
               this.character.executeAttack = true;
               this.character.attack(element);
               this.killEnemy(element);
@@ -57,6 +57,8 @@ class World {
               this.enemyCollisions();
             }
             break;
+          case this.level.endboss:
+            this.enemyCollisions();
           case this.level.coins:
             this.collectCoins(element);
             break;
