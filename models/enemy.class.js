@@ -11,7 +11,7 @@ class Enemy extends MovableObject {
 
   enemyType = null;
   enemyDyingImages = null;
-  life = 0;
+  health = 0;
   isDying = false;
   collisionDamage = 20;
 
@@ -180,7 +180,7 @@ class Enemy extends MovableObject {
     this.speed = 0.15 + Math.random() * 0.25;
     let randomEnemy = this.randomizeEnemy();
     this.getAnimationTime();
-    this.getEnemyLife();
+    this.getEnemyHealth();
     this.loadImages(randomEnemy);
     this.animate(randomEnemy);
   }
@@ -234,13 +234,13 @@ class Enemy extends MovableObject {
     }
   }
 
-  getEnemyLife() {
+  getEnemyHealth() {
     switch (this.enemyType) {
       case "jellyFish":
-        this.life = 1;
+        this.health = 1;
         break;
       case "pufferFish":
-        this.life = 2;
+        this.health = 2;
         break;
       default:
         break;

@@ -258,9 +258,10 @@ class Character extends MovableObject {
     if (
       !this.isHurt() &&
       ((enemy.enemyType == "pufferFish" && this.world.keyboard.SPACE) ||
-      (enemy.enemyType == "jellyFish" && !this.world.keyboard.SPACE))
+      ((enemy.enemyType == "jellyFish" || enemy.enemyType == "endboss") && !this.world.keyboard.SPACE))
     ) {
-      enemy.life -= this.world.attackDamage;
+      enemy.health -= this.world.attackDamage;
+      console.log(enemy.health);
     }
   }
 

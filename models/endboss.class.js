@@ -10,11 +10,12 @@ class Endboss extends MovableObject {
     bottom: 215,
   };
 
-  life = 10;
+  health = 10;
   collisionDamage = 20;
   attackPower = 40;
   firstContact = false;
   enemyType = "endboss";
+  isHurt = false;
 
   IMAGES_INTRODUCE = [
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -74,6 +75,7 @@ class Endboss extends MovableObject {
     super().loadImage(this.IMAGES_INTRODUCE[0]);
     this.loadImages(this.IMAGES_INTRODUCE);
     this.loadImages(this.IMAGES_FLOATING);
+    this.loadImages(this.IMAGES_HURT);
     this.x = 13000;
     this.animate();
   }
@@ -81,15 +83,25 @@ class Endboss extends MovableObject {
   animate() {
     let i = 0;
     setInterval(() => {
-      if (i < 10 && this.firstContact) {
-        this.playAnimation(this.IMAGES_INTRODUCE);
-      } else if (i >= 10) {
-        this.playAnimation(this.IMAGES_FLOATING);
-      }
-      i++;
-      if (!this.firstContact) {
-        i = 0;
+      if (this.isHurt) {
+        this.playAnimation(this.IMAGES_HURT);
+      } else {
+        if (i < 10 && this.firstContact) {
+          this.playAnimation(this.IMAGES_INTRODUCE);
+        } else if (i >= 10) {
+          this.playAnimation(this.IMAGES_FLOATING);
+        }
+        i++;
+        if (!this.firstContact) {
+          i = 0;
+        }
       }
     }, 150);
+  }
+
+  handleHurt() {
+    setTimeout(() => {
+      this.isHurt = false;
+    }, this.IMAGES_HURT.length * 150); // Warte, bis die Hurt-Animation vorbei ist
   }
 }

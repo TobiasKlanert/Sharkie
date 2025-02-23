@@ -74,6 +74,10 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
           this.character.attack(enemy);
+          if (enemy instanceof Endboss) {
+            enemy.isHurt = true;
+            enemy.handleHurt();
+          }
           this.killEnemy(enemy);
           this.bubbles = this.bubbles.filter((b) => b !== bubble);
         }
@@ -93,7 +97,7 @@ class World {
   }
 
   killEnemy(enemy) {
-    if (enemy.life <= 0 && !enemy.isDying) {
+    if (enemy.health <= 0 && !enemy.isDying) {
       enemy.isDying = true;
       enemy.loadImages(enemy.enemyDyingImages);
       let animationInterval = setInterval(() => {
