@@ -85,6 +85,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_ATTACK);
     this.x = 13000;
+    this.speed = 200;
     this.animate();
     this.getRandomTime();
     this.attack();
@@ -125,6 +126,7 @@ class Endboss extends MovableObject {
     setInterval(() => {
       this.executeAttack = true;
       this.collisionDamage = 40;
+      this.moveLeft();
       this.handleAttack();
     }, this.attackInterval);
   }
@@ -133,6 +135,7 @@ class Endboss extends MovableObject {
     setTimeout(() => {
       this.executeAttack = false;
       this.collisionDamage = 20;
+      this.moveRight();
       this.getRandomTime();
     }, this.IMAGES_ATTACK.length * 150);
   }
