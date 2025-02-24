@@ -17,7 +17,9 @@ class Endboss extends MovableObject {
   enemyType = "endboss";
   isHurt = false;
   isDying = false;
+  executeAttack = false;
   animationInterval;
+  attackInterval;
   animationTime = 200;
 
   IMAGES_INTRODUCE = [
@@ -81,8 +83,11 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_INTRODUCE);
     this.loadImages(this.IMAGES_FLOATING);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_ATTACK);
     this.x = 13000;
     this.animate();
+    this.getRandomTime();
+    this.attack();
   }
 
   animate() {
@@ -93,6 +98,8 @@ class Endboss extends MovableObject {
       } else {
         if (i < 10 && this.firstContact) {
           this.playAnimation(this.IMAGES_INTRODUCE);
+        } else if (i >= 10 && this.executeAttack) {
+          this.playAnimation(this.IMAGES_ATTACK);
         } else if (i >= 10) {
           this.playAnimation(this.IMAGES_FLOATING);
         }
@@ -104,9 +111,29 @@ class Endboss extends MovableObject {
     }, 150);
   }
 
+  getRandomTime() {
+    this.attackInterval = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+  }
+
   handleHurt() {
     setTimeout(() => {
       this.isHurt = false;
     }, this.IMAGES_HURT.length * 150);
+  }
+
+  attack() {
+    setInterval(() => {
+      this.executeAttack = true;
+      this.collisionDamage = 40;
+      this.handleAttack();
+    }, this.attackInterval);
+  }
+
+  handleAttack() {
+    setTimeout(() => {
+      this.executeAttack = false;
+      this.collisionDamage = 20;
+      this.getRandomTime();
+    }, this.IMAGES_ATTACK.length * 150);
   }
 }
