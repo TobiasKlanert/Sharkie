@@ -88,7 +88,7 @@ class Endboss extends MovableObject {
     this.speed = 200;
     this.animate();
     this.getRandomTime();
-    this.attack();
+    this.startAttack();
   }
 
   animate() {
@@ -120,6 +120,15 @@ class Endboss extends MovableObject {
     setTimeout(() => {
       this.isHurt = false;
     }, this.IMAGES_HURT.length * 150);
+  }
+
+  startAttack() {
+    let startAttackInterval = setInterval(() => {
+      if (this.firstContact) {
+        this.attack();
+        clearInterval(startAttackInterval);
+      }
+    }, 150)
   }
 
   attack() {
