@@ -275,7 +275,7 @@ class Character extends MovableObject {
 
   getAnimationImages() {
     if (this.isDead()) {
-      return this.IMAGES_DEAD_POISONED;
+      return this.getDyingImages();
     } else if (this.isHurt()) {
       return this.getHurtImages();
     } else if (this.world.keyboard.D) {
@@ -316,6 +316,17 @@ class Character extends MovableObject {
     }
   }
 
+  getDyingImages() {
+    switch (this.enemyType) {
+      case "pufferFish":
+        return this.IMAGES_DEAD_POISONED;
+      case "endboss":
+        return this.IMAGES_DEAD_POISONED;
+      case "jellyFish":
+        return this.IMAGES_DEAD_ELECTRO_SHOCK;
+    }
+  }
+
   getBubbleAttackImages() {
     if (this.bottles > 0) {
       return this.IMAGES_ATTACK_POISONED_BUBBLES;
@@ -325,6 +336,7 @@ class Character extends MovableObject {
   }
 
   animate(currentTime) {
+    let deltaTime = this.setTimeInterval(currentTime);
     let imageArray = this.getAnimationImages();
 
     if (this.animateIntervalReached) {
@@ -335,9 +347,21 @@ class Character extends MovableObject {
 
     this.animationId = requestAnimationFrame((time) => this.animate(time));
     if (this.isDead()) {
-      setTimeout(() => {
-        cancelAnimationFrame(this.animationId);
-      }, 1000);
+      if (this.enemyType == "jellyFish") {
+        if (this.y < (this.world.level.levelEndY - 30)) {
+          this.moveDown(deltaTime / 5);
+        }
+        setTimeout(() => {
+          cancelAnimationFrame(this.animationId);
+        }, 1350);
+      } else {
+        if (this.y > (this.world.level.levelStartY + 50)) {
+          this.moveUp(deltaTime / 5);
+        }
+        setTimeout(() => {
+          cancelAnimationFrame(this.animationId);
+        }, 1600);
+      }
     }
   }
 

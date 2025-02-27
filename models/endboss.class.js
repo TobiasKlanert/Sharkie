@@ -132,15 +132,17 @@ class Endboss extends MovableObject {
         this.pushToIntervals([this.attackInterval]);
         clearInterval(this.startAttackInterval);
       }
-    }, 150)
+    }, 150);
   }
 
   attack() {
     this.attackInterval = setInterval(() => {
-      this.executeAttack = true;
-      this.collisionDamage = 40;
-      this.moveLeft();
-      this.handleAttack();
+      if (!this.isHurt) {
+        this.executeAttack = true;
+        this.collisionDamage = 40;
+        this.moveLeft();
+        this.handleAttack();
+      }
     }, this.attackTime);
   }
 
