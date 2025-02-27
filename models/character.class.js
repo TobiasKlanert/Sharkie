@@ -3,6 +3,8 @@ class Character extends MovableObject {
   width = 300;
   speed = 10;
   idleTime = 0;
+  idleInterval;
+  animationId;
 
   lastMoveFrameTime = 0;
   lastAnimateFrameTime = 0;
@@ -152,13 +154,13 @@ class Character extends MovableObject {
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImagesToConstructor();
-    /* this.applyGravity(); */
     this.lastMoveFrameTime = performance.now();
     requestAnimationFrame((time) => this.getTimeInterval(time));
     requestAnimationFrame((time) => this.moveCharacter(time));
     requestAnimationFrame(this.characterAttack.bind(this));
-    requestAnimationFrame((time) => this.animate(time));
+    this.animationId = requestAnimationFrame((time) => this.animate(time));
     this.startIdleTimer();
+    this.pushToIntervals([this.idleInterval]);
   }
 
   loadImagesToConstructor() {
@@ -258,14 +260,15 @@ class Character extends MovableObject {
     if (
       !this.isHurt() &&
       ((enemy.enemyType == "pufferFish" && this.world.keyboard.SPACE) ||
-      ((enemy.enemyType == "jellyFish" || enemy.enemyType == "endboss") && !this.world.keyboard.SPACE))
+        ((enemy.enemyType == "jellyFish" || enemy.enemyType == "endboss") &&
+          !this.world.keyboard.SPACE))
     ) {
       enemy.health -= this.world.attackDamage;
     }
   }
 
   startIdleTimer() {
-    setInterval(() => {
+    this.idleInterval = setInterval(() => {
       this.idleTime += 1;
     }, 100);
   }
@@ -330,7 +333,12 @@ class Character extends MovableObject {
       this.stopAttackAnimation(imageArray);
     }
 
-    requestAnimationFrame((time) => this.animate(time));
+    this.animationId = requestAnimationFrame((time) => this.animate(time));
+    if (this.isDead()) {
+      setTimeout(() => {
+        cancelAnimationFrame(this.animationId);
+      }, 1000);
+    }
   }
 
   getTimeInterval(currentTime) {

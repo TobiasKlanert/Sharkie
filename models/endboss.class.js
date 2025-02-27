@@ -19,7 +19,9 @@ class Endboss extends MovableObject {
   isDying = false;
   executeAttack = false;
   animationInterval;
+  startAttackInterval;
   attackInterval;
+  attackTime;
   animationTime = 200;
 
   IMAGES_INTRODUCE = [
@@ -89,6 +91,7 @@ class Endboss extends MovableObject {
     this.animate();
     this.getRandomTime();
     this.startAttack();
+    this.pushToIntervals([this.animationInterval, this.startAttackInterval]);
   }
 
   animate() {
@@ -113,7 +116,7 @@ class Endboss extends MovableObject {
   }
 
   getRandomTime() {
-    this.attackInterval = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+    this.attackTime = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
   }
 
   handleHurt() {
@@ -123,21 +126,22 @@ class Endboss extends MovableObject {
   }
 
   startAttack() {
-    let startAttackInterval = setInterval(() => {
+    this.startAttackInterval = setInterval(() => {
       if (this.firstContact) {
         this.attack();
-        clearInterval(startAttackInterval);
+        this.pushToIntervals([this.attackInterval]);
+        clearInterval(this.startAttackInterval);
       }
     }, 150)
   }
 
   attack() {
-    setInterval(() => {
+    this.attackInterval = setInterval(() => {
       this.executeAttack = true;
       this.collisionDamage = 40;
       this.moveLeft();
       this.handleAttack();
-    }, this.attackInterval);
+    }, this.attackTime);
   }
 
   handleAttack() {

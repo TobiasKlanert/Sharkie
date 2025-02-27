@@ -17,6 +17,8 @@ class BOTTLES extends DrawableObject {
     bottom: 50,
   };
 
+  animationInterval;
+
   constructor(x) {
     super().loadImage("graphics/4. Marcadores/Posión/Animada/1.png");
     this.loadImages(this.IMAGES_BOTTLES);
@@ -25,11 +27,12 @@ class BOTTLES extends DrawableObject {
     this.height = 130;
     this.width = 75;
     this.animate();
+    this.pushToIntervals([this.animationInterval]);
   }
 
   animate() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLES);
-    }, 200);
+    }, 200)
   }
 }

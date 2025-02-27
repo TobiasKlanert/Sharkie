@@ -13,6 +13,8 @@ class COINS extends DrawableObject {
     bottom: 0,
   };
 
+  animationInterval;
+
   constructor(x, y) {
     super().loadImage("graphics/4. Marcadores/1. Coins/1.png");
     this.loadImages(this.IMAGES_COINS);
@@ -21,11 +23,12 @@ class COINS extends DrawableObject {
     this.height = 50;
     this.width = 50;
     this.animate();
+    this.pushToIntervals([this.animationInterval]);
   }
 
   animate() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_COINS);
-    }, 200);
+    }, 200)
   }
 }

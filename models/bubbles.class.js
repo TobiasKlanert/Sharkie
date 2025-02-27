@@ -3,6 +3,8 @@ class Bubble extends MovableObject {
   poisonedBubble =
     "graphics/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png";
 
+  throwInterval;
+
   constructor(x, y, speed, bubble) {
     super();
     this.loadImage(this.getBubbleType(bubble));
@@ -11,12 +13,13 @@ class Bubble extends MovableObject {
     this.width = 50;
     this.height = 50;
     this.throw(speed);
+    this.pushToIntervals([this.throwInterval]);
   }
 
   throw(speed = 0) {
-    setInterval(() => {
+    this.throwInterval = setInterval(() => {
       this.x += 10 + speed;
-    }, 1000 / 60);
+    }, 1000 / 60)
   }
 
   getBubbleType(bubble) {

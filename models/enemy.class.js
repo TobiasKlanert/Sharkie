@@ -183,6 +183,7 @@ class Enemy extends MovableObject {
     this.getEnemyHealth();
     this.loadImages(randomEnemy);
     this.animate(randomEnemy);
+    this.pushToIntervals([this.moveInterval, this.animationInterval]);
   }
 
   randomizeEnemy() {

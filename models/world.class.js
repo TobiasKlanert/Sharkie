@@ -9,6 +9,8 @@ class World {
   statusBarBottles = new StatusBar("bottles", 20, 0, 0);
   statusBarLife = new StatusBar("life", 20, 50, 100);
   statusBarCoins = new StatusBar("coins", 20, 100, 0);
+  runInterval;
+  animationInterval;
 
   bubbles = [];
   attackDamage = 1;
@@ -20,6 +22,7 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    this.character.pushToIntervals([this.runInterval]);
   }
 
   setWorld() {
@@ -27,7 +30,7 @@ class World {
   }
 
   run() {
-    setInterval(() => {
+    this.runInterval = setInterval(() => {
       this.checkCharacterPosition();
       this.checkCharacterCollisions(this.level.enemies);
       this.checkCharacterCollisions(this.level.coins);
@@ -93,6 +96,7 @@ class World {
     );
     if (this.character.isDead(this.character)) {
       // TODO: show Game Over screen
+      this.character.stopGame();
     }
   }
 
@@ -100,7 +104,7 @@ class World {
     if (enemy.health <= 0 && !enemy.isDying) {
       enemy.isDying = true;
       enemy.loadImages(enemy.enemyDyingImages);
-      let animationInterval = setInterval(() => {
+      this.animationInterval = setInterval(() => {
         enemy.playAnimation(enemy.enemyDyingImages);
       }, enemy.animationTime);
 
@@ -110,7 +114,7 @@ class World {
       clearInterval(enemy.animationInterval);
 
       setTimeout(() => {
-        clearInterval(animationInterval);
+        clearInterval(this.animationInterval);
         this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
         this.character.executeAttack = false;
       }, enemy.enemyDyingImages.length * enemy.animationTime);
