@@ -25,9 +25,9 @@ class Character extends MovableObject {
 
   offset = {
     top: 240,
-    left: 60,
-    right: 120,
-    bottom: 350,
+    left: 80,
+    right: 160,
+    bottom: 360,
   };
 
   enemyType = null;
@@ -355,7 +355,7 @@ class Character extends MovableObject {
           cancelAnimationFrame(this.animationId);
         }, 1350);
       } else {
-        if (this.y > (this.world.level.levelStartY + 50)) {
+        if (this.y > (this.world.level.levelStartY + 100)) {
           this.moveUp(deltaTime / 5);
         }
         setTimeout(() => {

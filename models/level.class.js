@@ -7,7 +7,7 @@ class Level {
   coins;
   bottles;
   levelStartX = 230;
-  levelEndX = 13680;
+  levelEndX = 24320;
   levelStartY = -200;
   levelEndY = 280;
 
@@ -48,14 +48,14 @@ class Level {
       },
     };
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       let x, y, validPosition;
       let randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
       ({ y } = barrierData[randomImage]);
       
       do {
-        x = 500 + Math.random() * 12000;
-        validPosition = !this.isOverlapping({ x, y }, positions, 1000);
+        x = 1000 + Math.random() * 20000;
+        validPosition = !this.isOverlapping({ x, y }, positions, 2000);
       } while (!validPosition);
 
       positions.push({ x, y });
@@ -72,11 +72,11 @@ class Level {
     for (let i = 0; i < 5; i++) {
       let startX, startY, validPosition;
       do {
-        startX = 500 + Math.random() * 12000;
-        startY = 150 + Math.floor(Math.random() * 101);
+        startX = 1000 + Math.random() * 22000;
+        startY = 200 + Math.floor(Math.random() * 201);
         validPosition =
-          !this.isOverlapping({ x: startX, y: startY }, positions, 1000) &&
-          !this.isOverlapping({ x: startX, y: startY }, existingBarriers, 500);
+          !this.isOverlapping({ x: startX, y: startY }, positions, 500) &&
+          !this.isOverlapping({ x: startX, y: startY }, existingBarriers, 1000);
       } while (!validPosition);
 
       positions.push({ x: startX, y: startY });
@@ -84,17 +84,17 @@ class Level {
       let coins = [];
 
       for (let j = 0; j < 5; j++) {
-        let xOffset = j * 75;
+        let xOffset = j * 100;
         let yOffset = 0;
 
         if (formation === 1) {
-          yOffset = [0, -60, -90, -60, 0][j];
+          yOffset = [0, -75, -105, -75, 0][j];
         } else if (formation === 2) {
-          yOffset = -j * 30;
+          yOffset = -j * 45;
         } else if (formation === 3) {
-          yOffset = j * 30;
+          yOffset = j * 45;
         } else {
-          yOffset = [0, 60, 90, 60, 0][j];
+          yOffset = [0, 75, 105, 75, 0][j];
         }
 
         coins.push(new COINS(startX + xOffset, startY + yOffset));
@@ -111,10 +111,10 @@ class Level {
     for (let i = 0; i < 5; i++) {
       let x, y , validPosition;
       do {
-        x = 500 + Math.random() * 12000;
+        x = 1000 + Math.random() * 22000;
         validPosition =
           !this.isOverlapping({ x, y }, positions, 500) &&
-          !this.isOverlapping({ x, y }, existingBarriers, 500) &&
+          !this.isOverlapping({ x, y }, existingBarriers, 1000) &&
           !this.isOverlapping({ x, y }, existingCoins.flat(), 500);
       } while (!validPosition);
 

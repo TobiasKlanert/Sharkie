@@ -40,7 +40,7 @@ class World {
   }
 
   checkCharacterPosition() {
-    if (this.endboss && this.character.x > 12000) {
+    if (this.endboss && this.character.x > 23000) {
       this.endboss.firstContact = true;
     }
   }
@@ -95,8 +95,9 @@ class World {
       this.statusBarLife.IMAGES_LIFE
     );
     if (this.character.isDead(this.character)) {
-      // TODO: show Game Over screen
-      this.character.stopGame();
+      setTimeout(() => {
+        this.character.stopGame("gameoverScreen");
+      }, 2000);
     }
   }
 
@@ -117,6 +118,9 @@ class World {
         clearInterval(this.animationInterval);
         this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
         this.character.executeAttack = false;
+        if (this.endboss.isDying) {
+          this.character.stopGame("winningScreen");
+        }
       }, enemy.enemyDyingImages.length * enemy.animationTime);
     }
   }
@@ -276,8 +280,8 @@ class World {
       this.flipImage(mo);
     }
     mo.drawObject(this.ctx);
-    mo.drawFrame(this.ctx);
-    mo.drawBarrierFrame(this.ctx);
+    /* mo.drawFrame(this.ctx);
+    mo.drawBarrierFrame(this.ctx); */
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

@@ -175,12 +175,11 @@ class Enemy extends MovableObject {
     super().loadImage(
       "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png"
     );
-    this.x = 500 + Math.random() * 12000;
-    this.y = Math.random() * 350;
-    this.speed = 0.15 + Math.random() * 0.25;
+    this.x = 1000 + Math.random() * 20000;
+    this.y = Math.random() * 450;
     let randomEnemy = this.randomizeEnemy();
     this.getAnimationTime();
-    this.getEnemyHealth();
+    this.getEnemyData();
     this.loadImages(randomEnemy);
     this.animate(randomEnemy);
     this.pushToIntervals([this.moveInterval, this.animationInterval]);
@@ -235,13 +234,19 @@ class Enemy extends MovableObject {
     }
   }
 
-  getEnemyHealth() {
+  getEnemyData() {
     switch (this.enemyType) {
       case "jellyFish":
+        this.width = 150;
+        this.height = 150;
         this.health = 1;
+        this.speed = 1.15 + Math.random() * 0.25;
         break;
       case "pufferFish":
+        this.width = 300;
+        this.height = 300;
         this.health = 2;
+        this.speed = 0.15 + Math.random() * 0.25;
         break;
       default:
         break;

@@ -24,8 +24,8 @@ class BOTTLES extends DrawableObject {
     this.loadImages(this.IMAGES_BOTTLES);
     this.x = x;
     this.y = 500;
-    this.height = 130;
-    this.width = 75;
+    this.height = 170;
+    this.width = 98;
     this.animate();
     this.pushToIntervals([this.animationInterval]);
   }
@@ -33,6 +33,7 @@ class BOTTLES extends DrawableObject {
   animate() {
     this.animationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLES);
+      console.log("bottles");
     }, 200)
   }
 }

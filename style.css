@@ -66,6 +66,10 @@ td {
   align-items: center;
 }
 
+.gameoverScreen {
+  display: none;
+}
+
 .leftSide {
   height: 100%;
   display: flex;

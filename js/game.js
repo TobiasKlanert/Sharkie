@@ -4,6 +4,8 @@ let keyboard = new Keyboard();
 
 function startGame() {
   document.getElementById("startScreen").style.display = "none";
+  document.getElementById("gameoverScreen").style.display = "none";
+  document.getElementById("winningScreen").style.display = "none";
   document.getElementById("canvas").style.display = "block";
   initLevel();
   init();

@@ -14,8 +14,10 @@ class DrawableObject {
     });
   }
 
-  stopGame() {
+  stopGame(screenType) {
     DrawableObject.intervalIds.forEach(clearInterval);
+    document.getElementById("canvas").style.display = "none";
+    document.getElementById(screenType).style.display = "flex";
   }
 
   loadImage(path) {

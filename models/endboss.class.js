@@ -1,13 +1,13 @@
 class Endboss extends MovableObject {
-  height = 500;
-  width = 400;
+  height = 720;
+  width = 576;
   y = 0;
 
   offset = {
-    top: 150,
+    top: 330,
     left: 25,
-    right: 52,
-    bottom: 215,
+    right: 60,
+    bottom: 450,
   };
 
   health = 10;
@@ -86,7 +86,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_FLOATING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_ATTACK);
-    this.x = 13000;
+    this.x = 24000;
     this.speed = 200;
     this.animate();
     this.getRandomTime();
@@ -137,7 +137,7 @@ class Endboss extends MovableObject {
 
   attack() {
     this.attackInterval = setInterval(() => {
-      if (!this.isHurt) {
+      if (!this.isHurt && !this.isDying) {
         this.executeAttack = true;
         this.collisionDamage = 40;
         this.moveLeft();
