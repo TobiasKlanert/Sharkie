@@ -13,6 +13,8 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: "LuckiesGuy";
+  background-image: url("graphics/3. Background/Layers/5. Water/D1.png");
+  background-size: cover;
 }
 
 canvas {
