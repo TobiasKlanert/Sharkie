@@ -29,10 +29,10 @@ class BARRIERS extends DrawableObject {
         top: 0,
         left: 4,
         right: 7,
-        bottom: 330,
+        bottom: 510,
       }
       this.offsetBottom = {
-        top: 350,
+        top: 530,
         left: 0,
         right: 10,
         bottom: 0,

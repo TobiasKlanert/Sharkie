@@ -23,7 +23,7 @@ class BOTTLES extends DrawableObject {
     super().loadImage("graphics/4. Marcadores/Posión/Animada/1.png");
     this.loadImages(this.IMAGES_BOTTLES);
     this.x = x;
-    this.y = 300;
+    this.y = 500;
     this.height = 130;
     this.width = 75;
     this.animate();

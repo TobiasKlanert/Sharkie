@@ -8,8 +8,8 @@ class Level {
   bottles;
   levelStartX = 230;
   levelEndX = 13680;
-  levelStartY = -100;
-  levelEndY = 210;
+  levelStartY = -200;
+  levelEndY = 280;
 
   constructor(enemies, lights, backgroundObjects, barriers, coins, bottles) {
     this.enemies = enemies;
@@ -33,18 +33,18 @@ class Level {
     const barrierData = {
       "graphics/3. Background/Barrier/1.png": {
         y: 0,
-        width: 500,
-        height: 480,
+        width: 750,
+        height: 720,
       },
       "graphics/3. Background/Barrier/2.png": {
-        y: 300,
-        width: 436,
-        height: 200,
+        y: 320,
+        width: 872,
+        height: 400,
       },
       "graphics/3. Background/Barrier/3.png": {
-        y: 200,
-        width: 150,
-        height: 307,
+        y: 100,
+        width: 200,
+        height: 409,
       },
     };
 
@@ -52,7 +52,7 @@ class Level {
       let x, y, validPosition;
       let randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
       ({ y } = barrierData[randomImage]);
-
+      
       do {
         x = 500 + Math.random() * 12000;
         validPosition = !this.isOverlapping({ x, y }, positions, 1000);

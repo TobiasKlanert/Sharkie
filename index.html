@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sharkie</title>
 
-    <link rel="icon" type="image/png" href="graphics/1.Sharkie/1.IDLE/1.png">
+    <link rel="icon" type="image/png" href="graphics/1.Sharkie/1.IDLE/1.png" />
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
@@ -26,10 +26,47 @@
     <script src="./models/bubbles.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
-</head>
-<body onload="init()">
-    <h1>Sharkie</h1>
-
-    <canvas id="canvas" width="1280" height="480"></canvas>
-</body>
+  </head>
+  <body>
+    <div id="game" class="game">
+      <h1>Sharkie</h1>
+      <div id="startScreen" class="startScreen">
+        <div class="leftSide">
+          <button class="startGame" onclick="startGame()">
+            <img src="graphics/6.Botones/Start/2.png" alt="" class="button-img"/>
+          </button>
+        </div>
+        <div class="rightSide">
+          <table>
+            <tr>
+              <td class="tableIMG">
+                <img
+                  src="graphics/6.Botones/Key/arrow keys.png"
+                  alt="Arrow Keys"
+                />
+              </td>
+              <td><h2>Move Sharkie</h2></td>
+            </tr>
+            <tr>
+              <td class="tableIMG">
+                <img src="graphics/6.Botones/Key/D key.png" alt="D Key" class="d-key"/>
+              </td>
+              <td><h2>Bubble Attack</h2></td>
+            </tr>
+            <tr>
+              <td class="tableIMG">
+                <img
+                  src="graphics/6.Botones/Key/Space Bar key.png"
+                  alt="Space Bar"
+                />
+              </td>
+              <td><h2>Fin Slap</h2></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <canvas id="canvas" width="1280" height="720"></canvas>
+      <button onclick="enterFullscreen()">Fullscreen</button>
+    </div>
+  </body>
 </html>

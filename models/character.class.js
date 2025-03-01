@@ -1,6 +1,6 @@
 class Character extends MovableObject {
-  height = 300;
-  width = 300;
+  height = 500;
+  width = 407;
   speed = 10;
   idleTime = 0;
   idleInterval;
@@ -24,10 +24,10 @@ class Character extends MovableObject {
   executeAttack = false;
 
   offset = {
-    top: 140,
+    top: 240,
     left: 60,
     right: 120,
-    bottom: 215,
+    bottom: 350,
   };
 
   enemyType = null;
@@ -425,12 +425,12 @@ class Character extends MovableObject {
 
   getCharacterMovement() {
     if (this.world.keyboard.RIGHT) {
-      return { x: 250, y: 150, speed: 10 };
+      return { x: 300, y: 280, speed: 10 };
     } else if (this.world.keyboard.LEFT) {
-      return { x: 0, y: 150, speed: -30 };
+      return { x: 0, y: 280, speed: -30 };
     } else if (this.otherDirection) {
-      return { x: 0, y: 150, speed: -20 };
+      return { x: 0, y: 280, speed: -20 };
     }
-    return { x: 250, y: 150, speed: 0 };
+    return { x: 300, y: 280, speed: 0 };
   }
 }
