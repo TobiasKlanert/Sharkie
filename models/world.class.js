@@ -251,6 +251,7 @@ class World {
     });
   
     this.ctx.translate(this.cameraX, 0);
+  
     this.addObjectsToMap(this.level.lights);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.barriers);
@@ -258,6 +259,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);
+  
     this.ctx.translate(-this.cameraX, 0);
   
     this.addToMap(this.statusBarBottles);
@@ -270,25 +272,42 @@ class World {
     });
   }
   
-
   addObjectsToMap(objects) {
     objects.forEach((object) => {
       this.addToMap(object);
     });
   }
-
+  
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-    mo.drawObject(this.ctx);
+  
+    if (mo instanceof Bubble) {
+      this.drawRotatedObject(mo);
+    } else {
+      mo.drawObject(this.ctx);
+    }
+  
     /* mo.drawFrame(this.ctx);
     mo.drawBarrierFrame(this.ctx); */
-
+  
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   }
+
+  drawRotatedObject(mo) {
+    this.ctx.save();
+  
+    this.ctx.translate(mo.x, mo.y);
+    this.ctx.rotate(mo.rotation);
+  
+    this.ctx.drawImage(mo.img, -mo.width / 2, -mo.height / 2, mo.width, mo.height); 
+  
+    this.ctx.restore();
+  }
+  
 
   flipImage(mo) {
     this.ctx.save();

@@ -4,6 +4,8 @@ class Bubble extends MovableObject {
     "graphics/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png";
 
   throwInterval;
+  rotation = 0;
+  animationInterval;
 
   constructor(x, y, speed, bubble) {
     super();
@@ -13,7 +15,9 @@ class Bubble extends MovableObject {
     this.width = 75;
     this.height = 75;
     this.throw(speed);
+    this.animate(5);
     this.pushToIntervals([this.throwInterval]);
+    this.pushToIntervals([this.animationInterval]);
   }
 
   throw(speed = 0) {
@@ -24,7 +28,6 @@ class Bubble extends MovableObject {
       time += 0.1;
     }, 1000 / 60);
   }
-  
 
   getBubbleType(bubble) {
     switch (bubble) {
@@ -33,5 +36,13 @@ class Bubble extends MovableObject {
       case "poisoned":
         return this.poisonedBubble;
     }
+  }
+
+  animate(rotationSpeed = 5) {
+    let angle = 0;
+    this.animationInterval = setInterval(() => {
+      angle += rotationSpeed;
+      this.rotation = (angle * Math.PI) / 180;
+    }, 1000 / 60);
   }
 }
