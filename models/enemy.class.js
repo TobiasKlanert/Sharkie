@@ -254,8 +254,13 @@ class Enemy extends MovableObject {
   }
 
   animate(randomEnemy) {
+    let time = 0;
     this.moveInterval = setInterval(() => {
       this.moveLeft();
+      if (this.enemyType === "jellyFish") {
+        this.y += Math.cos(time) * Math.random() * 10;
+        time += Math.random() * 0.1;
+      }
     }, 1000 / 60);
 
     this.animationInterval = setInterval(() => {
