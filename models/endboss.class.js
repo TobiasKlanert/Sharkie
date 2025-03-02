@@ -87,7 +87,6 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_ATTACK);
     this.x = 24000;
-    this.speed = 200;
     this.animate();
     this.getRandomTime();
     this.startAttack();
@@ -140,6 +139,7 @@ class Endboss extends MovableObject {
       if (!this.isHurt && !this.isDying) {
         this.executeAttack = true;
         this.collisionDamage = 40;
+        this.speed = 200 + Math.random() * 200;
         this.moveLeft();
         this.handleAttack();
       }
