@@ -10,17 +10,21 @@ class Bubble extends MovableObject {
     this.loadImage(this.getBubbleType(bubble));
     this.x = x;
     this.y = y;
-    this.width = 50;
-    this.height = 50;
+    this.width = 75;
+    this.height = 75;
     this.throw(speed);
     this.pushToIntervals([this.throwInterval]);
   }
 
   throw(speed = 0) {
+    let time = 0;
     this.throwInterval = setInterval(() => {
       this.x += 10 + speed;
-    }, 1000 / 60)
+      this.y += Math.cos(time) * 7.5;
+      time += 0.1;
+    }, 1000 / 60);
   }
+  
 
   getBubbleType(bubble) {
     switch (bubble) {
