@@ -27,38 +27,14 @@ function initLevel() {
       ...Array.from({ length: 10 }, (_, index) => {
         const i = index * 2;
         return [
-          new BackgroundObject(
-            "graphics/3. Background/Layers/5. Water/D1.png",
-            1280 * i
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/4.Fondo 2/D1.png",
-            1280 * i
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/3.Fondo 1/D1.png",
-            1280 * i
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/2. Floor/D1.png",
-            1280 * i
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/5. Water/D2.png",
-            1280 * (i + 1)
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/4.Fondo 2/D2.png",
-            1280 * (i + 1)
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/3.Fondo 1/D2.png",
-            1280 * (i + 1)
-          ),
-          new BackgroundObject(
-            "graphics/3. Background/Layers/2. Floor/D2.png",
-            1280 * (i + 1)
-          ),
+          new BackgroundObject("graphics/3. Background/Layers/5. Water/D1.png", 1280 * i, 0.2),
+          new BackgroundObject("graphics/3. Background/Layers/4.Fondo 2/D1.png", 1280 * i, 0.4),
+          new BackgroundObject("graphics/3. Background/Layers/3.Fondo 1/D1.png", 1280 * i, 0.6),
+          new BackgroundObject("graphics/3. Background/Layers/2. Floor/D1.png", 1280 * i, 1.0),
+          new BackgroundObject("graphics/3. Background/Layers/5. Water/D2.png", 1280 * (i + 1), 0.2),
+          new BackgroundObject("graphics/3. Background/Layers/4.Fondo 2/D2.png", 1280 * (i + 1), 0.4),
+          new BackgroundObject("graphics/3. Background/Layers/3.Fondo 1/D2.png", 1280 * (i + 1), 0.6),
+          new BackgroundObject("graphics/3. Background/Layers/2. Floor/D2.png", 1280 * (i + 1), 1.0),
         ];
       }).flat(),
     ],

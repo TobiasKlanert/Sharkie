@@ -245,29 +245,31 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+  
+    this.level.backgroundObjects.forEach(bg => {
+      bg.drawObject(this.ctx, this.cameraX);
+    });
+  
     this.ctx.translate(this.cameraX, 0);
-
-    this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.lights);
-
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.barriers);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);
-
     this.ctx.translate(-this.cameraX, 0);
+  
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarLife);
     this.addToMap(this.statusBarCoins);
-
+  
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
   }
+  
 
   addObjectsToMap(objects) {
     objects.forEach((object) => {
