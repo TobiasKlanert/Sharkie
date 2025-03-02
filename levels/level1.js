@@ -1,11 +1,17 @@
 let x = 0;
 let y = 0;
 
-let barriers = Level.generateBarriers().flat();
-let coins = Level.generateCoinGroups(barriers).flat();
-let bottles = Level.generateBottles(barriers, coins).flat();
+let barriers;
+let coins;
+let bottles;
 
 let level1;
+
+function initAssets() {
+  barriers = Level.generateBarriers().flat();
+  coins = Level.generateCoinGroups(barriers).flat();
+  bottles = Level.generateBottles(barriers, coins).flat();
+}
 
 function initLevel() {
   level1 = new Level(

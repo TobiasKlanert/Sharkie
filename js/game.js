@@ -7,6 +7,7 @@ function startGame() {
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
   document.getElementById("canvas").style.display = "block";
+  initAssets();
   initLevel();
   init();
 }
