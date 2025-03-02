@@ -29,14 +29,23 @@
   </head>
   <body>
     <div id="game" class="game">
-      <h1>Sharkie</h1>
       <div id="startScreen" class="startScreen">
         <div class="leftSide">
+          <button
+            onclick="document.getElementById('instructions-dialog').style.display = 'flex'" class="menu-button"
+          >
+            Game Instructions
+          </button>
           <button class="startGame" onclick="startGame()">
-            <img src="graphics/6.Botones/Start/2.png" alt="" class="button-img"/>
+            <img
+              src="graphics/6.Botones/Start/2.png"
+              alt=""
+              class="button-img"
+            />
           </button>
         </div>
         <div class="rightSide">
+          <h1>Sharkie</h1>
           <table>
             <tr>
               <td class="tableIMG">
@@ -45,11 +54,15 @@
                   alt="Arrow Keys"
                 />
               </td>
-              <td><h2>Move Sharkie</h2></td>
+              <td><h2>Move Shark</h2></td>
             </tr>
             <tr>
               <td class="tableIMG">
-                <img src="graphics/6.Botones/Key/D key.png" alt="D Key" class="d-key"/>
+                <img
+                  src="graphics/6.Botones/Key/D key.png"
+                  alt="D Key"
+                  class="d-key"
+                />
               </td>
               <td><h2>Bubble Attack</h2></td>
             </tr>
@@ -65,6 +78,94 @@
           </table>
         </div>
       </div>
+      <dialog id="instructions-dialog">
+        <h2>Sharkie’s Adventure: Game Instructions</h2>
+        <div class="dialog-body">
+          <div class="box">
+            <p class="instruction-header">1. Move Sharkie</p>
+            <p>
+              Use the arrow keys to move Sharkie through the underwater world.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">2. Sharkie’s Attacks</p>
+            <ul>
+              <li>
+                <span class="highlight">Fin Slap</span>: A strong fin attack
+                that can be used against pufferfish.
+              </li>
+              <li>
+                <span class="highlight">Bubble Trap</span>: A bubble-based
+                attack that traps and disables jellyfish.
+              </li>
+            </ul>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">3. Defeating Enemies</p>
+            <ul>
+              <li>
+                Pufferfish can only be defeated using
+                <span class="highlight">Fin Slap</span>.
+              </li>
+              <li>
+                Jellyfish can only be defeated using
+                <span class="highlight">Bubble Trap</span>.
+              </li>
+            </ul>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">4. Collect Poison Bottles</p>
+            <p>
+              Find and collect poison bottles to
+              <span class="highlight">boost your Bubble Trap</span>. They will
+              make your bubble attack stronger and more effective.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">
+              5. Save Poison Bottles for the Final Boss
+            </p>
+            <p>
+              Don’t use all your poison bottles too early!
+              <span class="highlight">Save them for the final boss</span> to
+              increase your chances of victory.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">6. The Final Boss</p>
+            <p>
+              The final boss can only be defeated using
+              <span class="highlight">Bubble Trap</span>.
+            </p>
+            <p>
+              <span class="highlight">Poisoned bubbles</span> are
+              <span class="highlight">twice as effective</span> against the
+              final boss, so make sure to collect enough poison bottles to
+              maximize your attack power!
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">7. Collect Coins</p>
+            <p>
+              Collect coins scattered throughout the game to
+              <span class="highlight">beat the high score</span> and become the
+              best player in Sharkie’s world!
+            </p>
+          </div>
+        </div>
+        <button
+          class="close-btn"
+          onclick="document.getElementById('instructions-dialog').style.display='none'"
+        >
+          Close
+        </button>
+      </dialog>
       <div id="winningScreen" class="gameoverScreen">
         <button onclick="startGame()">New Game</button>
       </div>

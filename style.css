@@ -15,6 +15,7 @@ body {
   font-family: "LuckiesGuy";
   background-image: url("graphics/3. Background/Layers/5. Water/D1.png");
   background-size: cover;
+  color: white;
 }
 
 canvas {
@@ -22,15 +23,18 @@ canvas {
   display: none;
 }
 
+h1,
+h2 {
+  color: white;
+}
+
 h1 {
-  font-size: 56px;
-  margin-top: 0;
-  color: #531a82;
+  font-size: 96px;
+  margin-top: 100px;
 }
 
 h2 {
   font-size: 30px;
-  color: white;
 }
 
 button {
@@ -75,14 +79,16 @@ td {
 .leftSide {
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center
 }
 
 .rightSide {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -107,6 +113,85 @@ td {
   content: url("graphics/6.Botones/Start/1.png");
 }
 
+.menu-button {
+  background-color: #7fffe0;
+  font-family: "LuckiesGuy";
+  font-size: 24px;
+  color: #531a82;
+  width: 250px;
+  height: 81px; 
+  border: 4px solid white;
+  border-radius: 20px;
+  margin: 24px;
+}
+
+.menu-button:hover {
+  background-color: #531a82;
+  color: white;
+}
+
+dialog {
+  height: 720px;
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: rgba(48, 105, 176, 0.5);
+  border: 2px solid #0077b6;
+  border-radius: 45px;
+  font-size: 1.1em;
+  color: white; /* Textfarbe im Dialog auf Weiß setzen */
+  display: none;
+  flex-direction: column;
+}
+
+.dialog-body {
+  overflow-y: auto; /* Ermöglicht Scrollen */
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.instruction-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white; /* Überschriften ebenfalls weiß */
+}
+
+.highlight {
+  color: #7fffe0;
+  font-weight: bold;
+}
+
+.box {
+  border: 2px solid white;
+  border-radius: 45px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #1b1464;
+  color: white; /* Textfarbe in den Boxen auf Weiß setzen */
+}
+
+.close-btn {
+  width: 150px;
+  height: 49px;
+  font-family: "LuckiesGuy";
+  font-size: 24px;
+  background-color: #7fffe0;
+  color: #531a82;
+  border: 4px solid white;
+  border-radius: 20px;
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+.close-btn:hover {
+  background-color: #531a82;
+  color: white;
+}
+
 @media only screen and (max-width: 1280px) {
   canvas {
     width: 100%;
@@ -115,6 +200,10 @@ td {
 
 @media only screen and (max-height: 720px) {
   canvas {
+    height: 100vh;
+  }
+
+  dialog {
     height: 100vh;
   }
 }
