@@ -7,6 +7,7 @@ function startGame() {
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
   document.getElementById("canvas").style.display = "block";
+  document.getElementById("btnFullscreen").classList.remove("d-none");
   initAssets();
   initLevel();
   init();
@@ -26,6 +27,7 @@ function enterFullscreen() {
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
   }
+  document.getElementById("canvas").classList.add("fullscreen");
 }
 
 function exitFullscreen() {

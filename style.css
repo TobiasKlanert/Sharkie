@@ -6,16 +6,36 @@
   font-style: normal;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7fffe0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #531a82;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   font-family: "LuckiesGuy";
   background-image: url("graphics/3. Background/Layers/5. Water/D1.png");
   background-size: cover;
   color: white;
+  height: 100vh;
 }
 
 canvas {
@@ -49,19 +69,50 @@ td {
   vertical-align: middle;
 }
 
+.d-none {
+  display: none;
+}
+
+.margin-top-30px {
+  margin-top: 30px;
+}
+
+.margin-bottom-30px {
+  margin-bottom: 30px;
+}
+
+.margin-bottom-60px {
+  margin-bottom: 60px;
+}
+
+.font-size-48px {
+  font-size: 40px !important;
+}
+
 .tableIMG {
   text-align: center;
 }
 
 .game {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .startScreen {
+  position: relative;
   background: url("graphics/3. Background/Mesa de trabajo 1.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -101,18 +152,6 @@ td {
   width: 75px;
 }
 
-.startGame {
-  margin-bottom: 60px;
-}
-
-.startGame .button-img {
-  width: 250px;
-}
-
-.startGame:hover .button-img {
-  content: url("graphics/6.Botones/Start/1.png");
-}
-
 .menu-button {
   background-color: #7fffe0;
   font-family: "LuckiesGuy";
@@ -122,7 +161,7 @@ td {
   height: 81px; 
   border: 4px solid white;
   border-radius: 20px;
-  margin: 24px;
+  transition: all 0.2s ease;
 }
 
 .menu-button:hover {
@@ -130,34 +169,69 @@ td {
   color: white;
 }
 
+.sound-button {
+  background-color: #7fffe0;
+  color: #531a82;
+  width: 150px;
+  height: 81px; 
+  border: 4px solid white;
+  border-radius: 20px;
+  transition: all 0.2s ease; 
+  margin: 10px;
+}
+
+.sound-button:hover {
+  background-color: #531a82;
+  color: white;
+}
+
 dialog {
-  height: 720px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 80%;
   max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  background-color: rgba(48, 105, 176, 0.5);
-  border: 2px solid #0077b6;
-  border-radius: 45px;
-  font-size: 1.1em;
-  color: white; /* Textfarbe im Dialog auf Weiß setzen */
+  height: 720px;
+  background: linear-gradient(180deg, #3EB1CF 0%, #6625AF 100%);
+  border: 2px solid white;
+  border-radius: 25px;
+  font-size: 1.2em;
+  color: white;
   display: none;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .dialog-body {
-  overflow-y: auto; /* Ermöglicht Scrollen */
+  overflow-y: auto;
   flex: 1;
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
+  border-radius: 15px;
 }
 
-
 .instruction-header {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
-  color: white; /* Überschriften ebenfalls weiß */
+  color: #7fffe0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.box {
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  box-shadow: inset 0px 0px 10px rgba(127, 255, 224, 0.2);
 }
 
 .highlight {
@@ -165,30 +239,23 @@ dialog {
   font-weight: bold;
 }
 
-.box {
-  border: 2px solid white;
-  border-radius: 45px;
-  padding: 20px;
-  margin: 20px 0;
-  background-color: #1b1464;
-  color: white; /* Textfarbe in den Boxen auf Weiß setzen */
-}
-
 .close-btn {
-  width: 150px;
-  height: 49px;
+  width: 180px;
+  height: 58px;
   font-family: "LuckiesGuy";
   font-size: 24px;
-  background-color: #7fffe0;
+  background: #7fffe0;
   color: #531a82;
-  border: 4px solid white;
+  border: 3px solid white;
   border-radius: 20px;
-  font-size: 28px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
   margin-top: 20px;
 }
 
 .close-btn:hover {
-  background-color: #531a82;
+  background: #531a82;
   color: white;
 }
 
