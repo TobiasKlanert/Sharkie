@@ -90,7 +90,7 @@ class Endboss extends MovableObject {
     this.animate();
     this.getRandomTime();
     this.startAttack();
-    this.pushToIntervals([this.animationInterval, this.startAttackInterval]);
+    pushToIntervals([this.animationInterval, this.startAttackInterval]);
   }
 
   animate() {
@@ -128,7 +128,7 @@ class Endboss extends MovableObject {
     this.startAttackInterval = setInterval(() => {
       if (this.firstContact) {
         this.attack();
-        this.pushToIntervals([this.attackInterval]);
+        pushToIntervals([this.attackInterval]);
         clearInterval(this.startAttackInterval);
       }
     }, 150);

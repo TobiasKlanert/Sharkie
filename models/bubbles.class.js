@@ -16,8 +16,8 @@ class Bubble extends MovableObject {
     this.height = 75;
     this.throw(speed);
     this.animate(5);
-    this.pushToIntervals([this.throwInterval]);
-    this.pushToIntervals([this.animationInterval]);
+    pushToIntervals([this.throwInterval]);
+    pushToIntervals([this.animationInterval]);
   }
 
   throw(speed = 0) {

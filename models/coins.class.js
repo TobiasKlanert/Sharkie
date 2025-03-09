@@ -23,7 +23,7 @@ class COINS extends DrawableObject {
     this.height = 75;
     this.width = 75;
     this.animate();
-    this.pushToIntervals([this.animationInterval]);
+    pushToIntervals([this.animationInterval]);
   }
 
   animate() {

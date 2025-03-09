@@ -160,7 +160,7 @@ class Character extends MovableObject {
     requestAnimationFrame(this.characterAttack.bind(this));
     this.animationId = requestAnimationFrame((time) => this.animate(time));
     this.startIdleTimer();
-    this.pushToIntervals([this.idleInterval]);
+    pushToIntervals([this.idleInterval]);
   }
 
   loadImagesToConstructor() {

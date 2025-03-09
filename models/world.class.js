@@ -22,7 +22,8 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
-    this.character.pushToIntervals([this.runInterval]);
+    checkTouchEvents();
+    pushToIntervals([this.runInterval]);
   }
 
   setWorld() {

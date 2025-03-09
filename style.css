@@ -100,13 +100,26 @@ td {
   align-items: center;
 }
 
-.panel {
+.top-panel {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
   gap: 10px;
   padding-bottom: 10px;
+}
+
+.bottom-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.movement-controls {
+  display: flex;
 }
 
 .fullscreen {

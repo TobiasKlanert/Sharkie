@@ -7,21 +7,56 @@ let keyboard = new Keyboard();
 let isPaused = false;
 let savedIntervals = [];
 
+let btnSounds;
+let btnFullscreen;
+let btnStop;
+let btnUp;
+let btnDown;
+let btnLeft;
+let btnRight;
+let btnBubble;
+let btnSlap;
+
+let intervalIds = [];
+
 function startGame() {
+  initCanvas();
   initButtons();
+  setButtons();
   initAssets();
   initLevel();
   init();
 }
 
-function initButtons() {
+function initCanvas() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
   document.getElementById("canvas").style.display = "block";
-  document.getElementById("btnSounds").style.display = "flex";
-  document.getElementById("btnFullscreen").style.display = "flex";
-  document.getElementById("btnStop").style.display = "flex";
+}
+
+function initButtons() {
+  btnSounds = document.getElementById("btnSounds");
+  btnFullscreen = document.getElementById("btnFullscreen");
+  btnStop = document.getElementById("btnStop");
+  btnUp = document.getElementById("btnUp");
+  btnDown = document.getElementById("btnDown");
+  btnLeft = document.getElementById("btnLeft");
+  btnRight = document.getElementById("btnRight");
+  btnBubble = document.getElementById("btnBubble");
+  btnSlap = document.getElementById("btnSlap");
+}
+
+function setButtons() {
+  btnSounds.style.display = "flex";
+  btnFullscreen.style.display = "flex";
+  btnStop.style.display = "flex";
+  btnUp.style.display = "flex";
+  btnDown.style.display = "flex";
+  btnLeft.style.display = "flex";
+  btnRight.style.display = "flex";
+  btnBubble.style.display = "flex";
+  btnSlap.style.display = "flex";
 }
 
 function init() {
@@ -30,18 +65,28 @@ function init() {
 }
 
 function stopGame(screenType) {
-  DrawableObject.intervalIds.forEach(clearInterval);
+  intervalIds.forEach(clearInterval);
   if (fullscreenEnabled) {
     toggleBtnFullscreen(document.getElementById("btnFullscreen"));
-    document.getElementById("canvas").classList.toggle("fullscreen");
+    canvas.classList.toggle("fullscreen");
     exitFullscreen();
   }
-  document.getElementById("btnSounds").style.display = "none";
-  document.getElementById("btnFullscreen").style.display = "none";
-  document.getElementById("btnStop").style.display = "none";
-  document.getElementById("canvas").style.display = "none";
+
   document.getElementById(screenType).style.display = "flex";
-  document.getElementById("btnFullscreen").classList.add("d-none");
+  disableButtons();
+}
+
+function disableButtons() {
+  btnSounds.style.display = "none";
+  btnFullscreen.style.display = "none";
+  btnStop.style.display = "none";
+  btnUp.style.display = "none";
+  btnDown.style.display = "none";
+  btnLeft.style.display = "none";
+  btnRight.style.display = "none";
+  btnBubble.style.display = "none";
+  btnSlap.style.display = "none";
+  canvas.style.display = "none";
 }
 
 function toggleSound(button) {
@@ -67,7 +112,7 @@ function toggleSound(button) {
 
 function toggleFullscreen(button) {
   fullscreenEnabled ? exitFullscreen() : enterFullscreen();
-  document.getElementById("canvas").classList.toggle("fullscreen");
+  canvas.classList.toggle("fullscreen");
   toggleBtnFullscreen(button);
 }
 
@@ -132,6 +177,77 @@ function exitFullscreen() {
   }
   fullscreenEnabled = false;
 }
+
+function pushToIntervals(intervals) {
+  intervals.forEach((interval) => {
+    intervalIds.push(interval);
+  });
+}
+
+function checkTouchEvents() {
+  if (btnLeft) {
+    btnLeft.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.LEFT = true;
+    }, { passive: false });
+
+    btnLeft.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      keyboard.LEFT = false;
+    }, { passive: false });
+  }
+
+  if (btnRight) {
+    btnRight.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.RIGHT = true;
+    }, { passive: false });
+
+    btnRight.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      keyboard.RIGHT = false;
+    }, { passive: false });
+  }
+
+  if (btnUp) {
+    btnUp.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.UP = true;
+    }, { passive: false });
+
+    btnUp.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      keyboard.UP = false;
+    }, { passive: false });
+  }
+
+  if (btnDown) {
+    btnDown.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.DOWN = true;
+    }, { passive: false });
+
+    btnDown.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      keyboard.DOWN = false;
+    }, { passive: false });
+  }
+
+  if (btnBubble) {
+    btnBubble.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.D = true;
+    }, { passive: false });
+  }
+
+  if (btnSlap) {
+    btnSlap.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.SPACE = true;
+    }, { passive: false });
+  }
+}
+
 
 window.addEventListener("keydown", (event) => {
   switch (event.code) {

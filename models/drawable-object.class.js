@@ -6,13 +6,6 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
-  static intervalIds = [];
-
-  pushToIntervals(intervals) {
-    intervals.forEach((interval) => {
-      DrawableObject.intervalIds.push(interval);
-    });
-  }
 
   loadImage(path) {
     this.img = new Image();

@@ -172,7 +172,7 @@
       <button onclick="startGame()">Retry</button>
     </div>
     <div id="game" class="game">
-      <div class="panel">
+      <div class="top-panel">
         <button onclick="toggleSound(this)" id="btnSounds" class="game-button">
           <svg
             width="100%"
@@ -244,7 +244,18 @@
         </button>
       </div>
       <canvas id="canvas" width="1280" height="720"></canvas>
-      <div class="panel"></div>
+      <div class="bottom-panel">
+        <div class="movement-controls">
+          <button class="game-button" id="btnUp">Up</button>
+          <button class="game-button" id="btnDown">Down</button>
+          <button class="game-button" id="btnLeft">Left</button>
+          <button class="game-button" id="btnRight">Right</button>
+        </div>
+        <div>
+          <button class="game-button" id="btnBubble">Bubble</button>
+          <button class="game-button" id="btnSlap">Fin Slap</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

@@ -27,7 +27,7 @@ class BOTTLES extends DrawableObject {
     this.height = 170;
     this.width = 98;
     this.animate();
-    this.pushToIntervals([this.animationInterval]);
+    pushToIntervals([this.animationInterval]);
   }
 
   animate() {
