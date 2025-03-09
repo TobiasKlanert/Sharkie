@@ -225,7 +225,7 @@ class Character extends MovableObject {
 
   handleMovementStart(direction) {
     clearInterval(this.gravityInterval);
-    this.swimming_sound.play();
+    soundsEnabled && this.swimming_sound.play();
     this.idleTime = 0;
     switch (direction) {
       case "right":
@@ -348,14 +348,14 @@ class Character extends MovableObject {
     this.animationId = requestAnimationFrame((time) => this.animate(time));
     if (this.isDead()) {
       if (this.enemyType == "jellyFish") {
-        if (this.y < (this.world.level.levelEndY - 30)) {
+        if (this.y < this.world.level.levelEndY - 30) {
           this.moveDown(deltaTime / 5);
         }
         setTimeout(() => {
           cancelAnimationFrame(this.animationId);
         }, 1350);
       } else {
-        if (this.y > (this.world.level.levelStartY + 100)) {
+        if (this.y > this.world.level.levelStartY + 100) {
           this.moveUp(deltaTime / 5);
         }
         setTimeout(() => {

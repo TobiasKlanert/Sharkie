@@ -1,21 +1,127 @@
 let canvas;
 let world;
+let fullscreenEnabled = false;
+let soundsEnabled = true;
 let keyboard = new Keyboard();
 
+let isPaused = false;
+let savedIntervals = [];
+
 function startGame() {
-  document.getElementById("startScreen").style.display = "none";
-  document.getElementById("gameoverScreen").style.display = "none";
-  document.getElementById("winningScreen").style.display = "none";
-  document.getElementById("canvas").style.display = "block";
-  document.getElementById("btnFullscreen").classList.remove("d-none");
+  initButtons();
   initAssets();
   initLevel();
   init();
 }
 
+function initButtons() {
+  document.getElementById("startScreen").style.display = "none";
+  document.getElementById("gameoverScreen").style.display = "none";
+  document.getElementById("winningScreen").style.display = "none";
+  document.getElementById("canvas").style.display = "block";
+  document.getElementById("btnGameplay").style.display = "flex";
+  document.getElementById("btnSounds").style.display = "flex";
+  document.getElementById("btnFullscreen").style.display = "flex";
+}
+
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
+}
+
+function toggleGameplay(button) {
+  toggleIntervals();
+
+  const svg1 = `
+    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="20" width="20" height="60" fill="currentColor"/>
+      <rect x="60" y="20" width="20" height="60" fill="currentColor"/>
+    </svg>
+  `;
+
+  const svg2 = `
+    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,20 80,50 20,80" fill="currentColor"/>
+    </svg>
+  `;
+
+  button.innerHTML = button.innerHTML.includes("rect") ? svg2 : svg1;
+}
+
+function toggleIntervals() {
+  if (isPaused) {
+    savedIntervals.forEach(id => {
+      DrawableObject.intervalIds.push(id);
+    });
+    isPaused = false;
+  } else {
+    savedIntervals = [...DrawableObject.intervalIds];
+    DrawableObject.intervalIds.forEach(clearInterval);
+    isPaused = true;
+  }
+}
+
+function toggleSound(button) {
+  soundsEnabled = !soundsEnabled;
+
+  const svg1 = `
+    <svg width="100" height="81" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
+      <path d="M70 30 Q85 50 70 70" stroke="currentColor" stroke-width="8" fill="none" />
+      <path d="M80 20 Q100 50 80 80" stroke="currentColor" stroke-width="6" fill="none" />
+    </svg>
+  `;
+
+  const svg2 = `
+    <svg width="100" height="81" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
+      <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="8" />
+    </svg>
+  `;
+
+  button.innerHTML = button.innerHTML.includes("path") ? svg2 : svg1;
+}
+
+function toggleFullscreen(button) {
+  fullscreenEnabled ? exitFullscreen() : enterFullscreen();
+  document.getElementById("canvas").classList.toggle("fullscreen");
+
+  const svg1 = `
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="currentColor"
+      stroke-width="12"
+      fill="none"
+    >
+      <polyline points="10,30 10,10 30,10" />
+      <polyline points="70,10 90,10 90,30" />
+      <polyline points="10,70 10,90 30,90" />
+      <polyline points="70,90 90,90 90,70" />
+    </svg>
+  `;
+
+  const svg2 = `
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="currentColor"
+      stroke-width="12"
+      fill="none"
+    >
+      <polyline points="10,30 30,30 30,10" />
+      <polyline points="90,30 70,30 70,10" />
+      <polyline points="10,70 30,70 30,90" />
+      <polyline points="90,70 70,70 70,90" />
+    </svg>
+
+  `;
+
+  button.innerHTML = button.innerHTML.includes("10,30 10,10 30,10") ? svg2 : svg1;
 }
 
 function enterFullscreen() {
@@ -27,7 +133,7 @@ function enterFullscreen() {
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
   }
-  document.getElementById("canvas").classList.add("fullscreen");
+  fullscreenEnabled = true;
 }
 
 function exitFullscreen() {
@@ -36,6 +142,7 @@ function exitFullscreen() {
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
+  fullscreenEnabled = false;
 }
 
 window.addEventListener("keydown", (event) => {

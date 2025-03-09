@@ -6,9 +6,9 @@ class World {
   ctx;
   keyboard;
   cameraX = 0;
-  statusBarBottles = new StatusBar("bottles", 20, 0, 0);
-  statusBarLife = new StatusBar("life", 20, 50, 100);
-  statusBarCoins = new StatusBar("coins", 20, 100, 0);
+  statusBarLife = new StatusBar("life", 20, 0, 100);
+  statusBarBottles = new StatusBar("bottles", 20, 60, 0);
+  statusBarCoins = new StatusBar("coins", 20, 120, 0);
   runInterval;
   animationInterval;
 
