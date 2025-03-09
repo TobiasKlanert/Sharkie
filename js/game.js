@@ -19,9 +19,9 @@ function initButtons() {
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
   document.getElementById("canvas").style.display = "block";
-  document.getElementById("btnGameplay").style.display = "flex";
   document.getElementById("btnSounds").style.display = "flex";
   document.getElementById("btnFullscreen").style.display = "flex";
+  document.getElementById("btnStop").style.display = "flex";
 }
 
 function init() {
@@ -29,36 +29,19 @@ function init() {
   world = new World(canvas, keyboard);
 }
 
-function toggleGameplay(button) {
-  toggleIntervals();
-
-  const svg1 = `
-    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="20" width="20" height="60" fill="currentColor"/>
-      <rect x="60" y="20" width="20" height="60" fill="currentColor"/>
-    </svg>
-  `;
-
-  const svg2 = `
-    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="20,20 80,50 20,80" fill="currentColor"/>
-    </svg>
-  `;
-
-  button.innerHTML = button.innerHTML.includes("rect") ? svg2 : svg1;
-}
-
-function toggleIntervals() {
-  if (isPaused) {
-    savedIntervals.forEach(id => {
-      DrawableObject.intervalIds.push(id);
-    });
-    isPaused = false;
-  } else {
-    savedIntervals = [...DrawableObject.intervalIds];
-    DrawableObject.intervalIds.forEach(clearInterval);
-    isPaused = true;
+function stopGame(screenType) {
+  DrawableObject.intervalIds.forEach(clearInterval);
+  if (fullscreenEnabled) {
+    toggleBtnFullscreen(document.getElementById("btnFullscreen"));
+    document.getElementById("canvas").classList.toggle("fullscreen");
+    exitFullscreen();
   }
+  document.getElementById("btnSounds").style.display = "none";
+  document.getElementById("btnFullscreen").style.display = "none";
+  document.getElementById("btnStop").style.display = "none";
+  document.getElementById("canvas").style.display = "none";
+  document.getElementById(screenType).style.display = "flex";
+  document.getElementById("btnFullscreen").classList.add("d-none");
 }
 
 function toggleSound(button) {
@@ -85,7 +68,10 @@ function toggleSound(button) {
 function toggleFullscreen(button) {
   fullscreenEnabled ? exitFullscreen() : enterFullscreen();
   document.getElementById("canvas").classList.toggle("fullscreen");
+  toggleBtnFullscreen(button);
+}
 
+function toggleBtnFullscreen(button) {
   const svg1 = `
     <svg
       width="70"
@@ -121,7 +107,9 @@ function toggleFullscreen(button) {
 
   `;
 
-  button.innerHTML = button.innerHTML.includes("10,30 10,10 30,10") ? svg2 : svg1;
+  button.innerHTML = button.innerHTML.includes("10,30 10,10 30,10")
+    ? svg2
+    : svg1;
 }
 
 function enterFullscreen() {

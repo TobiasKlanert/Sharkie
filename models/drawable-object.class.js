@@ -14,14 +14,6 @@ class DrawableObject {
     });
   }
 
-  stopGame(screenType) {
-    DrawableObject.intervalIds.forEach(clearInterval);
-    exitFullscreen();
-    document.getElementById("canvas").style.display = "none";
-    document.getElementById(screenType).style.display = "flex";
-    document.getElementById("btnFullscreen").classList.add("d-none");
-  }
-
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;

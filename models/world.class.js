@@ -51,7 +51,10 @@ class World {
         switch (asset) {
           case this.level.enemies:
             this.character.collisionWithEnemy(element);
-            if (this.keyboard.SPACE && this.character.enemyType == "pufferFish") {
+            if (
+              this.keyboard.SPACE &&
+              this.character.enemyType == "pufferFish"
+            ) {
               this.character.executeAttack = true;
               this.character.attack(element);
               this.killEnemy(element);
@@ -96,7 +99,7 @@ class World {
     );
     if (this.character.isDead(this.character)) {
       setTimeout(() => {
-        this.character.stopGame("gameoverScreen");
+        stopGame("gameoverScreen");
       }, 2000);
     }
   }
@@ -119,7 +122,7 @@ class World {
         this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
         this.character.executeAttack = false;
         if (this.endboss.isDying) {
-          this.character.stopGame("winningScreen");
+          stopGame("winningScreen");
         }
       }, enemy.enemyDyingImages.length * enemy.animationTime);
     }
@@ -245,13 +248,13 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  
-    this.level.backgroundObjects.forEach(bg => {
+
+    this.level.backgroundObjects.forEach((bg) => {
       bg.drawObject(this.ctx, this.cameraX);
     });
-  
+
     this.ctx.translate(this.cameraX, 0);
-  
+
     this.addObjectsToMap(this.level.lights);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.barriers);
@@ -259,39 +262,39 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.bubbles);
-  
+
     this.ctx.translate(-this.cameraX, 0);
-  
+
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarLife);
     this.addToMap(this.statusBarCoins);
-  
+
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
   }
-  
+
   addObjectsToMap(objects) {
     objects.forEach((object) => {
       this.addToMap(object);
     });
   }
-  
+
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-  
+
     if (mo instanceof Bubble) {
       this.drawRotatedObject(mo);
     } else {
       mo.drawObject(this.ctx);
     }
-  
+
     /* mo.drawFrame(this.ctx);
     mo.drawBarrierFrame(this.ctx); */
-  
+
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -299,15 +302,20 @@ class World {
 
   drawRotatedObject(mo) {
     this.ctx.save();
-  
+
     this.ctx.translate(mo.x, mo.y);
     this.ctx.rotate(mo.rotation);
-  
-    this.ctx.drawImage(mo.img, -mo.width / 2, -mo.height / 2, mo.width, mo.height); 
-  
+
+    this.ctx.drawImage(
+      mo.img,
+      -mo.width / 2,
+      -mo.height / 2,
+      mo.width,
+      mo.height
+    );
+
     this.ctx.restore();
   }
-  
 
   flipImage(mo) {
     this.ctx.save();
