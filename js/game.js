@@ -51,12 +51,14 @@ function setButtons() {
   btnSounds.style.display = "flex";
   btnFullscreen.style.display = "flex";
   btnStop.style.display = "flex";
-  btnUp.style.display = "flex";
-  btnDown.style.display = "flex";
-  btnLeft.style.display = "flex";
-  btnRight.style.display = "flex";
-  btnBubble.style.display = "flex";
-  btnSlap.style.display = "flex";
+  if ("ontouchstart" in window) {
+    btnUp.style.display = "flex";
+    btnDown.style.display = "flex";
+    btnLeft.style.display = "flex";
+    btnRight.style.display = "flex";
+    btnBubble.style.display = "flex";
+    btnSlap.style.display = "flex";
+  }
 }
 
 function init() {
@@ -65,7 +67,8 @@ function init() {
 }
 
 function stopGame(screenType) {
-  intervalIds.forEach(clearInterval);
+  intervalIds.forEach((id) => clearInterval(id));
+  intervalIds.splice(0, intervalIds.length);
   if (fullscreenEnabled) {
     toggleBtnFullscreen(document.getElementById("btnFullscreen"));
     canvas.classList.toggle("fullscreen");
@@ -93,7 +96,7 @@ function toggleSound(button) {
   soundsEnabled = !soundsEnabled;
 
   const svg1 = `
-    <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
       <path d="M70 30 Q85 50 70 70" stroke="currentColor" stroke-width="8" fill="none" />
       <path d="M80 20 Q100 50 80 80" stroke="currentColor" stroke-width="6" fill="none" />
@@ -101,7 +104,7 @@ function toggleSound(button) {
   `;
 
   const svg2 = `
-    <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
       <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="8" />
     </svg>
@@ -112,15 +115,14 @@ function toggleSound(button) {
 
 function toggleFullscreen(button) {
   fullscreenEnabled ? exitFullscreen() : enterFullscreen();
-  canvas.classList.toggle("fullscreen");
   toggleBtnFullscreen(button);
 }
 
 function toggleBtnFullscreen(button) {
   const svg1 = `
     <svg
-      width="100%"
-      height="100%"
+      width="60"
+      height="60"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
@@ -136,8 +138,8 @@ function toggleBtnFullscreen(button) {
 
   const svg2 = `
     <svg
-      width="100%"
-      height="100%"
+      width="60"
+      height="60"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
@@ -166,6 +168,7 @@ function enterFullscreen() {
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
   }
+  canvas.classList.toggle("fullscreen");
   fullscreenEnabled = true;
 }
 
@@ -175,6 +178,7 @@ function exitFullscreen() {
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
+  canvas.classList.toggle("fullscreen");
   fullscreenEnabled = false;
 }
 
@@ -186,68 +190,107 @@ function pushToIntervals(intervals) {
 
 function checkTouchEvents() {
   if (btnLeft) {
-    btnLeft.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.LEFT = true;
-    }, { passive: false });
+    btnLeft.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.LEFT = true;
+      },
+      { passive: false }
+    );
 
-    btnLeft.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      keyboard.LEFT = false;
-    }, { passive: false });
+    btnLeft.addEventListener(
+      "touchend",
+      (event) => {
+        event.preventDefault();
+        keyboard.LEFT = false;
+      },
+      { passive: false }
+    );
   }
 
   if (btnRight) {
-    btnRight.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.RIGHT = true;
-    }, { passive: false });
+    btnRight.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.RIGHT = true;
+      },
+      { passive: false }
+    );
 
-    btnRight.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      keyboard.RIGHT = false;
-    }, { passive: false });
+    btnRight.addEventListener(
+      "touchend",
+      (event) => {
+        event.preventDefault();
+        keyboard.RIGHT = false;
+      },
+      { passive: false }
+    );
   }
 
   if (btnUp) {
-    btnUp.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.UP = true;
-    }, { passive: false });
+    btnUp.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.UP = true;
+      },
+      { passive: false }
+    );
 
-    btnUp.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      keyboard.UP = false;
-    }, { passive: false });
+    btnUp.addEventListener(
+      "touchend",
+      (event) => {
+        event.preventDefault();
+        keyboard.UP = false;
+      },
+      { passive: false }
+    );
   }
 
   if (btnDown) {
-    btnDown.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.DOWN = true;
-    }, { passive: false });
+    btnDown.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.DOWN = true;
+      },
+      { passive: false }
+    );
 
-    btnDown.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      keyboard.DOWN = false;
-    }, { passive: false });
+    btnDown.addEventListener(
+      "touchend",
+      (event) => {
+        event.preventDefault();
+        keyboard.DOWN = false;
+      },
+      { passive: false }
+    );
   }
 
   if (btnBubble) {
-    btnBubble.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.D = true;
-    }, { passive: false });
+    btnBubble.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.D = true;
+      },
+      { passive: false }
+    );
   }
 
   if (btnSlap) {
-    btnSlap.addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.SPACE = true;
-    }, { passive: false });
+    btnSlap.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        keyboard.SPACE = true;
+      },
+      { passive: false }
+    );
   }
 }
-
 
 window.addEventListener("keydown", (event) => {
   switch (event.code) {

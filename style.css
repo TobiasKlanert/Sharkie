@@ -24,9 +24,12 @@
   background: #531a82;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,6 +39,7 @@ body {
   background-size: cover;
   color: white;
   height: 100vh;
+  overflow-y: hidden;
 }
 
 canvas {
@@ -106,7 +110,7 @@ td {
   align-items: center;
   width: 100%;
   gap: 10px;
-  padding-bottom: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
 .bottom-panel {
@@ -115,11 +119,20 @@ td {
   align-items: center;
   width: 100%;
   gap: 10px;
-  padding-top: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
-.movement-controls {
+.touch-controls {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.touch-controls div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .fullscreen {
@@ -148,7 +161,7 @@ td {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center
+  align-items: center;
 }
 
 .rightSide {
@@ -174,7 +187,7 @@ td {
   font-size: 24px;
   color: #531a82;
   width: 250px;
-  height: 81px; 
+  height: 81px;
   border: 4px solid white;
   border-radius: 20px;
   transition: all 0.2s ease;
@@ -191,16 +204,21 @@ td {
   align-items: center;
   background-color: #7fffe0;
   color: #531a82;
-  width: 100px;
-  height: 54px; 
+  width: 60px;
+  height: 60px;
   border: 4px solid white;
   border-radius: 20px;
-  transition: all 0.2s ease; 
+  transition: all 0.2s ease;
 }
 
 .game-button:hover {
   background-color: #531a82;
   color: white;
+}
+
+.bigger-btn {
+  width: 100px;
+  height: 100px;
 }
 
 dialog {
@@ -211,7 +229,7 @@ dialog {
   width: 80%;
   max-width: 800px;
   height: 720px;
-  background: linear-gradient(180deg, #3EB1CF 0%, #6625AF 100%);
+  background: linear-gradient(180deg, #3eb1cf 0%, #6625af 100%);
   border: 2px solid white;
   border-radius: 25px;
   font-size: 1.2em;
