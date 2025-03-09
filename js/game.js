@@ -48,7 +48,7 @@ function toggleSound(button) {
   soundsEnabled = !soundsEnabled;
 
   const svg1 = `
-    <svg width="100" height="81" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
       <path d="M70 30 Q85 50 70 70" stroke="currentColor" stroke-width="8" fill="none" />
       <path d="M80 20 Q100 50 80 80" stroke="currentColor" stroke-width="6" fill="none" />
@@ -56,7 +56,7 @@ function toggleSound(button) {
   `;
 
   const svg2 = `
-    <svg width="100" height="81" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
       <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="8" />
     </svg>
@@ -74,8 +74,8 @@ function toggleFullscreen(button) {
 function toggleBtnFullscreen(button) {
   const svg1 = `
     <svg
-      width="70"
-      height="70"
+      width="100%"
+      height="100%"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
@@ -91,8 +91,8 @@ function toggleBtnFullscreen(button) {
 
   const svg2 = `
     <svg
-      width="70"
-      height="70"
+      width="100%"
+      height="100%"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
