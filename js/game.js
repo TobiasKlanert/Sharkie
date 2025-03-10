@@ -51,14 +51,14 @@ function setButtons() {
   btnSounds.style.display = "flex";
   btnFullscreen.style.display = "flex";
   btnStop.style.display = "flex";
-  if ("ontouchstart" in window) {
+  /* if ("ontouchstart" in window) { */
     btnUp.style.display = "flex";
     btnDown.style.display = "flex";
     btnLeft.style.display = "flex";
     btnRight.style.display = "flex";
     btnBubble.style.display = "flex";
     btnSlap.style.display = "flex";
-  }
+  /* } */
 }
 
 function init() {
@@ -113,9 +113,8 @@ function toggleSound(button) {
   button.innerHTML = button.innerHTML.includes("path") ? svg2 : svg1;
 }
 
-function toggleFullscreen(button) {
+function toggleFullscreen() {
   fullscreenEnabled ? exitFullscreen() : enterFullscreen();
-  toggleBtnFullscreen(button);
 }
 
 function toggleBtnFullscreen(button) {
@@ -169,6 +168,7 @@ function enterFullscreen() {
     element.webkitRequestFullscreen();
   }
   canvas.classList.toggle("fullscreen");
+  toggleBtnFullscreen(btnFullscreen);
   fullscreenEnabled = true;
 }
 
@@ -178,9 +178,16 @@ function exitFullscreen() {
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
-  canvas.classList.toggle("fullscreen");
   fullscreenEnabled = false;
 }
+
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    fullscreenEnabled = false;
+    toggleBtnFullscreen(btnFullscreen);
+    canvas.classList.toggle("fullscreen");
+  }
+});
 
 function pushToIntervals(intervals) {
   intervals.forEach((interval) => {
