@@ -7,6 +7,8 @@ let keyboard = new Keyboard();
 let isPaused = false;
 let savedIntervals = [];
 
+let topPanel;
+let bottomPanel;
 let btnSounds;
 let btnFullscreen;
 let btnStop;
@@ -36,6 +38,8 @@ function initCanvas() {
 }
 
 function initButtons() {
+  topPanel = document.getElementById("topPanel");
+  bottomPanel = document.getElementById("bottomPanel");
   btnSounds = document.getElementById("btnSounds");
   btnFullscreen = document.getElementById("btnFullscreen");
   btnStop = document.getElementById("btnStop");
@@ -169,6 +173,7 @@ function enterFullscreen() {
   }
   canvas.classList.toggle("fullscreen");
   toggleBtnFullscreen(btnFullscreen);
+  arrangeButtons();
   fullscreenEnabled = true;
 }
 
@@ -181,11 +186,18 @@ function exitFullscreen() {
   fullscreenEnabled = false;
 }
 
+function arrangeButtons() {
+  canvas.classList.toggle("relative");
+  topPanel.classList.toggle("top-absolute");
+  bottomPanel.classList.toggle("bottom-absolute");
+}
+
 document.addEventListener("fullscreenchange", () => {
   if (!document.fullscreenElement) {
     fullscreenEnabled = false;
     toggleBtnFullscreen(btnFullscreen);
     canvas.classList.toggle("fullscreen");
+    arrangeButtons();
   }
 });
 
