@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="style.css" />
 
+    <script src="./js/script.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -27,11 +28,11 @@
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
   </head>
-  <body>
+  <body onload="initStartScreen()">
     <div id="startScreen" class="startScreen">
       <div class="leftSide">
         <button
-          onclick="document.getElementById('instructions-dialog').style.display = 'flex'"
+          onclick="toggleInstructions()"
           class="menu-button margin-bottom-30px"
         >
           Game Instructions
@@ -159,10 +160,13 @@
         </div>
         <button
           class="close-btn"
-          onclick="document.getElementById('instructions-dialog').style.display='none'"
+          onclick="toggleInstructions()"
         >
           Close
         </button>
+      </dialog>
+      <dialog id="orientationMessage">
+        <h1>Please rotate your device to play the game</h1>
       </dialog>
     </div>
     <div id="winningScreen" class="gameoverScreen">
