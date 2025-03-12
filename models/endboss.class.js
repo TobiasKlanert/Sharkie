@@ -80,6 +80,9 @@ class Endboss extends MovableObject {
 
   enemyDyingImages = this.IMAGES_DEAD;
 
+  endbossMusic = new Audio("audio/endboss-music.mp3");
+  endbossAttackSound = new Audio("audio/endboss-attack.mp3");
+
   constructor() {
     super().loadImage(this.IMAGES_INTRODUCE[0]);
     this.loadImages(this.IMAGES_INTRODUCE);
@@ -100,8 +103,10 @@ class Endboss extends MovableObject {
         this.playAnimation(this.IMAGES_HURT);
       } else {
         if (i < 10 && this.firstContact) {
+          this.setEndbossMusic();
           this.playAnimation(this.IMAGES_INTRODUCE);
         } else if (i >= 10 && this.executeAttack) {
+          soundsEnabled && this.endbossAttackSound.play();
           this.playAnimation(this.IMAGES_ATTACK);
         } else if (i >= 10) {
           this.playAnimation(this.IMAGES_FLOATING);
@@ -112,6 +117,14 @@ class Endboss extends MovableObject {
         }
       }
     }, 150);
+  }
+
+  setEndbossMusic() {
+    currentMusic.pause();
+    currentMusic.currentTime = 0;
+    currentMusic = this.endbossMusic;
+    currentMusic.play();
+    currentMusic.loop = true;
   }
 
   getRandomTime() {

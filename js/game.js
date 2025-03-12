@@ -21,6 +21,9 @@ let btnSlap;
 
 let intervalIds = [];
 
+let backgroundMusic = new Audio("audio/background-music.mp3");
+let currentMusic; 
+
 function startGame() {
   initCanvas();
   initButtons();
@@ -28,6 +31,9 @@ function startGame() {
   initAssets();
   initLevel();
   init();
+  currentMusic = backgroundMusic;
+  currentMusic.play()
+  currentMusic.loop = true;
 }
 
 function initCanvas() {
@@ -56,12 +62,12 @@ function setButtons() {
   btnFullscreen.style.display = "flex";
   btnStop.style.display = "flex";
   /* if ("ontouchstart" in window) { */
-    btnUp.style.display = "flex";
-    btnDown.style.display = "flex";
-    btnLeft.style.display = "flex";
-    btnRight.style.display = "flex";
-    btnBubble.style.display = "flex";
-    btnSlap.style.display = "flex";
+  btnUp.style.display = "flex";
+  btnDown.style.display = "flex";
+  btnLeft.style.display = "flex";
+  btnRight.style.display = "flex";
+  btnBubble.style.display = "flex";
+  btnSlap.style.display = "flex";
   /* } */
 }
 
@@ -78,9 +84,14 @@ function stopGame(screenType) {
     canvas.classList.toggle("fullscreen");
     exitFullscreen();
   }
-
+  stopMusic();
   document.getElementById(screenType).style.display = "flex";
   disableButtons();
+}
+
+function stopMusic() {
+  currentMusic.pause();
+  currentMusic.currentTime = 0;
 }
 
 function disableButtons() {
@@ -115,6 +126,11 @@ function toggleSound(button) {
   `;
 
   button.innerHTML = button.innerHTML.includes("path") ? svg2 : svg1;
+  if (soundsEnabled) {
+    currentMusic.play();
+  } else {
+    currentMusic.pause();
+  }
 }
 
 function toggleFullscreen() {
