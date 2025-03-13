@@ -123,8 +123,9 @@ class Endboss extends MovableObject {
     currentMusic.pause();
     currentMusic.currentTime = 0;
     currentMusic = this.endbossMusic;
-    currentMusic.play();
+    currentMusic.volume = 0.2;
     currentMusic.loop = true;
+    currentMusic.play();
   }
 
   getRandomTime() {

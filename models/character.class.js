@@ -149,7 +149,12 @@ class Character extends MovableObject {
     "graphics/1.Sharkie/4.Attack/Fin slap/8.png",
   ];
   world;
-  swimming_sound = new Audio("audio/swimming.mp3");
+  swimmingSound = new Audio("audio/swimming.mp3");
+  snoringSound = new Audio("audio/snoring.mp3");
+  bubbleSound = new Audio("audio/bubble-attack.mp3");
+  slapSound = new Audio("audio/fin-slap.mp3");
+  electricShockSound = new Audio("audio/electric-shock.mp3");
+  posionedSound;
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
@@ -182,7 +187,7 @@ class Character extends MovableObject {
 
     if (deltaTime) {
       this.checkBarrierCollisions();
-      this.swimming_sound.pause();
+      this.swimmingSound.pause();
       if (
         this.world.keyboard.RIGHT &&
         this.x < this.world.level.levelEndX &&
@@ -216,6 +221,12 @@ class Character extends MovableObject {
         this.handleMovementStart();
       }
       if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
+        if (soundsEnabled) {
+          this.snoringSound.volume = 0.5;
+          this.snoringSound.loop = true;
+          this.snoringSound.play();
+        }
+        // TODO: stop snoring sound when stop game
         this.moveDown(deltaTime / 5);
       }
       this.world.cameraX = -this.x + 220;
@@ -225,7 +236,11 @@ class Character extends MovableObject {
 
   handleMovementStart(direction) {
     clearInterval(this.gravityInterval);
-    soundsEnabled && this.swimming_sound.play();
+    if (soundsEnabled) {
+      this.swimmingSound.volume = 1;
+      this.swimmingSound.play();
+    }
+    this.snoringSound.pause();
     this.idleTime = 0;
     switch (direction) {
       case "right":
@@ -249,8 +264,15 @@ class Character extends MovableObject {
   }
 
   characterAttack() {
-    if (this.world.keyboard.D || this.world.keyboard.SPACE) {
+    if (this.world.keyboard.D) {
       this.idleTime = 0;
+      this.bubbleSound.volume = 0.5;
+      this.bubbleSound.loop = true;
+      this.bubbleSound.play();
+    } else if (this.world.keyboard.SPACE) {
+      this.idleTime = 0;
+      this.slapSound.volume = 0.5;
+      this.slapSound.play();
     }
 
     requestAnimationFrame(this.characterAttack.bind(this));
@@ -313,6 +335,18 @@ class Character extends MovableObject {
         return this.IMAGES_HURT_POISONED;
       case "jellyFish":
         return this.IMAGES_HURT_ELECTRO_SHOCK;
+    }
+  }
+
+  // TODO: add play sound 
+  getHurtSound() {
+    switch (this.enemyType) {
+      case "pufferFish":
+        return this.posionedSound;
+      case "endboss":
+        return this.posionedSound;
+      case "jellyFish":
+        return this.electricShockSound;
     }
   }
 

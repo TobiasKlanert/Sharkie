@@ -15,10 +15,13 @@ class World {
   bubbles = [];
   attackDamage = 1;
 
+  gameOverSound = new Audio("audio/game-over.mp3");
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.gameOverSound.volume = 0.2;
     this.draw();
     this.setWorld();
     this.run();
@@ -81,6 +84,8 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
           this.character.attack(enemy);
+          this.character.bubbleSound.pause();
+          this.character.bubbleSound.currentTime = 0;
           if (enemy instanceof Endboss) {
             enemy.isHurt = true;
             enemy.handleHurt();
@@ -99,6 +104,9 @@ class World {
       this.statusBarLife.IMAGES_LIFE
     );
     if (this.character.isDead(this.character)) {
+      currentMusic.pause();
+      currentMusic.currentTime = 0;
+      this.gameOverSound.play();
       setTimeout(() => {
         stopGame("gameoverScreen");
       }, 2000);
@@ -123,6 +131,9 @@ class World {
         this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
         this.character.executeAttack = false;
         if (this.endboss.isDying) {
+          currentMusic.pause();
+          currentMusic.currentTime = 0;
+          // TODO: add winning sound
           stopGame("winningScreen");
         }
       }, enemy.enemyDyingImages.length * enemy.animationTime);

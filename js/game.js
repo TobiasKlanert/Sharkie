@@ -32,8 +32,9 @@ function startGame() {
   initLevel();
   init();
   currentMusic = backgroundMusic;
-  currentMusic.play()
+  currentMusic.volume = 0.2;
   currentMusic.loop = true;
+  currentMusic.play();
 }
 
 function initCanvas() {
@@ -84,7 +85,7 @@ function stopGame(screenType) {
     canvas.classList.toggle("fullscreen");
     exitFullscreen();
   }
-  stopMusic();
+  /* stopMusic(); */
   document.getElementById(screenType).style.display = "flex";
   disableButtons();
 }
