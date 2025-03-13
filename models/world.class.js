@@ -16,6 +16,7 @@ class World {
   attackDamage = 1;
 
   gameOverSound = new Audio("audio/game-over.mp3");
+  winningSound = new Audio("audio/winning-music.mp3");
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -98,7 +99,9 @@ class World {
   }
 
   enemyCollisions(collisionDamage) {
+    let hurtSound = this.character.getHurtSound();
     this.character.hit(collisionDamage);
+    hurtSound.play();
     this.statusBarLife.setPercentage(
       this.character.energy,
       this.statusBarLife.IMAGES_LIFE
@@ -133,7 +136,7 @@ class World {
         if (this.endboss.isDying) {
           currentMusic.pause();
           currentMusic.currentTime = 0;
-          // TODO: add winning sound
+          this.winningSound.play();
           stopGame("winningScreen");
         }
       }, enemy.enemyDyingImages.length * enemy.animationTime);
@@ -232,6 +235,7 @@ class World {
 
   collectCoins(coin) {
     this.character.countCoins();
+    this.playSound(this.character.collectCoinSound);
     this.statusBarCoins.setPercentage(
       this.character.coinPercentage,
       this.statusBarCoins.IMAGES_COINS
@@ -241,11 +245,18 @@ class World {
 
   collectBottles(bottle) {
     this.character.countBottles();
+    this.playSound(this.character.collectBottleSound);
     this.statusBarBottles.setPercentage(
       this.character.bottles,
       this.statusBarBottles.IMAGES_BOTTLES
     );
     this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
+  }
+
+  playSound(sound) {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play();
   }
 
   checkAttacks(x, y, speed, bubbleType) {

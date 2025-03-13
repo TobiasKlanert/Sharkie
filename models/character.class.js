@@ -155,6 +155,8 @@ class Character extends MovableObject {
   slapSound = new Audio("audio/fin-slap.mp3");
   electricShockSound = new Audio("audio/electric-shock.mp3");
   posionedSound;
+  collectCoinSound = new Audio("audio/collect-coins.mp3");
+  collectBottleSound = new Audio("audio/collect-bottle.mp3");
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
@@ -222,7 +224,6 @@ class Character extends MovableObject {
       }
       if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
         if (soundsEnabled) {
-          this.snoringSound.volume = 0.5;
           this.snoringSound.loop = true;
           this.snoringSound.play();
         }
@@ -237,7 +238,6 @@ class Character extends MovableObject {
   handleMovementStart(direction) {
     clearInterval(this.gravityInterval);
     if (soundsEnabled) {
-      this.swimmingSound.volume = 1;
       this.swimmingSound.play();
     }
     this.snoringSound.pause();
@@ -266,12 +266,11 @@ class Character extends MovableObject {
   characterAttack() {
     if (this.world.keyboard.D) {
       this.idleTime = 0;
-      this.bubbleSound.volume = 0.5;
       this.bubbleSound.loop = true;
       this.bubbleSound.play();
     } else if (this.world.keyboard.SPACE) {
       this.idleTime = 0;
-      this.slapSound.volume = 0.5;
+      this.slapSound.currentTime = 0;
       this.slapSound.play();
     }
 
@@ -338,7 +337,6 @@ class Character extends MovableObject {
     }
   }
 
-  // TODO: add play sound 
   getHurtSound() {
     switch (this.enemyType) {
       case "pufferFish":

@@ -85,7 +85,7 @@ function stopGame(screenType) {
     canvas.classList.toggle("fullscreen");
     exitFullscreen();
   }
-  /* stopMusic(); */
+  screenType == 'startScreen' && stopMusic();
   document.getElementById(screenType).style.display = "flex";
   disableButtons();
 }
