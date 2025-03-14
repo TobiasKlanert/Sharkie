@@ -22,9 +22,12 @@ let btnSlap;
 let intervalIds = [];
 
 let backgroundMusic = new Audio("audio/background-music.mp3");
-let currentMusic; 
+let currentMusic;
+
+let mobileDevice = false;
 
 function startGame() {
+  checkDevice();
   initCanvas();
   initButtons();
   setButtons();
@@ -62,30 +65,38 @@ function setButtons() {
   btnSounds.style.display = "flex";
   btnFullscreen.style.display = "flex";
   btnStop.style.display = "flex";
-  /* if ("ontouchstart" in window) { */
-  btnUp.style.display = "flex";
-  btnDown.style.display = "flex";
-  btnLeft.style.display = "flex";
-  btnRight.style.display = "flex";
-  btnBubble.style.display = "flex";
-  btnSlap.style.display = "flex";
-  /* } */
+  if (mobileDevice) {
+    btnUp.style.display = "flex";
+    btnDown.style.display = "flex";
+    btnLeft.style.display = "flex";
+    btnRight.style.display = "flex";
+    btnBubble.style.display = "flex";
+    btnSlap.style.display = "flex";
+  }
 }
 
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
+  if (mobileDevice) {
+    enterFullscreen();
+    btnFullscreen.style.display = "none";
+  }
 }
 
 function stopGame(screenType) {
   intervalIds.forEach((id) => clearInterval(id));
   intervalIds.splice(0, intervalIds.length);
   if (fullscreenEnabled) {
-    toggleBtnFullscreen(document.getElementById("btnFullscreen"));
-    canvas.classList.toggle("fullscreen");
+    /* toggleBtnFullscreen(document.getElementById("btnFullscreen")); */
     exitFullscreen();
+    /* canvas.classList.toggle("fullscreen"); */
   }
-  screenType == 'startScreen' && stopMusic();
+  if (!soundsEnabled) {
+    toggleSound(btnSounds);
+  }
+  stopMusic();
+  stopSounds();
   document.getElementById(screenType).style.display = "flex";
   disableButtons();
 }
@@ -93,6 +104,13 @@ function stopGame(screenType) {
 function stopMusic() {
   currentMusic.pause();
   currentMusic.currentTime = 0;
+}
+
+function stopSounds() {
+  world.character.bubbleSound.pause();
+  world.character.bubbleSound.currentTime = 0;
+  world.character.snoringSound.pause();
+  world.character.snoringSound.currentTime = 0;
 }
 
 function disableButtons() {
@@ -129,8 +147,11 @@ function toggleSound(button) {
   button.innerHTML = button.innerHTML.includes("path") ? svg2 : svg1;
   if (soundsEnabled) {
     currentMusic.play();
+    world.character.idleTime >= 150 && world.character.snoringSound.play();
   } else {
     currentMusic.pause();
+    world.character.snoringSound.pause();
+    world.character.bubbleSound.pause();
   }
 }
 
@@ -222,6 +243,14 @@ function pushToIntervals(intervals) {
   intervals.forEach((interval) => {
     intervalIds.push(interval);
   });
+}
+
+function checkDevice() {
+  if ("ontouchstart" in window) {
+    mobileDevice = true;
+  } else {
+    mobileDevice = false;
+  }
 }
 
 function checkTouchEvents() {

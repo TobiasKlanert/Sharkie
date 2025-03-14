@@ -57,7 +57,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit(damage) {
-    if (!this.isHurt()) {    
+    if (!this.isHurt()) {
       this.energy -= damage;
       this.lastHit = new Date().getTime();
 

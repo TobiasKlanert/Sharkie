@@ -101,7 +101,7 @@ class World {
   enemyCollisions(collisionDamage) {
     let hurtSound = this.character.getHurtSound();
     this.character.hit(collisionDamage);
-    hurtSound.play();
+    soundsEnabled && hurtSound.play();
     this.statusBarLife.setPercentage(
       this.character.energy,
       this.statusBarLife.IMAGES_LIFE
@@ -109,7 +109,7 @@ class World {
     if (this.character.isDead(this.character)) {
       currentMusic.pause();
       currentMusic.currentTime = 0;
-      this.gameOverSound.play();
+      soundsEnabled && this.gameOverSound.play();
       setTimeout(() => {
         stopGame("gameoverScreen");
       }, 2000);
@@ -136,7 +136,7 @@ class World {
         if (this.endboss.isDying) {
           currentMusic.pause();
           currentMusic.currentTime = 0;
-          this.winningSound.play();
+          soundsEnabled && this.winningSound.play();
           stopGame("winningScreen");
         }
       }, enemy.enemyDyingImages.length * enemy.animationTime);
@@ -235,7 +235,7 @@ class World {
 
   collectCoins(coin) {
     this.character.countCoins();
-    this.playSound(this.character.collectCoinSound);
+    soundsEnabled && this.playSound(this.character.collectCoinSound);
     this.statusBarCoins.setPercentage(
       this.character.coinPercentage,
       this.statusBarCoins.IMAGES_COINS
@@ -245,7 +245,7 @@ class World {
 
   collectBottles(bottle) {
     this.character.countBottles();
-    this.playSound(this.character.collectBottleSound);
+    soundsEnabled && this.playSound(this.character.collectBottleSound);
     this.statusBarBottles.setPercentage(
       this.character.bottles,
       this.statusBarBottles.IMAGES_BOTTLES

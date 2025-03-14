@@ -222,12 +222,12 @@ class Character extends MovableObject {
         this.moveDown();
         this.handleMovementStart();
       }
-      if (this.idleTime >= 150 && this.y < this.world.level.levelEndY) {
+      if (this.idleTime >= 150 && this.y < this.world.level.levelEndY && this.canMoveDown) {
         if (soundsEnabled) {
           this.snoringSound.loop = true;
           this.snoringSound.play();
         }
-        // TODO: stop snoring sound when stop game
+        // TODO: Wenn Tab verlassen wird, während Animation läuft, fällt character aus der Welt
         this.moveDown(deltaTime / 5);
       }
       this.world.cameraX = -this.x + 220;
@@ -266,12 +266,16 @@ class Character extends MovableObject {
   characterAttack() {
     if (this.world.keyboard.D) {
       this.idleTime = 0;
-      this.bubbleSound.loop = true;
-      this.bubbleSound.play();
+      if (soundsEnabled) {
+        this.bubbleSound.loop = true;
+        this.bubbleSound.play();
+      }
     } else if (this.world.keyboard.SPACE) {
       this.idleTime = 0;
-      this.slapSound.currentTime = 0;
-      this.slapSound.play();
+      if (soundsEnabled) {
+        this.slapSound.currentTime = 0;
+        this.slapSound.play();
+      }
     }
 
     requestAnimationFrame(this.characterAttack.bind(this));
