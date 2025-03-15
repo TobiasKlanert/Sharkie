@@ -311,6 +311,10 @@ class World {
 
     if (mo instanceof Bubble) {
       this.drawRotatedObject(mo);
+    } else if (
+      mo instanceof Character
+    ) {
+      this.drawRotatedCharacter(mo);
     } else {
       mo.drawObject(this.ctx);
     }
@@ -335,6 +339,31 @@ class World {
       -mo.height / 2,
       mo.width,
       mo.height
+    );
+
+    this.ctx.restore();
+  }
+
+  drawRotatedCharacter(mo) {
+    this.ctx.save();
+
+    this.ctx.translate(
+      this.character.x + this.character.width / 2,
+      this.character.y + this.character.height / 2
+    );
+
+    if (this.keyboard.UP) {
+      this.ctx.rotate(-Math.PI / 4);
+    } else if (this.keyboard.DOWN) {
+      this.ctx.rotate(Math.PI / 4);
+    }
+
+    this.ctx.drawImage(
+      this.character.img,
+      -this.character.width / 2,
+      -this.character.height / 2,
+      this.character.width,
+      this.character.height
     );
 
     this.ctx.restore();

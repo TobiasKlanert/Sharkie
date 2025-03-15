@@ -10,6 +10,7 @@ class Character extends MovableObject {
   lastAnimateFrameTime = 0;
   moveFrameDuration = 16;
   animateFrameDuration = 125;
+  rotation = 0;
   animateIntervalReached = false;
   moveIntervalReached = false;
 
