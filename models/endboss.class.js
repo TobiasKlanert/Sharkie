@@ -109,7 +109,7 @@ class Endboss extends MovableObject {
           this.playAnimation(this.IMAGES_INTRODUCE);
         } else if (i >= 10 && this.executeAttack) {
           if (soundsEnabled) {
-            this.endbossAttackSound.volume = 0.5;
+            this.endbossAttackSound.volume = 0.2;
             this.endbossAttackSound.play();
           }
           this.playAnimation(this.IMAGES_ATTACK);
