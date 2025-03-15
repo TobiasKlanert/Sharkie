@@ -32,23 +32,36 @@ class BARRIERS extends DrawableObject {
         bottom: 510,
       }
       this.offsetBottom = {
-        top: 530,
+        top: 550,
         left: 0,
         right: 10,
         bottom: 0,
       }
     } else if (image === "graphics/3. Background/Barrier/2.png") {
       this.offsetTop = {
-        top: 50,
+        top: 70,
         left: 50,
         right: 100,
         bottom: 0,
       }
       this.offsetBottom = {
-        top: 50,
+        top: 70,
         left: 50,
         right: 100,
         bottom: 0,
+      }
+    } else {
+      this.offsetTop = {
+        top: 0,
+        left: 30,
+        right: 50,
+        bottom: 10,
+      }
+      this.offsetBottom = {
+        top: 0,
+        left: 30,
+        right: 50,
+        bottom: 10,
       }
     }
   }
