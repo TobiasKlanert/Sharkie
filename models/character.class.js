@@ -154,9 +154,10 @@ class Character extends MovableObject {
   bubbleSound = new Audio("audio/bubble-attack.mp3");
   slapSound = new Audio("audio/fin-slap.mp3");
   electricShockSound = new Audio("audio/electric-shock.mp3");
-  posionedSound;
+  posionedSound = new Audio("audio/poisoned.mp3");
   collectCoinSound = new Audio("audio/collect-coins.mp3");
   collectBottleSound = new Audio("audio/collect-bottle.mp3");
+  barrierCollisionSound = new Audio("audio/collision.mp3");
 
   constructor() {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
@@ -189,6 +190,7 @@ class Character extends MovableObject {
 
     if (deltaTime) {
       this.checkBarrierCollisions();
+      soundsEnabled && this.playCollisionSound();
       this.swimmingSound.pause();
       if (
         this.world.keyboard.RIGHT &&
@@ -222,7 +224,11 @@ class Character extends MovableObject {
         this.moveDown();
         this.handleMovementStart();
       }
-      if (this.idleTime >= 150 && this.y < this.world.level.levelEndY && this.canMoveDown) {
+      if (
+        this.idleTime >= 150 &&
+        this.y < this.world.level.levelEndY &&
+        this.canMoveDown
+      ) {
         if (soundsEnabled) {
           this.snoringSound.loop = true;
           this.snoringSound.play();
@@ -261,6 +267,19 @@ class Character extends MovableObject {
     this.canMoveDown = true;
 
     this.world.checkBarrierCollisions();
+  }
+
+  playCollisionSound() {
+    let keyboard = this.world.keyboard;
+    if (
+      (keyboard.LEFT || keyboard.RIGHT || keyboard.UP || keyboard.DOWN) &&
+      (!this.canMoveLeft ||
+        !this.canMoveRight ||
+        !this.canMoveUp ||
+        !this.canMoveDown)
+    ) {
+      this.barrierCollisionSound.play();
+    }
   }
 
   characterAttack() {

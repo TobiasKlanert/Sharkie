@@ -88,9 +88,7 @@ function stopGame(screenType) {
   intervalIds.forEach((id) => clearInterval(id));
   intervalIds.splice(0, intervalIds.length);
   if (fullscreenEnabled) {
-    /* toggleBtnFullscreen(document.getElementById("btnFullscreen")); */
     exitFullscreen();
-    /* canvas.classList.toggle("fullscreen"); */
   }
   if (!soundsEnabled) {
     toggleSound(btnSounds);

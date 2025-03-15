@@ -82,6 +82,7 @@ class Endboss extends MovableObject {
 
   endbossMusic = new Audio("audio/endboss-music.mp3");
   endbossAttackSound = new Audio("audio/endboss-attack.mp3");
+  endbossHurtSound = new Audio("audio/poisoned.mp3");
 
   constructor() {
     super().loadImage(this.IMAGES_INTRODUCE[0]);
@@ -101,12 +102,16 @@ class Endboss extends MovableObject {
     this.animationInterval = setInterval(() => {
       if (this.isHurt) {
         this.playAnimation(this.IMAGES_HURT);
+        soundsEnabled && this.endbossHurtSound.play();
       } else {
         if (i < 10 && this.firstContact) {
           soundsEnabled && this.setEndbossMusic();
           this.playAnimation(this.IMAGES_INTRODUCE);
         } else if (i >= 10 && this.executeAttack) {
-          soundsEnabled && this.endbossAttackSound.play();
+          if (soundsEnabled) {
+            this.endbossAttackSound.volume = 0.5;
+            this.endbossAttackSound.play();
+          }
           this.playAnimation(this.IMAGES_ATTACK);
         } else if (i >= 10) {
           this.playAnimation(this.IMAGES_FLOATING);
