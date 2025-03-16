@@ -158,12 +158,7 @@
             </p>
           </div>
         </div>
-        <button
-          class="close-btn"
-          onclick="toggleInstructions()"
-        >
-          Close
-        </button>
+        <button class="close-btn" onclick="toggleInstructions()">Close</button>
       </dialog>
       <dialog id="orientationMessage">
         <h1>Please rotate your device to play the game</h1>
@@ -175,7 +170,11 @@
       <button class="menu-button new-game" onclick="startGame()">New Game</button>
     </div>
     <div id="gameoverScreen" class="gameoverScreen">
-      <button onclick="startGame()">Retry</button>
+      <div class="game-over">
+        <img src="graphics/1.Sharkie/6.dead/1.Poisoned/12.png" alt="">
+        <h1>Game Over</h1>
+        <button class="menu-button" onclick="startGame()">Try Again</button>
+      </div>
     </div>
     <div id="game" class="game">
       <div id="topPanel" class="top-panel">
