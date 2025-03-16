@@ -138,9 +138,14 @@ class World {
           currentMusic.currentTime = 0;
           soundsEnabled && this.winningSound.play();
           stopGame("winningScreen");
+          this.showCollectedCoins();
         }
       }, enemy.enemyDyingImages.length * enemy.animationTime);
     }
+  }
+
+  showCollectedCoins() {
+    document.getElementById("collectedCoins").innerHTML = this.character.coins + " / 25";
   }
 
   checkBarrierCollisions() {

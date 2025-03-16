@@ -34,6 +34,11 @@ function startGame() {
   initAssets();
   initLevel();
   init();
+
+  if (!soundsEnabled) {
+    toggleSound(btnSounds);
+  }
+  
   currentMusic = backgroundMusic;
   currentMusic.volume = 0.2;
   currentMusic.loop = true;
@@ -90,11 +95,9 @@ function stopGame(screenType) {
   if (fullscreenEnabled) {
     exitFullscreen();
   }
-  if (!soundsEnabled) {
-    toggleSound(btnSounds);
-  }
   stopMusic();
   stopSounds();
+
   document.getElementById(screenType).style.display = "flex";
   disableButtons();
 }
