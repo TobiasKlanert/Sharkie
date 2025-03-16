@@ -24,14 +24,14 @@ function checkOrientation() {
 function toggleDialog(dialog) {
     if (!dialogOpened) {
         dialog.style.display = "flex";
-        startScreen.style.backgroundImage = "none";   
+        startScreen.style.borderRadius = "25px";  
         dialogOpened = true;
     } else {
         dialog.style.display = "none";
-        startScreen.style.backgroundImage = "url('graphics/3. Background/Mesa de trabajo 1.png')";   
+        startScreen.style.borderRadius = "0px";  
         dialogOpened = false;
     }
 }
 
-window.addEventListener("resize", checkOrientation);
-window.addEventListener("orientationchange", checkOrientation);
+/* window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation); */
