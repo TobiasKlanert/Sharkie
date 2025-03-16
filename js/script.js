@@ -1,14 +1,14 @@
 let startScreen;
 let instructionDialog;
 let orientationMessage;
-let impressumDialog;
+let impressumBtn;
 let dialogOpened = false;
 
 function initStartScreen() {
     startScreen = document.getElementById("startScreen");
     instructionDialog = document.getElementById("instructionsDialog");
-    impressumDialog = document.getElementById("impressumDialog");
     orientationMessage = document.getElementById("orientationMessage");
+    impressumBtn = document.getElementById("btn-impressum");
 }
 
 function checkOrientation() {
@@ -24,10 +24,12 @@ function checkOrientation() {
 function toggleDialog(dialog) {
     if (!dialogOpened) {
         dialog.style.display = "flex";
+        impressumBtn.style.display = "none";
         startScreen.style.borderRadius = "25px";  
         dialogOpened = true;
     } else {
         dialog.style.display = "none";
+        impressumBtn.style.display = "flex";
         startScreen.style.borderRadius = "0px";  
         dialogOpened = false;
     }

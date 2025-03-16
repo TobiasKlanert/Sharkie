@@ -50,6 +50,7 @@ function initCanvas() {
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
   document.getElementById("btn-impressum").style.display = "none";
+  document.getElementById("game").style.display = "flex";
   document.getElementById("canvas").style.display = "block";
 }
 
@@ -99,6 +100,7 @@ function stopGame(screenType) {
   stopMusic();
   stopSounds();
 
+  document.getElementById("game").style.display = "none";
   document.getElementById(screenType).style.display = "flex";
   document.getElementById("btn-impressum").style.display = "flex";
   disableButtons();
