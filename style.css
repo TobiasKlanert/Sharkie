@@ -73,6 +73,16 @@ td {
   vertical-align: middle;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #7fffe0;
+}
+
+a:hover {
+  color: #531a82;
+}
+
 .d-none {
   display: none;
 }
@@ -372,6 +382,20 @@ dialog {
 .close-btn:hover {
   background: #531a82;
   color: white;
+}
+
+.impressum {
+  font-family: Arial, sans-serif;
+}
+
+.btn-impressum {
+  font-family: "LuckiesGuy";
+  font-size: 18px;
+  color: white;
+}
+
+.btn-impressum:hover {
+  text-decoration: underline;
 }
 
 @media only screen and (max-width: 1280px) {

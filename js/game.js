@@ -49,6 +49,7 @@ function initCanvas() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
+  document.getElementById("btn-impressum").style.display = "none";
   document.getElementById("canvas").style.display = "block";
 }
 
@@ -99,6 +100,7 @@ function stopGame(screenType) {
   stopSounds();
 
   document.getElementById(screenType).style.display = "flex";
+  document.getElementById("btn-impressum").style.display = "flex";
   disableButtons();
 }
 
