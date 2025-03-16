@@ -547,4 +547,14 @@ dialog {
   .btn-impressum {
     bottom: 10px;
   }
+
+  .game-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .bigger-btn {
+    width: 75px;
+    height: 75px;
+  }
 }
