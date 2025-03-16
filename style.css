@@ -170,7 +170,8 @@ a:hover {
   position: relative;
   background: url("graphics/3. Background/Mesa de trabajo 1.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center;
   width: 100%;
   height: 100%;
   max-width: 1280px;
@@ -182,23 +183,27 @@ a:hover {
 
 .gameoverScreen {
   position: relative;
-  background: url("graphics/3. Background/Dark/1.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 1280px;
-  height: 720px;
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  max-height: 720px;
   display: none;
   justify-content: space-around;
   align-items: center;
 }
 
-.img-winning {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  max-width: 1280px;
-  max-height: 720px;
+.winning-background {
+  background: url("graphics/6.Botones/Tittles/You win/Mesa de trabajo 1.png"), url("graphics/3. Background/Dark/1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.gameover-background {
+  background: url("graphics/3. Background/Dark/1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .new-game {
@@ -217,7 +222,7 @@ a:hover {
   align-items: center;
 }
 
-.coins img{
+.coins img {
   width: 50px;
   height: 50px;
   margin-right: 15px;
@@ -419,7 +424,7 @@ dialog {
 
 @media only screen and (max-width: 1000px) {
   .startScreen {
-    background-image: none;
+    background-image: url("graphics/3. Background/Dark/1.png");
     flex-direction: column;
   }
 
@@ -429,10 +434,15 @@ dialog {
 
   .responsive-title {
     display: block;
+    margin-bottom: 100px;
   }
 
   .responsive-img {
     display: block;
+  }
+
+  .winning-background {
+    background-image: url("graphics/6.Botones/Tittles/You win/confetti.PNG"), url("graphics/3. Background/Dark/1.png");
   }
 }
 
@@ -446,7 +456,7 @@ dialog {
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 510px) {
   h1 {
     font-size: 52px;
   }
@@ -461,5 +471,10 @@ dialog {
 
   .close-btn {
     margin-top: 10px;
+  }
+
+  .game-over img {
+    width: 400px;
+    top: 0;
   }
 }

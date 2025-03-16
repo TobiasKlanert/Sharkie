@@ -32,7 +32,11 @@
     <div id="startScreen" class="startScreen">
       <div class="leftSide">
         <h1 class="responsive-title">Sharkie</h1>
-        <img src="graphics/6.Botones/Tittles/sharkie.png" alt="Sharkie" class="responsive-img">
+        <img
+          src="graphics/6.Botones/Tittles/sharkie.png"
+          alt="Sharkie"
+          class="responsive-img"
+        />
         <button
           onclick="toggleDialog(instructionDialog)"
           class="menu-button margin-bottom-30px"
@@ -206,7 +210,8 @@
           <h2>Audio Credits</h2>
           <p>
             The game uses sounds from
-            <a href="https://freesound.org/" target="_blank">Freesound.org</a> (CC0 license).
+            <a href="https://freesound.org/" target="_blank">Freesound.org</a>
+            (CC0 license).
           </p>
 
           <h2>Liability for Content</h2>
@@ -246,12 +251,8 @@
         </button>
       </dialog>
     </div>
-    <div id="winningScreen" class="gameoverScreen">
-      <img
-        src="graphics/6.Botones/Tittles/You win/Mesa de trabajo 1.png"
-        alt="You win!"
-        class="img-winning"
-      />
+    <div id="winningScreen" class="gameoverScreen winning-background">
+      <h1 class="responsive-title">¡You Win!</h1>
       <h2 class="coins">
         <img src="graphics/4. Marcadores/1. Coins/1.png" alt="coin" /><span
           id="collectedCoins"
@@ -262,7 +263,7 @@
         New Game
       </button>
     </div>
-    <div id="gameoverScreen" class="gameoverScreen">
+    <div id="gameoverScreen" class="gameoverScreen gameover-background">
       <div class="game-over">
         <img src="graphics/1.Sharkie/6.dead/1.Poisoned/12.png" alt="" />
         <h1>Game Over</h1>

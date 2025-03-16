@@ -14,10 +14,10 @@ function initStartScreen() {
 function checkOrientation() {
   if (window.innerHeight > window.innerWidth) {
     orientationMessage.style.display = "flex";
-    startScreen.style.backgroundImage = "none";
+    startScreen.style.borderRadius = "25px";
   } else {
     orientationMessage.style.display = "none";
-    startScreen.style.backgroundImage = "url('graphics/3. Background/Mesa de trabajo 1.png')";
+    startScreen.style.borderRadius = "0";
   }
 }
 
@@ -33,5 +33,5 @@ function toggleDialog(dialog) {
     }
 }
 
-/* window.addEventListener("resize", checkOrientation);
-window.addEventListener("orientationchange", checkOrientation); */
+window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation);
