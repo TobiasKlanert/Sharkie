@@ -262,8 +262,7 @@ function checkTouchEvents() {
   if (btnLeft) {
     btnLeft.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.LEFT = true;
       },
       { passive: false }
@@ -271,8 +270,7 @@ function checkTouchEvents() {
 
     btnLeft.addEventListener(
       "touchend",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.LEFT = false;
       },
       { passive: false }
@@ -282,8 +280,7 @@ function checkTouchEvents() {
   if (btnRight) {
     btnRight.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.RIGHT = true;
       },
       { passive: false }
@@ -291,8 +288,7 @@ function checkTouchEvents() {
 
     btnRight.addEventListener(
       "touchend",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.RIGHT = false;
       },
       { passive: false }
@@ -302,8 +298,7 @@ function checkTouchEvents() {
   if (btnUp) {
     btnUp.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.UP = true;
       },
       { passive: false }
@@ -311,8 +306,7 @@ function checkTouchEvents() {
 
     btnUp.addEventListener(
       "touchend",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.UP = false;
       },
       { passive: false }
@@ -322,8 +316,7 @@ function checkTouchEvents() {
   if (btnDown) {
     btnDown.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.DOWN = true;
       },
       { passive: false }
@@ -331,8 +324,7 @@ function checkTouchEvents() {
 
     btnDown.addEventListener(
       "touchend",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.DOWN = false;
       },
       { passive: false }
@@ -342,8 +334,7 @@ function checkTouchEvents() {
   if (btnBubble) {
     btnBubble.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.D = true;
       },
       { passive: false }
@@ -353,8 +344,7 @@ function checkTouchEvents() {
   if (btnSlap) {
     btnSlap.addEventListener(
       "touchstart",
-      (event) => {
-        event.preventDefault();
+      () => {
         keyboard.SPACE = true;
       },
       { passive: false }

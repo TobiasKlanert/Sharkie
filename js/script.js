@@ -9,6 +9,7 @@ function initStartScreen() {
     instructionDialog = document.getElementById("instructionsDialog");
     orientationMessage = document.getElementById("orientationMessage");
     impressumBtn = document.getElementById("btn-impressum");
+    checkOrientation();
 }
 
 function checkOrientation() {
@@ -35,5 +36,6 @@ function toggleDialog(dialog) {
     }
 }
 
+addEventListener("DOMContentLoaded", initStartScreen);
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
