@@ -109,8 +109,8 @@ class World {
     if (this.character.isDead(this.character)) {
       currentMusic.pause();
       currentMusic.currentTime = 0;
-      soundsEnabled && this.gameOverSound.play();
       setTimeout(() => {
+        soundsEnabled && this.gameOverSound.play();
         stopGame("gameoverScreen");
       }, 2000);
     }
