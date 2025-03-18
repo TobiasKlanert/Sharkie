@@ -3,10 +3,10 @@ class Enemy extends MovableObject {
   width = 150;
 
   offset = {
-    top: 10,
-    left: 5,
-    right: 10,
-    bottom: 40,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   };
 
   enemyType = null;
@@ -241,12 +241,24 @@ class Enemy extends MovableObject {
         this.height = 150;
         this.health = 1;
         this.speed = 1.15 + Math.random() * 0.25;
+        this.offset = {
+          top: 10,
+          left: 5,
+          right: 10,
+          bottom: 40,
+        };
         break;
       case "pufferFish":
         this.width = 300;
         this.height = 300;
         this.health = 2;
         this.speed = 0.15 + Math.random() * 0.25;
+        this.offset = {
+          top: 30,
+          left: 5,
+          right: 10,
+          bottom: 120,
+        };
         break;
       default:
         break;
