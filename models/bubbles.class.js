@@ -14,6 +14,9 @@ class Bubble extends MovableObject {
     this.y = y;
     this.width = 75;
     this.height = 75;
+    this.isActive = true;
+    this.sound = new Audio("audio/bubble-attack.mp3");
+    soundsEnabled && this.sound.play();
     this.throw(speed);
     this.animate(5);
     pushToIntervals([this.throwInterval]);

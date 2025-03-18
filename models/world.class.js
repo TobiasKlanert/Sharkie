@@ -85,8 +85,8 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
           this.character.attack(enemy);
-          this.character.bubbleSound.pause();
-          this.character.bubbleSound.currentTime = 0;
+          bubble.sound.pause();
+          bubble.sound.currentTime = 0;
           if (enemy instanceof Endboss) {
             enemy.isHurt = true;
             enemy.handleHurt();

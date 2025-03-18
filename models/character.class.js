@@ -152,7 +152,6 @@ class Character extends MovableObject {
   world;
   swimmingSound = new Audio("audio/swimming.mp3");
   snoringSound = new Audio("audio/snoring.mp3");
-  bubbleSound = new Audio("audio/bubble-attack.mp3");
   slapSound = new Audio("audio/fin-slap.mp3");
   electricShockSound = new Audio("audio/electric-shock.mp3");
   posionedSound = new Audio("audio/poisoned.mp3");
@@ -286,10 +285,6 @@ class Character extends MovableObject {
   characterAttack() {
     if (this.world.keyboard.D) {
       this.idleTime = 0;
-      if (soundsEnabled) {
-        this.bubbleSound.loop = true;
-        this.bubbleSound.play();
-      }
     } else if (this.world.keyboard.SPACE) {
       this.idleTime = 0;
       if (soundsEnabled) {

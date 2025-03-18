@@ -38,7 +38,7 @@ function startGame() {
   if (!soundsEnabled) {
     toggleSound(btnSounds);
   }
-  
+
   currentMusic = backgroundMusic;
   currentMusic.volume = 0.2;
   currentMusic.loop = true;
@@ -99,6 +99,7 @@ function stopGame(screenType) {
   }
   stopMusic();
   stopSounds();
+  removeAllBubbles();
 
   document.getElementById("game").style.display = "none";
   document.getElementById(screenType).style.display = "flex";
@@ -112,11 +113,19 @@ function stopMusic() {
 }
 
 function stopSounds() {
-  world.character.bubbleSound.pause();
-  world.character.bubbleSound.currentTime = 0;
   world.character.snoringSound.pause();
   world.character.snoringSound.currentTime = 0;
 }
+
+function removeAllBubbles() {
+  world.bubbles.forEach((bubble) => {
+      bubble.sound.pause();
+      bubble.sound.currentTime = 0;
+      bubble.isActive = false;
+  });
+  world.bubbles = [];
+}
+
 
 function disableButtons() {
   btnSounds.style.display = "none";
@@ -156,7 +165,7 @@ function toggleSound(button) {
   } else {
     currentMusic.pause();
     world.character.snoringSound.pause();
-    world.character.bubbleSound.pause();
+    world.bubbles.forEach((bubble) => bubble.sound.pause());
   }
 }
 
