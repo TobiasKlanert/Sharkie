@@ -12,6 +12,7 @@ class Bubble extends MovableObject {
     this.loadImage(this.getBubbleType(bubble));
     this.x = x;
     this.y = y;
+    this.startX = x;
     this.width = 75;
     this.height = 75;
     this.isActive = true;
@@ -19,8 +20,8 @@ class Bubble extends MovableObject {
     soundsEnabled && this.sound.play();
     this.throw(speed);
     this.animate(5);
-    pushToIntervals([this.throwInterval]);
-    pushToIntervals([this.animationInterval]);
+    this.checkBubbleRange();
+    pushToIntervals([this.throwInterval, this.animationInterval, this.checkRangeInterval]);
   }
 
   throw(speed = 0) {
@@ -47,5 +48,14 @@ class Bubble extends MovableObject {
       angle += rotationSpeed;
       this.rotation = (angle * Math.PI) / 180;
     }, 1000 / 60);
+  }
+
+  checkBubbleRange() {
+    this.checkRangeInterval = setInterval(() => {
+      if (this.x >= this.startX + 1000) {
+        this.sound.pause();
+        this.isActive = false;
+      }
+    }, 100);
   }
 }

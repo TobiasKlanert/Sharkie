@@ -41,6 +41,8 @@ class World {
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
+      console.log(this.bubbles);
+      this.bubbles = this.bubbles.filter(bubble => bubble.isActive);
     }, 100);
   }
 

@@ -233,7 +233,6 @@ class Character extends MovableObject {
           this.snoringSound.loop = true;
           this.snoringSound.play();
         }
-        // TODO: Wenn Tab verlassen wird, während Animation läuft, fällt character aus der Welt
         this.moveDown(deltaTime / 5);
       }
       this.world.cameraX = -this.x + 220;
@@ -446,8 +445,8 @@ class Character extends MovableObject {
     if (this.currentImage == imageArray.length - 1) {
       if (this.world.keyboard.D && !this.isHurt()) {
         const { x, y, speed } = this.getCharacterMovement();
-        this.world.keyboard.D = false;
         this.world.checkAttacks(x, y, speed, this.getBubbleImages());
+        this.world.keyboard.D = false;
         if (this.bottles > 0) {
           this.world.attackDamage = 2;
           this.bottles -= 20;
