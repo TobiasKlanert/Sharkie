@@ -273,9 +273,7 @@ class World {
       speed,
       bubbleType
     );
-    console.log("Bubble created:", bubble);
     this.bubbles.push(bubble);
-    console.log("Current bubbles array:", this.bubbles);
     this.character.executeAttack = false;
     setTimeout(() => this.keyboard.D = false, 100);
   }

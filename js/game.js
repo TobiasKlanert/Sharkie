@@ -126,7 +126,6 @@ function removeAllBubbles() {
     bubble.isActive = false;
   });
   world.bubbles = [];
-  console.log(world.bubbles);
 }
 
 function clearCanvas() {
