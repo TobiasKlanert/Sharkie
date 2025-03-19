@@ -28,6 +28,9 @@ let currentMusic;
 
 let mobileDevice = false;
 
+/**
+ * Initializes and starts the game by setting up the canvas, buttons, and game assets.
+ */
 function startGame() {
   checkDevice();
   initCanvas();
@@ -47,6 +50,9 @@ function startGame() {
   currentMusic.play();
 }
 
+/**
+ * Initializes the game canvas and hides unnecessary UI elements.
+ */
 function initCanvas() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("gameoverScreen").style.display = "none";
@@ -56,6 +62,9 @@ function initCanvas() {
   document.getElementById("canvas").style.display = "block";
 }
 
+/**
+ * Assigns button elements from the DOM to their respective variables.
+ */
 function initButtons() {
   topPanel = document.getElementById("topPanel");
   bottomPanel = document.getElementById("bottomPanel");
@@ -70,6 +79,9 @@ function initButtons() {
   btnSlap = document.getElementById("btnSlap");
 }
 
+/**
+ * Displays the appropriate control buttons based on the device type.
+ */
 function setButtons() {
   btnSounds.style.display = "flex";
   btnFullscreen.style.display = "flex";
@@ -84,6 +96,9 @@ function setButtons() {
   }
 }
 
+/**
+ * Initializes the game world and keyboard controls.
+ */
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
@@ -93,6 +108,10 @@ function init() {
   }
 }
 
+/**
+ * Stops the game and resets all elements.
+ * @param {string} screenType - The screen to display after stopping the game.
+ */
 function stopGame(screenType) {
   if (fullscreenEnabled) {
     exitFullscreen();
@@ -104,36 +123,56 @@ function stopGame(screenType) {
   removeAllBubbles();
   clearCanvas();
   resetKeyboard();
-
-  document.getElementById("game").style.display = "none";
-  document.getElementById(screenType).style.display = "flex";
-  document.getElementById("btn-impressum").style.display = "flex";
+  changeScreen(screenType);
   disableButtons();
 }
 
+/**
+ * Clears all active interval timers.
+ */
 function stopIntervals() {
   intervalIds.forEach((id) => clearInterval(id));
-  /* intervalIds.splice(0, intervalIds.length); */
   intervalIds = [];
 }
 
+/**
+ * Cancels all active animation frames and stops the game loop.
+ */
 function stopAllAnimations() {
   animationFrameIds.forEach((id) => cancelAnimationFrame(id));
   animationFrameIds = [];
   gameRunning = false;
 }
 
-
+/**
+ * Stops the background music and resets its playback position.
+ */
 function stopMusic() {
   currentMusic.pause();
   currentMusic.currentTime = 0;
 }
 
+/**
+ * Stops all character-related sounds.
+ */
 function stopSounds() {
   world.character.snoringSound.pause();
   world.character.snoringSound.currentTime = 0;
 }
 
+/**
+ * Changes the game screen to the specified type.
+ * @param {string} screenType - The ID of the screen to be displayed.
+ */
+function changeScreen(screenType) {
+  document.getElementById("game").style.display = "none";
+  document.getElementById(screenType).style.display = "flex";
+  document.getElementById("btn-impressum").style.display = "flex";
+}
+
+/**
+ * Removes all active bubbles from the game.
+ */
 function removeAllBubbles() {
   world.bubbles.forEach((bubble) => {
     bubble.sound.pause();
@@ -143,10 +182,16 @@ function removeAllBubbles() {
   world.bubbles = [];
 }
 
+/**
+ * Clears the game canvas.
+ */
 function clearCanvas() {
   world.ctx.clearRect(0, 0, world.canvas.width, world.canvas.height);
 }
 
+/**
+ * Resets all keyboard input states.
+ */
 function resetKeyboard() {
   keyboard.LEFT = false;
   keyboard.RIGHT = false;
@@ -156,6 +201,9 @@ function resetKeyboard() {
   keyboard.D = false;
 }
 
+/**
+ * Hides all game control buttons and the game canvas.
+ */
 function disableButtons() {
   btnSounds.style.display = "none";
   btnFullscreen.style.display = "none";
@@ -169,23 +217,15 @@ function disableButtons() {
   canvas.style.display = "none";
 }
 
+/**
+ * Toggles game sounds on or off and updates the sound button icon.
+ * @param {HTMLElement} button - The button element that triggered the toggle.
+ */
 function toggleSound(button) {
   soundsEnabled = !soundsEnabled;
 
-  const svg1 = `
-    <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
-      <path d="M70 30 Q85 50 70 70" stroke="currentColor" stroke-width="8" fill="none" />
-      <path d="M80 20 Q100 50 80 80" stroke="currentColor" stroke-width="6" fill="none" />
-    </svg>
-  `;
-
-  const svg2 = `
-    <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="20,30 40,30 60,10 60,90 40,70 20,70" fill="currentColor" />
-      <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="8" />
-    </svg>
-  `;
+  const svg1 = getSoundOnSvg();
+  const svg2 = getSoundOffSvg();
 
   button.innerHTML = button.innerHTML.includes("path") ? svg2 : svg1;
   if (soundsEnabled) {
@@ -198,51 +238,29 @@ function toggleSound(button) {
   }
 }
 
+/**
+ * Toggles between fullscreen mode and normal mode.
+ */
 function toggleFullscreen() {
   fullscreenEnabled ? exitFullscreen() : enterFullscreen();
 }
 
+/**
+ * Toggles the fullscreen button icon between two SVG representations.
+ * @param {HTMLElement} button - The button element whose icon should be toggled.
+ */
 function toggleBtnFullscreen(button) {
-  const svg1 = `
-    <svg
-      width="60"
-      height="60"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      stroke-width="12"
-      fill="none"
-    >
-      <polyline points="10,30 10,10 30,10" />
-      <polyline points="70,10 90,10 90,30" />
-      <polyline points="10,70 10,90 30,90" />
-      <polyline points="70,90 90,90 90,70" />
-    </svg>
-  `;
-
-  const svg2 = `
-    <svg
-      width="60"
-      height="60"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      stroke-width="12"
-      fill="none"
-    >
-      <polyline points="10,30 30,30 30,10" />
-      <polyline points="90,30 70,30 70,10" />
-      <polyline points="10,70 30,70 30,90" />
-      <polyline points="90,70 70,70 70,90" />
-    </svg>
-
-  `;
+  const svg1 = getEnableFullscreenSvg();
+  const svg2 = getDisableFullscreenSvg();
 
   button.innerHTML = button.innerHTML.includes("10,30 10,10 30,10")
     ? svg2
     : svg1;
 }
 
+/**
+ * Enters fullscreen mode for the game element and adjusts UI elements accordingly.
+ */
 function enterFullscreen() {
   let element = document.getElementById("game");
   if (element.requestFullscreen) {
@@ -258,6 +276,9 @@ function enterFullscreen() {
   fullscreenEnabled = true;
 }
 
+/**
+ * Exits fullscreen mode and resets related UI elements.
+ */
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -267,22 +288,36 @@ function exitFullscreen() {
   fullscreenEnabled = false;
 }
 
+/**
+ * Adjusts the positioning of UI buttons for fullscreen mode.
+ */
 function arrangeButtons() {
   canvas.classList.toggle("relative");
   topPanel.classList.toggle("top-absolute");
   bottomPanel.classList.toggle("bottom-absolute");
 }
 
+/**
+ * Pushes new interval IDs to the global interval list.
+ * @param {number[]} intervals - An array of interval IDs.
+ */
 function pushToIntervals(intervals) {
   intervals.forEach((interval) => {
     intervalIds.push(interval);
   });
 }
 
+/**
+ * Pushes new animation request frame IDs to the global list.
+ * @param {number[]} animationIds - An array of animation frame IDs.
+ */
 function pushToRequests(animationIds) {
-  animationIds.forEach((id) => animationFrameIds.push(id))
+  animationIds.forEach((id) => animationFrameIds.push(id));
 }
 
+/**
+ * Checks if the game is running on a mobile device.
+ */
 function checkDevice() {
   if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
     mobileDevice = true;
@@ -291,96 +326,24 @@ function checkDevice() {
   }
 }
 
+/**
+ * Adds touch event listeners to control buttons.
+ * This function maps touch events to keyboard states.
+ */
 function checkTouchEvents() {
-  if (btnLeft) {
-    btnLeft.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.LEFT = true;
-      },
-      { passive: false }
-    );
-
-    btnLeft.addEventListener(
-      "touchend",
-      () => {
-        keyboard.LEFT = false;
-      },
-      { passive: false }
-    );
-  }
-
-  if (btnRight) {
-    btnRight.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.RIGHT = true;
-      },
-      { passive: false }
-    );
-
-    btnRight.addEventListener(
-      "touchend",
-      () => {
-        keyboard.RIGHT = false;
-      },
-      { passive: false }
-    );
-  }
-
-  if (btnUp) {
-    btnUp.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.UP = true;
-      },
-      { passive: false }
-    );
-
-    btnUp.addEventListener(
-      "touchend",
-      () => {
-        keyboard.UP = false;
-      },
-      { passive: false }
-    );
-  }
-
-  if (btnDown) {
-    btnDown.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.DOWN = true;
-      },
-      { passive: false }
-    );
-
-    btnDown.addEventListener(
-      "touchend",
-      () => {
-        keyboard.DOWN = false;
-      },
-      { passive: false }
-    );
-  }
-
-  if (btnBubble) {
-    btnBubble.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.D = true;
-      },
-      { passive: false }
-    );
-  }
-
-  if (btnSlap) {
-    btnSlap.addEventListener(
-      "touchstart",
-      () => {
-        keyboard.SPACE = true;
-      },
-      { passive: false }
-    );
-  }
+  const buttons = [
+    { btn: btnLeft, key: "LEFT" },
+    { btn: btnRight, key: "RIGHT" },
+    { btn: btnUp, key: "UP" },
+    { btn: btnDown, key: "DOWN" },
+    { btn: btnBubble, key: "D", end: false },
+    { btn: btnSlap, key: "SPACE", end: false }
+  ];
+  
+  buttons.forEach(({ btn, key, end = true }) => {
+    if (btn) {
+      btn.addEventListener("touchstart", () => (keyboard[key] = true), { passive: false });
+      if (end) btn.addEventListener("touchend", () => (keyboard[key] = false), { passive: false });
+    }
+  });
 }
