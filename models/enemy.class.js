@@ -1,7 +1,29 @@
+/**
+ * Represents an enemy in the game.
+ * Enemies can have different types (e.g., jellyfish, pufferfish) with unique animations, behaviors, and attributes.
+ * This class extends the `MovableObject` class.
+ */
 class Enemy extends MovableObject {
+  /**
+   * The height of the enemy.
+   * @type {number}
+   */
   height = 150;
+
+  /**
+   * The width of the enemy.
+   * @type {number}
+   */
   width = 150;
 
+  /**
+   * The offset values for collision detection.
+   * @type {Object}
+   * @property {number} top - The top offset.
+   * @property {number} left - The left offset.
+   * @property {number} right - The right offset.
+   * @property {number} bottom - The bottom offset.
+   */
   offset = {
     top: 0,
     left: 0,
@@ -9,14 +31,52 @@ class Enemy extends MovableObject {
     bottom: 0,
   };
 
+  /**
+   * The type of enemy (e.g., jellyfish, pufferfish).
+   * @type {string|null}
+   */
   enemyType = null;
+
+  /**
+   * The images used for the enemy's death animation.
+   * @type {string[]|null}
+   */
   enemyDyingImages = null;
+
+  /**
+   * The health of the enemy.
+   * @type {number}
+   */
   health = 0;
+
+  /**
+   * Indicates whether the enemy is in a dying state.
+   * @type {boolean}
+   */
   isDying = false;
+
+  /**
+   * The damage dealt by the enemy on collision.
+   * @type {number}
+   */
   collisionDamage = 20;
 
+  /**
+   * The interval ID for the enemy's movement.
+   * @type {number}
+   */
   moveInterval;
+
+  /**
+   * The interval ID for the enemy's animation.
+   * @type {number}
+   */
   animationInterval;
+
+  /**
+   * The duration of each animation frame in milliseconds.
+   * @type {number}
+   */
   animationTime;
 
   IMAGES_PUFFER_FISH_GREEN = [
@@ -171,6 +231,10 @@ class Enemy extends MovableObject {
     "graphics/2.Enemy/2 Jelly fish/Dead/Pink/P4.png",
   ];
 
+  /**
+   * Creates a new enemy object.
+   * Randomizes the enemy type, loads its images, and starts its movement and animation.
+   */
   constructor() {
     super().loadImage(
       "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png"
@@ -185,6 +249,10 @@ class Enemy extends MovableObject {
     pushToIntervals([this.moveInterval, this.animationInterval]);
   }
 
+  /**
+   * Randomizes the enemy type and returns the corresponding animation images.
+   * @returns {string[]} An array of image paths for the enemy's animation.
+   */
   randomizeEnemy() {
     let randomIndex = Math.floor(Math.random() * 7);
     switch (randomIndex) {
@@ -221,6 +289,9 @@ class Enemy extends MovableObject {
     }
   }
 
+  /**
+   * Sets the animation time based on the enemy type.
+   */
   getAnimationTime() {
     switch (this.enemyType) {
       case "jellyFish":
@@ -234,6 +305,9 @@ class Enemy extends MovableObject {
     }
   }
 
+  /**
+   * Sets the enemy's attributes (e.g., size, health, speed, collision offsets) based on its type.
+   */
   getEnemyData() {
     switch (this.enemyType) {
       case "jellyFish":
@@ -265,6 +339,10 @@ class Enemy extends MovableObject {
     }
   }
 
+  /**
+   * Animates the enemy by moving it and cycling through its animation images.
+   * @param {string[]} randomEnemy - An array of image paths for the enemy's animation.
+   */
   animate(randomEnemy) {
     let time = 0;
     this.moveInterval = setInterval(() => {
@@ -277,6 +355,6 @@ class Enemy extends MovableObject {
 
     this.animationInterval = setInterval(() => {
       this.playAnimation(randomEnemy);
-    }, 200);
+    }, this.animationTime);
   }
 }
