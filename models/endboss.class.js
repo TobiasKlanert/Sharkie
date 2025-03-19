@@ -1,8 +1,35 @@
+/**
+ * Represents the endboss in the game.
+ * The endboss is a powerful enemy with multiple states, animations, and behaviors.
+ * This class extends the `MovableObject` class.
+ */
 class Endboss extends MovableObject {
+  /**
+   * The height of the endboss.
+   * @type {number}
+   */
   height = 720;
+
+  /**
+   * The width of the endboss.
+   * @type {number}
+   */
   width = 576;
+
+  /**
+   * The y-coordinate of the endboss.
+   * @type {number}
+   */
   y = 0;
 
+  /**
+   * The offset values for collision detection.
+   * @type {Object}
+   * @property {number} top - The top offset.
+   * @property {number} left - The left offset.
+   * @property {number} right - The right offset.
+   * @property {number} bottom - The bottom offset.
+   */
   offset = {
     top: 330,
     left: 25,
@@ -10,20 +37,88 @@ class Endboss extends MovableObject {
     bottom: 450,
   };
 
+  /**
+   * The health of the endboss.
+   * @type {number}
+   */
   health = 10;
+
+  /**
+   * The damage dealt by the endboss on collision.
+   * @type {number}
+   */
   collisionDamage = 20;
+
+  /**
+   * The attack power of the endboss.
+   * @type {number}
+   */
   attackPower = 40;
+
+  /**
+   * Indicates whether the endboss has made first contact with the player.
+   * @type {boolean}
+   */
   firstContact = false;
+
+  /**
+   * The type of enemy (endboss).
+   * @type {string}
+   */
   enemyType = "endboss";
+
+  /**
+   * Indicates whether the endboss is in a hurt state.
+   * @type {boolean}
+   */
   isHurt = false;
+
+  /**
+   * Indicates whether the endboss is in a dying state.
+   * @type {boolean}
+   */
   isDying = false;
+
+  /**
+   * Indicates whether the endboss is currently executing an attack.
+   * @type {boolean}
+   */
   executeAttack = false;
+
+  /**
+   * The interval ID for the animation loop.
+   * @type {number}
+   */
   animationInterval;
+
+  /**
+   * The interval ID for starting the attack process.
+   * @type {number}
+   */
   startAttackInterval;
+
+  /**
+   * The interval ID for the attack process.
+   * @type {number}
+   */
   attackInterval;
+
+  /**
+   * The time interval for the endboss's attack in milliseconds.
+   * @type {number}
+   */
   attackTime;
+
+  /**
+   * The duration of each animation frame in milliseconds.
+   * @type {number}
+   */
   animationTime = 200;
 
+  /**
+   * An array of image paths for the endboss's introduction animation.
+   * @type {string[]}
+   */
   IMAGES_INTRODUCE = [
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -37,6 +132,10 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/1.Introduce/10.png",
   ];
 
+  /**
+   * An array of image paths for the endboss's floating animation.
+   * @type {string[]}
+   */
   IMAGES_FLOATING = [
     "graphics/2.Enemy/3 Final Enemy/2.floating/1.png",
     "graphics/2.Enemy/3 Final Enemy/2.floating/2.png",
@@ -53,6 +152,10 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
 
+  /**
+   * An array of image paths for the endboss's attack animation.
+   * @type {string[]}
+   */
   IMAGES_ATTACK = [
     "graphics/2.Enemy/3 Final Enemy/Attack/1.png",
     "graphics/2.Enemy/3 Final Enemy/Attack/2.png",
@@ -62,6 +165,10 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/Attack/6.png",
   ];
 
+  /**
+   * An array of image paths for the endboss's hurt animation.
+   * @type {string[]}
+   */
   IMAGES_HURT = [
     "graphics/2.Enemy/3 Final Enemy/Hurt/1.png",
     "graphics/2.Enemy/3 Final Enemy/Hurt/2.png",
@@ -69,6 +176,10 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/Hurt/4.png",
   ];
 
+  /**
+   * An array of image paths for the endboss's death animation.
+   * @type {string[]}
+   */
   IMAGES_DEAD = [
     "graphics/2.Enemy/3 Final Enemy/Dead/0.png",
     "graphics/2.Enemy/3 Final Enemy/Dead/1.png",
@@ -78,12 +189,35 @@ class Endboss extends MovableObject {
     "graphics/2.Enemy/3 Final Enemy/Dead/5.png",
   ];
 
+  /**
+   * The images used for the endboss's death animation.
+   * Defaults to the `IMAGES_DEAD` array.
+   * @type {string[]}
+   */
   enemyDyingImages = this.IMAGES_DEAD;
 
+  /**
+   * The audio file for the endboss's background music.
+   * @type {HTMLAudioElement}
+   */
   endbossMusic = new Audio("audio/endboss-music.mp3");
+
+  /**
+   * The audio file for the endboss's attack sound.
+   * @type {HTMLAudioElement}
+   */
   endbossAttackSound = new Audio("audio/endboss-attack.mp3");
+
+  /**
+   * The audio file for the endboss's hurt sound.
+   * @type {HTMLAudioElement}
+   */
   endbossHurtSound = new Audio("audio/poisoned.mp3");
 
+  /**
+   * Creates a new instance of the endboss.
+   * Loads all necessary images and starts the animation and attack processes.
+   */
   constructor() {
     super().loadImage(this.IMAGES_INTRODUCE[0]);
     this.loadImages(this.IMAGES_INTRODUCE);
@@ -97,33 +231,75 @@ class Endboss extends MovableObject {
     pushToIntervals([this.animationInterval, this.startAttackInterval]);
   }
 
+  /**
+   * Animates the endboss by determining its current state and playing the appropriate animation.
+   */
   animate() {
     let i = 0;
     this.animationInterval = setInterval(() => {
       if (this.isHurt) {
-        this.playAnimation(this.IMAGES_HURT);
-        soundsEnabled && this.endbossHurtSound.play();
+        this.handleHurtAnimation();
       } else {
-        if (i < 10 && this.firstContact) {
-          soundsEnabled && this.setEndbossMusic();
-          this.playAnimation(this.IMAGES_INTRODUCE);
-        } else if (i >= 10 && this.executeAttack) {
-          if (soundsEnabled) {
-            this.endbossAttackSound.volume = 0.2;
-            this.endbossAttackSound.play();
-          }
-          this.playAnimation(this.IMAGES_ATTACK);
-        } else if (i >= 10) {
-          this.playAnimation(this.IMAGES_FLOATING);
-        }
-        i++;
-        if (!this.firstContact) {
-          i = 0;
-        }
+        this.handleStateAnimation(i);
+        i = this.updateAnimationIndex(i);
       }
     }, 150);
   }
 
+  /**
+   * Handles the hurt animation for the endboss.
+   * Plays the hurt animation and sound if enabled.
+   */
+  handleHurtAnimation() {
+    this.playAnimation(this.IMAGES_HURT);
+    soundsEnabled && this.endbossHurtSound.play();
+  }
+
+  /**
+   * Handles the animation based on the endboss's current state.
+   * @param {number} i - The current animation index.
+   */
+  handleStateAnimation(i) {
+    if (i < 10 && this.firstContact) {
+      soundsEnabled && this.setEndbossMusic();
+      this.playAnimation(this.IMAGES_INTRODUCE);
+    } else if (i >= 10 && this.executeAttack) {
+      this.handleAttackAnimation();
+    } else if (i >= 10) {
+      this.playAnimation(this.IMAGES_FLOATING);
+    }
+  }
+
+  /**
+   * Handles the attack animation for the endboss.
+   * Plays the attack animation and sound if enabled.
+   */
+  handleAttackAnimation() {
+    if (soundsEnabled) {
+      this.endbossAttackSound.volume = 0.2;
+      this.endbossAttackSound.play();
+    }
+    this.playAnimation(this.IMAGES_ATTACK);
+  }
+
+  /**
+   * Updates the animation index based on the endboss's state.
+   * Resets the index if the first contact is not established.
+   * @param {number} i - The current animation index.
+   * @returns {number} The updated animation index.
+   */
+  updateAnimationIndex(i) {
+    i++;
+    if (!this.firstContact) {
+      i = 0;
+    }
+    return i;
+  }
+
+  /**
+   * Sets the endboss music.
+   * Pauses the current music, resets it, and plays the endboss music in a loop.
+   */
   setEndbossMusic() {
     currentMusic.pause();
     currentMusic.currentTime = 0;
@@ -133,16 +309,28 @@ class Endboss extends MovableObject {
     currentMusic.play();
   }
 
+  /**
+   * Generates a random time for the endboss's attack interval.
+   * The time is between 2000ms and 5000ms.
+   */
   getRandomTime() {
     this.attackTime = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
   }
 
+  /**
+   * Handles the hurt state of the endboss.
+   * Resets the `isHurt` flag after the hurt animation finishes.
+   */
   handleHurt() {
     setTimeout(() => {
       this.isHurt = false;
     }, this.IMAGES_HURT.length * 150);
   }
 
+  /**
+   * Starts the attack process for the endboss.
+   * Waits for the first contact and then initiates the attack sequence.
+   */
   startAttack() {
     this.startAttackInterval = setInterval(() => {
       if (this.firstContact) {
@@ -153,6 +341,10 @@ class Endboss extends MovableObject {
     }, 150);
   }
 
+  /**
+   * Executes the attack behavior of the endboss.
+   * Moves the endboss left, increases its speed, and handles the attack logic.
+   */
   attack() {
     this.attackInterval = setInterval(() => {
       if (!this.isHurt && !this.isDying) {
@@ -165,6 +357,10 @@ class Endboss extends MovableObject {
     }, this.attackTime);
   }
 
+  /**
+   * Handles the attack logic for the endboss.
+   * Resets the attack state after the attack animation finishes and moves the endboss back to the right.
+   */
   handleAttack() {
     setTimeout(() => {
       this.executeAttack = false;
