@@ -1,3 +1,6 @@
+/**
+ * @returns SVG for sounds enabled
+ */
 function getSoundOnSvg() {
   return `
     <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -8,6 +11,9 @@ function getSoundOnSvg() {
   `;
 }
 
+/**
+ * @returns SVG for sounds disabled
+ */
 function getSoundOffSvg() {
   return `
     <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -17,6 +23,9 @@ function getSoundOffSvg() {
   `;
 }
 
+/**
+ * @returns SVG for fullscreen enabled
+ */
 function getEnableFullscreenSvg() {
   return `
     <svg
@@ -36,6 +45,9 @@ function getEnableFullscreenSvg() {
   `;
 }
 
+/**
+ * @returns SVG for fullscreen disabled
+ */
 function getDisableFullscreenSvg() {
   return `
     <svg
