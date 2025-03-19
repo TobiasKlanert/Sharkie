@@ -4,6 +4,9 @@ class Character extends MovableObject {
   speed = 10;
   idleTime = 0;
   idleInterval;
+  timeId;
+  moveId;
+  attackId;
   animationId;
 
   lastMoveFrameTime = 0;
@@ -163,12 +166,14 @@ class Character extends MovableObject {
     super().loadImage("graphics/1.Sharkie/1.IDLE/1.png");
     this.loadImagesToConstructor();
     this.lastMoveFrameTime = performance.now();
-    requestAnimationFrame((time) => this.getTimeInterval(time));
-    requestAnimationFrame((time) => this.moveCharacter(time));
-    requestAnimationFrame(this.characterAttack.bind(this));
+    this.timeId = requestAnimationFrame((time) => this.getTimeInterval(time));
+    this.moveId = requestAnimationFrame((time) => this.moveCharacter(time));
+    this.attackId = requestAnimationFrame(this.characterAttack.bind(this));
     this.animationId = requestAnimationFrame((time) => this.animate(time));
     this.startIdleTimer();
+    gameRunning = true;
     pushToIntervals([this.idleInterval]);
+    pushToRequests([this.timeId, this.moveId, this.attackId, this.animationId]);
   }
 
   loadImagesToConstructor() {
@@ -236,8 +241,8 @@ class Character extends MovableObject {
         this.moveDown(deltaTime / 5);
       }
       this.world.cameraX = -this.x + 220;
-    }
-    requestAnimationFrame((time) => this.moveCharacter(time));
+    }    
+    gameRunning && requestAnimationFrame((time) => this.moveCharacter(time));
   }
 
   handleMovementStart(direction) {
@@ -292,7 +297,7 @@ class Character extends MovableObject {
       }
     }
 
-    requestAnimationFrame(this.characterAttack.bind(this));
+    gameRunning && requestAnimationFrame(this.characterAttack.bind(this));
   }
 
   attack(enemy) {
@@ -429,7 +434,7 @@ class Character extends MovableObject {
       this.lastAnimateFrameTime = currentTime;
     }
 
-    requestAnimationFrame((time) => this.getTimeInterval(time));
+    gameRunning && requestAnimationFrame((time) => this.getTimeInterval(time));
   }
 
   setTimeInterval(currentTime) {

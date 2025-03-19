@@ -306,7 +306,7 @@ class World {
     this.addToMap(this.statusBarLife);
     this.addToMap(this.statusBarCoins);
 
-    requestAnimationFrame(() => this.draw());
+    gameRunning && requestAnimationFrame(() => this.draw());
   }
 
   addObjectsToMap(objects) {

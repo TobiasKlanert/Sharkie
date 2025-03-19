@@ -6,6 +6,8 @@ let keyboard = new Keyboard();
 
 let isPaused = false;
 let savedIntervals = [];
+let animationFrameIds = [];
+let gameRunning;
 
 let topPanel;
 let bottomPanel;
@@ -92,11 +94,11 @@ function init() {
 }
 
 function stopGame(screenType) {
-  intervalIds.forEach((id) => clearInterval(id));
-  intervalIds.splice(0, intervalIds.length);
   if (fullscreenEnabled) {
     exitFullscreen();
   }
+  stopIntervals();
+  stopAllAnimations();
   stopMusic();
   stopSounds();
   removeAllBubbles();
@@ -108,6 +110,19 @@ function stopGame(screenType) {
   document.getElementById("btn-impressum").style.display = "flex";
   disableButtons();
 }
+
+function stopIntervals() {
+  intervalIds.forEach((id) => clearInterval(id));
+  /* intervalIds.splice(0, intervalIds.length); */
+  intervalIds = [];
+}
+
+function stopAllAnimations() {
+  animationFrameIds.forEach((id) => cancelAnimationFrame(id));
+  animationFrameIds = [];
+  gameRunning = false;
+}
+
 
 function stopMusic() {
   currentMusic.pause();
@@ -262,6 +277,10 @@ function pushToIntervals(intervals) {
   intervals.forEach((interval) => {
     intervalIds.push(interval);
   });
+}
+
+function pushToRequests(animationIds) {
+  animationIds.forEach((id) => animationFrameIds.push(id))
 }
 
 function checkDevice() {
