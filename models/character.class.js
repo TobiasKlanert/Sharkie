@@ -446,7 +446,9 @@ class Character extends MovableObject {
       if (this.world.keyboard.D && !this.isHurt()) {
         const { x, y, speed } = this.getCharacterMovement();
         this.world.checkAttacks(x, y, speed, this.getBubbleImages());
-        this.world.keyboard.D = false;
+        /* if (!this.executeAttack) {
+          this.world.keyboard.D = false;
+        } */
         if (this.bottles > 0) {
           this.world.attackDamage = 2;
           this.bottles -= 20;

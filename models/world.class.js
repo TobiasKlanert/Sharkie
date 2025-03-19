@@ -41,7 +41,6 @@ class World {
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
-      console.log(this.bubbles);
       this.bubbles = this.bubbles.filter(bubble => bubble.isActive);
     }, 100);
   }
@@ -267,13 +266,23 @@ class World {
   }
 
   checkAttacks(x, y, speed, bubbleType) {
+    this.deleteBubbles();
     let bubble = new Bubble(
       this.character.x + x,
       this.character.y + y,
       speed,
       bubbleType
     );
+    console.log("Bubble created:", bubble);
     this.bubbles.push(bubble);
+    console.log("Current bubbles array:", this.bubbles);
+    this.character.executeAttack = false;
+    setTimeout(() => this.keyboard.D = false, 100);
+  }
+
+  deleteBubbles() {
+    this.bubbles.forEach((bubble) => bubble.sound.pause());
+    this.bubbles = [];
   }
 
   draw() {
@@ -299,10 +308,7 @@ class World {
     this.addToMap(this.statusBarLife);
     this.addToMap(this.statusBarCoins);
 
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
+    requestAnimationFrame(() => this.draw());
   }
 
   addObjectsToMap(objects) {

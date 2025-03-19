@@ -100,6 +100,8 @@ function stopGame(screenType) {
   stopMusic();
   stopSounds();
   removeAllBubbles();
+  clearCanvas();
+  resetKeyboard();
 
   document.getElementById("game").style.display = "none";
   document.getElementById(screenType).style.display = "flex";
@@ -119,13 +121,26 @@ function stopSounds() {
 
 function removeAllBubbles() {
   world.bubbles.forEach((bubble) => {
-      bubble.sound.pause();
-      bubble.sound.currentTime = 0;
-      bubble.isActive = false;
+    bubble.sound.pause();
+    bubble.sound.currentTime = 0;
+    bubble.isActive = false;
   });
   world.bubbles = [];
+  console.log(world.bubbles);
 }
 
+function clearCanvas() {
+  world.ctx.clearRect(0, 0, world.canvas.width, world.canvas.height);
+}
+
+function resetKeyboard() {
+  keyboard.LEFT = false;
+  keyboard.RIGHT = false;
+  keyboard.UP = false;
+  keyboard.DOWN = false;
+  keyboard.SPACE = false;
+  keyboard.D = false;
+}
 
 function disableButtons() {
   btnSounds.style.display = "none";

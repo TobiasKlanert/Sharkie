@@ -1,4 +1,4 @@
-class Bubble extends MovableObject {
+class Bubble extends DrawableObject {
   normalBubble = "graphics/1.Sharkie/4.Attack/Bubble trap/Bubble.png";
   poisonedBubble =
     "graphics/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png";
@@ -6,6 +6,13 @@ class Bubble extends MovableObject {
   throwInterval;
   rotation = 0;
   animationInterval;
+
+  offset = {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
 
   constructor(x, y, speed, bubble) {
     super();
@@ -55,7 +62,14 @@ class Bubble extends MovableObject {
       if (this.x >= this.startX + 1000) {
         this.sound.pause();
         this.isActive = false;
+        this.clearIntervals();
       }
     }, 100);
+  }
+
+  clearIntervals() {
+    clearInterval(this.throwInterval);
+    clearInterval(this.animationInterval);
+    clearInterval(this.checkRangeInterval);
   }
 }
