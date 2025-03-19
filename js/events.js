@@ -63,3 +63,21 @@ window.addEventListener("keyup", (event) => {
       break;
   }
 });
+
+/**
+ * Event listener for the "DOMContentLoaded" event to initialize the start screen.
+ * @event DOMContentLoaded
+ */
+addEventListener("DOMContentLoaded", initStartScreen);
+
+/**
+ * Event listener for the "resize" event to check and adjust the screen orientation.
+ * @event resize
+ */
+window.addEventListener("resize", checkOrientation);
+
+/**
+ * Event listener for the "orientationchange" event to check and adjust the screen orientation.
+ * @event orientationchange
+ */
+window.addEventListener("orientationchange", checkOrientation);
