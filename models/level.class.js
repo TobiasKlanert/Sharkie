@@ -1,16 +1,49 @@
+/**
+ * Represents a level in the game.
+ */
 class Level {
+  /** @type {Array} List of enemies in the level. */
   enemies;
+
+  /** @type {Object} The end boss of the level. */
   endboss;
+
+  /** @type {Array} List of lights in the level. */
   lights;
+
+  /** @type {Array} List of background objects in the level. */
   backgroundObjects;
+
+  /** @type {Array} List of barriers in the level. */
   barriers;
+
+  /** @type {Array} List of coins in the level. */
   coins;
+
+  /** @type {Array} List of bottles in the level. */
   bottles;
+
+  /** @type {number} The starting X-coordinate of the level. */
   levelStartX = 230;
+
+  /** @type {number} The ending X-coordinate of the level. */
   levelEndX = 24320;
+
+  /** @type {number} The starting Y-coordinate of the level. */
   levelStartY = -200;
+
+  /** @type {number} The ending Y-coordinate of the level. */
   levelEndY = 280;
 
+  /**
+   * Creates a new Level instance.
+   * @param {Array} enemies - List of enemies in the level.
+   * @param {Array} lights - List of lights in the level.
+   * @param {Array} backgroundObjects - List of background objects in the level.
+   * @param {Array} barriers - List of barriers in the level.
+   * @param {Array} coins - List of coins in the level.
+   * @param {Array} bottles - List of bottles in the level.
+   */
   constructor(enemies, lights, backgroundObjects, barriers, coins, bottles) {
     this.enemies = enemies;
     this.lights = lights;
@@ -20,6 +53,13 @@ class Level {
     this.bottles = bottles;
   }
 
+  /**
+   * Checks if a new item overlaps with existing items within a minimum distance.
+   * @param {Object} newItem - The new item to check.
+   * @param {Array} existingItems - The list of existing items.
+   * @param {number} minDistance - The minimum distance to avoid overlap.
+   * @returns {boolean} True if overlapping, otherwise false.
+   */
   static isOverlapping(newItem, existingItems, minDistance) {
     return existingItems.some(
       (item) =>
@@ -27,100 +67,130 @@ class Level {
     );
   }
 
+  /**
+   * Generates a list of barriers for the level.
+   * @returns {Array} List of barrier objects.
+   */
   static generateBarriers() {
-    let barriers = [];
+    const barrierData = this.getBarrierData();
     let positions = [];
-    const barrierData = {
-      "graphics/3. Background/Barrier/1.png": {
-        y: 0,
-        width: 750,
-        height: 720,
-      },
-      "graphics/3. Background/Barrier/2.png": {
-        y: 320,
-        width: 872,
-        height: 400,
-      },
-      "graphics/3. Background/Barrier/3.png": {
-        y: 100,
-        width: 200,
-        height: 409,
-      },
-    };
-
-    for (let i = 0; i < 7; i++) {
-      let x, y, validPosition;
-      let randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
-      ({ y } = barrierData[randomImage]);
-      
-      do {
-        x = 1000 + Math.random() * 20000;
-        validPosition = !this.isOverlapping({ x, y }, positions, 2000);
-      } while (!validPosition);
-
+    return Array.from({ length: 7 }, () => {
+      let { x, y, randomImage } = this.getValidBarrierPosition(barrierData, positions);
       positions.push({ x, y });
       let { width, height } = barrierData[randomImage];
-      barriers.push(new BARRIERS(x, y, width, height, randomImage));
-    }
-    return barriers;
+      return new BARRIERS(x, y, width, height, randomImage);
+    });
   }
 
+  /**
+   * Provides the data for the barriers in the level.
+   * @returns {Object} An object containing barrier data.
+   */
+  static getBarrierData() {
+    return {
+      "graphics/3. Background/Barrier/1.png": { y: 0, width: 750, height: 720 },
+      "graphics/3. Background/Barrier/2.png": { y: 320, width: 872, height: 400 },
+      "graphics/3. Background/Barrier/3.png": { y: 100, width: 200, height: 409 },
+    };
+  }
+
+  /**
+   * Finds a valid position for a barrier that does not overlap with existing positions.
+   * @param {Object} barrierData - The data for the barriers.
+   * @param {Array} positions - The list of existing positions.
+   * @returns {Object} An object containing the x, y coordinates and the random image.
+   */
+  static getValidBarrierPosition(barrierData, positions) {
+    let randomImage, x, y, validPosition;
+    do {
+      randomImage = Object.keys(barrierData)[Math.floor(Math.random() * 3)];
+      ({ y } = barrierData[randomImage]);
+      x = 1000 + Math.random() * 20000;
+      validPosition = !this.isOverlapping({ x, y }, positions, 2000);
+    } while (!validPosition);
+    return { x, y, randomImage };
+  }
+
+  /**
+   * Generates groups of coins for the level.
+   * @param {Array} existingBarriers - The list of existing barriers.
+   * @returns {Array} List of coin formations.
+   */
   static generateCoinGroups(existingBarriers) {
-    let coinGroups = [];
     let positions = [];
-
-    for (let i = 0; i < 5; i++) {
-      let startX, startY, validPosition;
-      do {
-        startX = 1000 + Math.random() * 22000;
-        startY = 200 + Math.floor(Math.random() * 201);
-        validPosition =
-          !this.isOverlapping({ x: startX, y: startY }, positions, 500) &&
-          !this.isOverlapping({ x: startX, y: startY }, existingBarriers, 1000);
-      } while (!validPosition);
-
+    return Array.from({ length: 5 }, () => {
+      let { startX, startY } = this.getValidCoinPosition(positions, existingBarriers);
       positions.push({ x: startX, y: startY });
-      let formation = Math.floor(Math.random() * 5);
-      let coins = [];
-
-      for (let j = 0; j < 5; j++) {
-        let xOffset = j * 100;
-        let yOffset = 0;
-
-        if (formation === 1) {
-          yOffset = [0, -75, -105, -75, 0][j];
-        } else if (formation === 2) {
-          yOffset = -j * 45;
-        } else if (formation === 3) {
-          yOffset = j * 45;
-        } else {
-          yOffset = [0, 75, 105, 75, 0][j];
-        }
-
-        coins.push(new COINS(startX + xOffset, startY + yOffset));
-      }
-      coinGroups.push(coins);
-    }
-    return coinGroups;
+      return this.createCoinFormation(startX, startY);
+    });
   }
 
+  /**
+   * Finds a valid position for a coin group that does not overlap with existing positions or barriers.
+   * @param {Array} positions - The list of existing positions.
+   * @param {Array} existingBarriers - The list of existing barriers.
+   * @returns {Object} An object containing the startX and startY coordinates.
+   */
+  static getValidCoinPosition(positions, existingBarriers) {
+    let startX, startY, validPosition;
+    do {
+      startX = 1000 + Math.random() * 22000;
+      startY = 200 + Math.floor(Math.random() * 201);
+      validPosition =
+        !this.isOverlapping({ x: startX, y: startY }, positions, 500) &&
+        !this.isOverlapping({ x: startX, y: startY }, existingBarriers, 1000);
+    } while (!validPosition);
+    return { startX, startY };
+  }
+
+  /**
+   * Creates a formation of coins based on a random pattern.
+   * @param {number} startX - The starting X-coordinate of the formation.
+   * @param {number} startY - The starting Y-coordinate of the formation.
+   * @returns {Array} List of coin objects in the formation.
+   */
+  static createCoinFormation(startX, startY) {
+    const formations = [
+      [0, 75, 105, 75, 0],
+      [0, -75, -105, -75, 0],
+      [0, -45, -90, -135, -180],
+      [0, 45, 90, 135, 180],
+    ];
+    let formation = formations[Math.floor(Math.random() * formations.length)];
+    return formation.map((yOffset, j) => new COINS(startX + j * 100, startY + yOffset));
+  }
+
+  /**
+   * Generates bottles for the level.
+   * @param {Array} existingBarriers - The list of existing barriers.
+   * @param {Array} existingCoins - The list of existing coins.
+   * @returns {Array} List of bottle objects.
+   */
   static generateBottles(existingBarriers, existingCoins) {
-    let bottles = [];
     let positions = [];
+    return Array.from({ length: 5 }, () => {
+      let { x, y } = this.getValidBottlePosition(positions, existingBarriers, existingCoins);
+      positions.push({ x, y });
+      return new BOTTLES(x);
+    });
+  }
 
-    for (let i = 0; i < 5; i++) {
-      let x, y , validPosition;
-      do {
-        x = 1000 + Math.random() * 22000;
-        validPosition =
-          !this.isOverlapping({ x, y }, positions, 500) &&
-          !this.isOverlapping({ x, y }, existingBarriers, 1000) &&
-          !this.isOverlapping({ x, y }, existingCoins.flat(), 500);
-      } while (!validPosition);
-
-      positions.push({ x, y: 300 });
-      bottles.push(new BOTTLES(x));
-    }
-    return bottles;
+  /**
+   * Finds a valid position for a bottle that does not overlap with existing positions, barriers, or coins.
+   * @param {Array} positions - The list of existing positions.
+   * @param {Array} existingBarriers - The list of existing barriers.
+   * @param {Array} existingCoins - The list of existing coins.
+   * @returns {Object} An object containing the x and y coordinates.
+   */
+  static getValidBottlePosition(positions, existingBarriers, existingCoins) {
+    let x, y = 300, validPosition;
+    do {
+      x = 1000 + Math.random() * 22000;
+      validPosition =
+        !this.isOverlapping({ x, y }, positions, 500) &&
+        !this.isOverlapping({ x, y }, existingBarriers, 1000) &&
+        !this.isOverlapping({ x, y }, existingCoins.flat(), 500);
+    } while (!validPosition);
+    return { x, y };
   }
 }
