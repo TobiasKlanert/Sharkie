@@ -306,37 +306,50 @@ class Enemy extends MovableObject {
   }
 
   /**
-   * Sets the enemy's attributes (e.g., size, health, speed, collision offsets) based on its type.
+   * Retrieves and sets the attributes of the enemy based on its type.
+   * Configures the enemy's size, health, speed, and collision offsets.
    */
   getEnemyData() {
     switch (this.enemyType) {
       case "jellyFish":
-        this.width = 150;
-        this.height = 150;
-        this.health = 1;
-        this.speed = 1.15 + Math.random() * 0.25;
-        this.offset = {
+        this.setEnemyAttributes(150, 150, 1, 1.15 + Math.random() * 0.25, {
           top: 10,
           left: 5,
           right: 10,
           bottom: 40,
-        };
+        });
         break;
       case "pufferFish":
-        this.width = 300;
-        this.height = 300;
-        this.health = 2;
-        this.speed = 0.15 + Math.random() * 0.25;
-        this.offset = {
+        this.setEnemyAttributes(300, 300, 2, 0.15 + Math.random() * 0.25, {
           top: 30,
           left: 5,
           right: 10,
           bottom: 120,
-        };
+        });
         break;
       default:
         break;
     }
+  }
+
+  /**
+ * Sets the attributes of the enemy.
+ * @param {number} width - The width of the enemy.
+ * @param {number} height - The height of the enemy.
+ * @param {number} health - The health points of the enemy.
+ * @param {number} speed - The movement speed of the enemy.
+ * @param {Object} offset - The collision offset values for the enemy.
+ * @param {number} offset.top - The top collision offset.
+ * @param {number} offset.left - The left collision offset.
+ * @param {number} offset.right - The right collision offset.
+ * @param {number} offset.bottom - The bottom collision offset.
+ */
+  setEnemyAttributes(width, height, health, speed, offset) {
+    this.width = width;
+    this.height = height;
+    this.health = health;
+    this.speed = speed;
+    this.offset = offset;
   }
 
   /**
