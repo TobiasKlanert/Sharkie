@@ -15,7 +15,7 @@ class BackgroundObject {
     this.x = x;
     this.speed = speed;
     this.y = 0;
-    this.width = 1280;
+    this.width = 1281;
     this.height = 720;
   }
 
