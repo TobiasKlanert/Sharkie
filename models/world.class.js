@@ -84,6 +84,7 @@ class World {
       this.checkCharacterCollisions(this.level.coins);
       this.checkCharacterCollisions(this.level.bottles);
       this.checkBubbleAttackCollisions();
+      this.checkCharacterDeath();
       this.bubbles = this.bubbles.filter((bubble) => bubble.isActive);
     }, 100);
   }
@@ -107,6 +108,18 @@ class World {
         this.handleCollision(asset, element);
       }
     });
+  }
+
+  /**
+   * Checks whether character is dead, if yes, movement is stopped
+   */
+  checkCharacterDeath() {
+    if (this.character.isDead()) {
+      this.character.canMoveDown = false;
+      this.character.canMoveUp = false;
+      this.character.canMoveLeft = false;
+      this.character.canMoveRight = false;
+    }
   }
 
   /**

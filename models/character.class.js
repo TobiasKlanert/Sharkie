@@ -363,11 +363,12 @@ class Character extends MovableObject {
    * Checks for collisions with barriers and updates movement permissions.
    */
   checkBarrierCollisions() {
-    this.canMoveRight = true;
-    this.canMoveLeft = true;
-    this.canMoveUp = true;
-    this.canMoveDown = true;
-
+    if (!this.isDead()) {
+      this.canMoveRight = true;
+      this.canMoveLeft = true;
+      this.canMoveUp = true;
+      this.canMoveDown = true;
+    }
     this.world.checkBarrierCollisions();
   }
 
