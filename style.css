@@ -527,11 +527,13 @@ dialog {
   }
 }
 
-@media only screen and (max-height: 720px) {
+@media only screen and (max-height: 820px) {
   canvas {
-    height: 100vh;
+    height: calc(100vh - 100px);
   }
+}
 
+@media only screen and (max-height: 720px) {
   h2 {
     margin-top: 0;
   }
