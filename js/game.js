@@ -1,9 +1,7 @@
-import { World } from "../models/world.class.js";
-
 let canvas;
 let world;
 let fullscreenEnabled = false;
-let soundsEnabled;
+let soundsEnabled = true;
 let keyboard = new Keyboard();
 
 let isPaused = false;
@@ -33,7 +31,7 @@ let mobileDevice = false;
 /**
  * Initializes and starts the game by setting up the canvas, buttons, and game assets.
  */
-export function startGame() {
+function startGame() {
   checkDevice();
   initCanvas();
   initButtons();
@@ -50,8 +48,6 @@ export function startGame() {
     currentMusic.play();
   }
 }
-
-window.startGame = startGame;
 
 /**
  * Initializes the game canvas and hides unnecessary UI elements.

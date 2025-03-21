@@ -1,9 +1,7 @@
-import { Character } from './character.class.js';
-
 /**
  * Represents the game world, including the character, enemies, items, and interactions.
  */
-export class World {
+class World {
   /** @type {Character} The main character in the game. */
   character = new Character();
 

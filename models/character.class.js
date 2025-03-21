@@ -1,24 +1,8 @@
-import {
-  handleCollisionsAndSounds,
-  handleMovement,
-  handleMovementStart,
-  handleIdleMovement,
-  handleDeathAnimation,
-  getAnimationImages,
-  getFinSlapImages,
-  isMoving,
-  getIdleImages,
-  getHurtImages,
-  getHurtSound,
-  getDyingImages,
-  getBubbleAttackImages,
-} from '../js/character.handler.js';
-
 /**
  * Represents the main character in the game.
  * Extends the MovableObject class to provide movement and animation functionality.
  */
-export class Character extends MovableObject {
+class Character extends MovableObject {
   /** @type {number} The height of the character. */
   height = 500;
 
@@ -299,9 +283,9 @@ export class Character extends MovableObject {
     let deltaTime = this.setTimeInterval(currentTime);
 
     if (deltaTime) {
-      handleCollisionsAndSounds(this);
-      handleMovement(this, deltaTime);
-      handleIdleMovement(this.deltaTime);
+      this.handleCollisionsAndSounds();
+      this.handleMovement(deltaTime);
+      this.handleIdleMovement(deltaTime);
       this.world.cameraX = -this.x + 220;
     }
 
@@ -311,17 +295,17 @@ export class Character extends MovableObject {
   /**
    * Handles collisions and plays appropriate sounds.
    */
-/*   handleCollisionsAndSounds() {
+  handleCollisionsAndSounds() {
     this.checkBarrierCollisions();
     soundsEnabled && this.playCollisionSound();
     this.swimmingSound.pause();
-  } */
+  }
 
   /**
    * Handles the character's movement based on keyboard input.
    * @param {number} deltaTime - The time elapsed since the last frame.
    */
-/*   handleMovement(deltaTime) {
+  handleMovement(deltaTime) {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX && this.canMoveRight) {
       this.moveRight(deltaTime);
       this.handleMovementStart("right");
@@ -338,7 +322,7 @@ export class Character extends MovableObject {
       this.moveDown(deltaTime);
       this.handleMovementStart();
     }
-  } */
+  }
 
   /**
    * Handles the character's idle movement when no input is detected.
@@ -358,7 +342,7 @@ export class Character extends MovableObject {
    * Handles the start of a movement action and resets idle-related states.
    * @param {string} [direction] - The direction of movement ("right" or "left").
    */
-/*   handleMovementStart(direction) {
+  handleMovementStart(direction) {
     clearInterval(this.gravityInterval);
     soundsEnabled && this.swimmingSound.play();
     this.snoringSound.pause();
@@ -373,7 +357,7 @@ export class Character extends MovableObject {
       default:
         break;
     }
-  } */
+  }
 
   /**
    * Checks for collisions with barriers and updates movement permissions.
@@ -486,43 +470,43 @@ export class Character extends MovableObject {
    * Retrieves the appropriate animation images based on the character's current state.
    * @returns {Array<string>} The array of image paths for the current animation.
    */
-/*   getAnimationImages() {
+  getAnimationImages() {
     if (this.isDead()) return this.getDyingImages();
     if (this.isHurt()) return this.getHurtImages();
     if (this.world.keyboard.D) return this.getBubbleAttackImages();
     if (this.world.keyboard.SPACE) return this.getFinSlapImages();
     if (this.isMoving()) return this.IMAGES_SWIM;
     return this.getIdleImages();
-  } */
+  }
 
   /**
    * Retrieves the images for the fin slap attack animation.
    * Sets the attack damage to 2.
    * @returns {Array<string>} The array of image paths for the fin slap attack animation.
    */
-  /* getFinSlapImages() {
+  getFinSlapImages() {
     this.world.attackDamage = 2;
     return this.IMAGES_ATTACK_FIN_SLAP;
-  } */
+  }
 
   /**
    * Checks if the character is currently moving based on keyboard input.
    * @returns {boolean} True if the character is moving, otherwise false.
    */
-  /* isMoving() {
+  isMoving() {
     const { RIGHT, LEFT, UP, DOWN } = this.world.keyboard;
     return RIGHT || LEFT || UP || DOWN;
-  } */
+  }
 
   /**
    * Retrieves the images for the idle animation based on the idle time.
    * @returns {Array<string>} The array of image paths for the idle animation.
    */
-  /* getIdleImages() {
+  getIdleImages() {
     if (this.idleTime >= 150 && this.idleTime < 164) return this.IMAGES_FALL_ASLEEP;
     if (this.idleTime >= 164) return this.IMAGES_SLEEP;
     return this.IMAGES_IDLE;
-  } */
+  }
 
   /**
    * Updates the enemy type when the character collides with an enemy.
@@ -536,7 +520,7 @@ export class Character extends MovableObject {
    * Retrieves the images for the hurt animation based on the enemy type.
    * @returns {Array<string>} The array of image paths for the hurt animation.
    */
-  /* getHurtImages() {
+  getHurtImages() {
     switch (this.enemyType) {
       case "pufferFish":
         return this.IMAGES_HURT_POISONED;
@@ -545,13 +529,13 @@ export class Character extends MovableObject {
       case "jellyFish":
         return this.IMAGES_HURT_ELECTRO_SHOCK;
     }
-  } */
+  }
 
   /**
    * Retrieves the sound effect to play when the character is hurt.
    * @returns {Audio} The audio object for the hurt sound effect.
    */
-  /* getHurtSound() {
+  getHurtSound() {
     switch (this.enemyType) {
       case "pufferFish":
         return this.posionedSound;
@@ -560,13 +544,13 @@ export class Character extends MovableObject {
       case "jellyFish":
         return this.electricShockSound;
     }
-  } */
+  }
 
   /**
    * Retrieves the images for the dying animation based on the enemy type.
    * @returns {Array<string>} The array of image paths for the dying animation.
    */
-  /* getDyingImages() {
+  getDyingImages() {
     switch (this.enemyType) {
       case "pufferFish":
         return this.IMAGES_DEAD_POISONED;
@@ -575,19 +559,19 @@ export class Character extends MovableObject {
       case "jellyFish":
         return this.IMAGES_DEAD_ELECTRO_SHOCK;
     }
-  } */
+  }
 
   /**
    * Retrieves the images for the bubble attack animation based on the number of bottles.
    * @returns {Array<string>} The array of image paths for the bubble attack animation.
    */
-  /* getBubbleAttackImages() {
+  getBubbleAttackImages() {
     if (this.bottles > 0) {
       return this.IMAGES_ATTACK_POISONED_BUBBLES;
     } else {
       return this.IMAGES_ATTACK_BUBBLES;
     }
-  } */
+  }
 
   /**
  * Animates the character's actions based on the current state and time.
@@ -596,7 +580,7 @@ export class Character extends MovableObject {
  */
   animate(currentTime) {
     let deltaTime = this.setTimeInterval(currentTime);
-    let imageArray = getAnimationImages(this);
+    let imageArray = this.getAnimationImages();
 
     if (this.animateIntervalReached) {
       this.lastAnimateFrameTime = currentTime;
@@ -604,7 +588,7 @@ export class Character extends MovableObject {
       this.stopAttackAnimation(imageArray);
     }
 
-    handleDeathAnimation(this, deltaTime);
+    this.handleDeathAnimation(deltaTime);
     this.animationId = requestAnimationFrame((time) => this.animate(time));
   }
 
@@ -613,7 +597,7 @@ export class Character extends MovableObject {
    * Determines the type of death animation based on the enemy type.
    * @param {number} deltaTime - The time elapsed since the last frame.
    */
-/*   handleDeathAnimation(deltaTime) {
+  handleDeathAnimation(deltaTime) {
     if (this.isDead()) {
       if (this.enemyType === "jellyFish") {
         this.animateJellyFishDeath(deltaTime);
@@ -622,7 +606,7 @@ export class Character extends MovableObject {
       }
     }
   }
- */
+
   /**
    * Animates the death sequence for the character when killed by a jellyfish.
    * Moves the character downward and cancels the animation after a delay.
