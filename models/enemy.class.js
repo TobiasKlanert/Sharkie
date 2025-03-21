@@ -373,7 +373,7 @@ class Enemy extends MovableObject {
   }
 
   /**
-   * Animates the enemy by moving it and cycling through its animation images.
+   * Animates the enemy by cycling through its animation images.
    * @param {string[]} randomEnemy - An array of image paths for the enemy's animation.
    */
   animate(randomEnemy) {
@@ -383,6 +383,9 @@ class Enemy extends MovableObject {
     }, this.animationTime);
   }
 
+  /**
+   * Moves the enemy to the left.
+   */
   moveEnemy() {
     let time = 0;
     this.moveInterval = setInterval(() => {
