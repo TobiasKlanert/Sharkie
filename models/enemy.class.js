@@ -245,6 +245,7 @@ class Enemy extends MovableObject {
     this.getAnimationTime();
     this.getEnemyData();
     this.loadImages(randomEnemy);
+    this.moveEnemy();
     this.animate(randomEnemy);
     pushToIntervals([this.moveInterval, this.animationInterval]);
   }
@@ -298,7 +299,26 @@ class Enemy extends MovableObject {
         this.animationTime = 120;
         break;
       case "pufferFish":
-        this.animationTime = 300;
+        this.animationTime = 100;
+        break;
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Sets the animation time for the dying animation based on the enemy type.
+   * Adjusts the duration of the dying animation to match the specific enemy.
+   * @param {Object} enemy - The enemy object for which the dying interval is being set.
+   * @param {string} enemy.enemyType - The type of the enemy (e.g., "pufferFish", "jellyFish").
+   */
+  getDyingInterval(enemy) {
+    switch (enemy.enemyType) {
+      case "pufferFish":
+        this.animationTime = 130;
+        break;
+      case "jellyFish":
+        this.animationTime = 100;
         break;
       default:
         break;
@@ -333,17 +353,17 @@ class Enemy extends MovableObject {
   }
 
   /**
- * Sets the attributes of the enemy.
- * @param {number} width - The width of the enemy.
- * @param {number} height - The height of the enemy.
- * @param {number} health - The health points of the enemy.
- * @param {number} speed - The movement speed of the enemy.
- * @param {Object} offset - The collision offset values for the enemy.
- * @param {number} offset.top - The top collision offset.
- * @param {number} offset.left - The left collision offset.
- * @param {number} offset.right - The right collision offset.
- * @param {number} offset.bottom - The bottom collision offset.
- */
+   * Sets the attributes of the enemy.
+   * @param {number} width - The width of the enemy.
+   * @param {number} height - The height of the enemy.
+   * @param {number} health - The health points of the enemy.
+   * @param {number} speed - The movement speed of the enemy.
+   * @param {Object} offset - The collision offset values for the enemy.
+   * @param {number} offset.top - The top collision offset.
+   * @param {number} offset.left - The left collision offset.
+   * @param {number} offset.right - The right collision offset.
+   * @param {number} offset.bottom - The bottom collision offset.
+   */
   setEnemyAttributes(width, height, health, speed, offset) {
     this.width = width;
     this.height = height;
@@ -357,6 +377,13 @@ class Enemy extends MovableObject {
    * @param {string[]} randomEnemy - An array of image paths for the enemy's animation.
    */
   animate(randomEnemy) {
+    /* this.getMovement(); */
+    this.animationInterval = setInterval(() => {
+      this.playAnimation(randomEnemy);
+    }, this.animationTime);
+  }
+
+  moveEnemy() {
     let time = 0;
     this.moveInterval = setInterval(() => {
       this.moveLeft();
@@ -365,9 +392,5 @@ class Enemy extends MovableObject {
         time += Math.random() * 0.1;
       }
     }, 1000 / 60);
-
-    this.animationInterval = setInterval(() => {
-      this.playAnimation(randomEnemy);
-    }, this.animationTime);
   }
 }

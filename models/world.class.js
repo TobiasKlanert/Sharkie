@@ -223,6 +223,7 @@ class World {
    */
   startEnemyDeathSequence(enemy) {
     enemy.isDying = true;
+    enemy.getDyingInterval(enemy);
     enemy.loadImages(enemy.enemyDyingImages);
     this.animationInterval = setInterval(() => {
       enemy.playAnimation(enemy.enemyDyingImages);
