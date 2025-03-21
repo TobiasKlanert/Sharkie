@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let fullscreenEnabled = false;
-let soundsEnabled = true;
+let soundsEnabled;
 let keyboard = new Keyboard();
 
 let isPaused = false;
@@ -36,18 +36,17 @@ function startGame() {
   initCanvas();
   initButtons();
   setButtons();
+  loadSoundState();
   initAssets();
   initLevel();
   init();
 
-  if (!soundsEnabled) {
-    toggleSound(btnSounds);
-  }
-
   currentMusic = backgroundMusic;
   currentMusic.volume = 0.2;
   currentMusic.loop = true;
-  currentMusic.play();
+  if (soundsEnabled) {
+    currentMusic.play();
+  }
 }
 
 /**
@@ -218,6 +217,31 @@ function disableButtons() {
 }
 
 /**
+ * Saves the state of the sound button and soundsEnabled to local storage.
+ */
+function saveSoundState() {
+  const soundState = {
+    soundsEnabled: soundsEnabled,
+    btnSoundsState: btnSounds.innerHTML, // Save the current icon or state of the button
+  };
+  localStorage.setItem("soundState", JSON.stringify(soundState));
+}
+
+/**
+ * Checks if the sound state is stored in local storage and retrieves it.
+ * Updates the `soundsEnabled` and `btnSounds` state accordingly.
+ */
+function loadSoundState() {
+  const soundState = localStorage.getItem("soundState");
+  if (soundState) {
+    const { soundsEnabled: storedSoundsEnabled, btnSoundsState } =
+      JSON.parse(soundState);
+    soundsEnabled = storedSoundsEnabled;
+    btnSounds.innerHTML = btnSoundsState; // Update the button state (e.g., icon)
+  }
+}
+
+/**
  * Toggles game sounds on or off and updates the sound button icon.
  * @param {HTMLElement} button - The button element that triggered the toggle.
  */
@@ -236,6 +260,8 @@ function toggleSound(button) {
     world.character.snoringSound.pause();
     world.bubbles.forEach((bubble) => bubble.sound.pause());
   }
+
+  saveSoundState();
 }
 
 /**
@@ -337,13 +363,18 @@ function checkTouchEvents() {
     { btn: btnUp, key: "UP" },
     { btn: btnDown, key: "DOWN" },
     { btn: btnBubble, key: "D", end: false },
-    { btn: btnSlap, key: "SPACE", end: false }
+    { btn: btnSlap, key: "SPACE", end: false },
   ];
-  
+
   buttons.forEach(({ btn, key, end = true }) => {
     if (btn) {
-      btn.addEventListener("touchstart", () => (keyboard[key] = true), { passive: false });
-      if (end) btn.addEventListener("touchend", () => (keyboard[key] = false), { passive: false });
+      btn.addEventListener("touchstart", () => (keyboard[key] = true), {
+        passive: false,
+      });
+      if (end)
+        btn.addEventListener("touchend", () => (keyboard[key] = false), {
+          passive: false,
+        });
     }
   });
 }
