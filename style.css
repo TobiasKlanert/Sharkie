@@ -213,6 +213,13 @@ a:hover {
   font-size: 32px !important;
 }
 
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 .coins {
   position: absolute;
   bottom: 140px;
@@ -490,6 +497,12 @@ dialog {
     max-height: 100vh;
   }
 
+  .buttons button{
+    width: 100px;
+    height: 50px;
+    font-size: 12px;
+  }
+
   .menu-button {
     width: 200px;
     height: 65px;
@@ -558,5 +571,11 @@ dialog {
   .bigger-btn {
     width: 75px;
     height: 75px;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .coins {
+    bottom: 100px;
   }
 }

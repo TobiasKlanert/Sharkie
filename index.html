@@ -178,15 +178,26 @@
           id="collectedCoins"
         ></span>
       </h2>
-      <button class="menu-button new-game" onclick="startGame()">
-        New Game
-      </button>
+      <div class="buttons new-game">
+        <button class="menu-button" onclick="startGame()">New Game</button>
+        <button class="menu-button" onclick="showStartScreen('winningScreen')">
+          Home
+        </button>
+      </div>
     </div>
     <div id="gameoverScreen" class="gameoverScreen gameover-background">
       <div class="game-over">
         <img src="graphics/1.Sharkie/6.dead/1.Poisoned/12.png" alt="" />
         <h1>Game Over</h1>
-        <button class="menu-button" onclick="startGame()">Try Again</button>
+        <div class="buttons">
+          <button class="menu-button" onclick="startGame()">Try Again</button>
+          <button
+            class="menu-button"
+            onclick="showStartScreen('gameoverScreen')"
+          >
+            Home
+          </button>
+        </div>
       </div>
     </div>
     <div id="game" class="game">

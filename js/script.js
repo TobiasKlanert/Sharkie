@@ -54,3 +54,8 @@ function toggleDialog(dialog) {
         dialogOpened = false;
     }
 }
+
+function showStartScreen(screenType) {
+  document.getElementById(screenType).style.display = "none";
+  startScreen.style.display = "flex"; 
+}
