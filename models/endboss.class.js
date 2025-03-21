@@ -357,11 +357,16 @@ class Endboss extends MovableObject {
     }, this.attackTime);
   }
 
+  /**
+   * Starts moving the endboss to the left in an interval.
+   * The movement continues as long as the `executeAttack` flag is true.
+   * Stops the movement when the attack state ends.
+   */
   startMovingLeft() {
     if (this.moveLeftInterval) {
       clearInterval(this.moveLeftInterval);
     }
-  
+
     this.moveLeftInterval = setInterval(() => {
       if (this.executeAttack) {
         this.moveLeft();
