@@ -187,7 +187,7 @@ class World {
    * @param {number} collisionDamage - The amount of damage caused by the collision.
    */
   enemyCollisions(collisionDamage) {
-    let hurtSound = this.character.getHurtSound();
+    let hurtSound = getHurtSound(this.character);
     this.character.hit(collisionDamage);
     soundsEnabled && hurtSound.play();
     this.statusBarLife.setPercentage(

@@ -80,143 +80,6 @@ class Character extends MovableObject {
   /** @type {number} The rotation angle of the character. */
   rotation = 0;
 
-  /** @type {Array<string>} The image paths for the idle animation. */
-  IMAGES_IDLE = [
-    "graphics/1.Sharkie/1.IDLE/1.png",
-    "graphics/1.Sharkie/1.IDLE/2.png",
-    "graphics/1.Sharkie/1.IDLE/3.png",
-    "graphics/1.Sharkie/1.IDLE/4.png",
-    "graphics/1.Sharkie/1.IDLE/5.png",
-    "graphics/1.Sharkie/1.IDLE/6.png",
-    "graphics/1.Sharkie/1.IDLE/7.png",
-    "graphics/1.Sharkie/1.IDLE/8.png",
-    "graphics/1.Sharkie/1.IDLE/9.png",
-    "graphics/1.Sharkie/1.IDLE/10.png",
-    "graphics/1.Sharkie/1.IDLE/11.png",
-    "graphics/1.Sharkie/1.IDLE/12.png",
-    "graphics/1.Sharkie/1.IDLE/13.png",
-    "graphics/1.Sharkie/1.IDLE/14.png",
-    "graphics/1.Sharkie/1.IDLE/15.png",
-    "graphics/1.Sharkie/1.IDLE/16.png",
-    "graphics/1.Sharkie/1.IDLE/17.png",
-    "graphics/1.Sharkie/1.IDLE/18.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the "fall asleep" animation. */
-  IMAGES_FALL_ASLEEP = [
-    "graphics/1.Sharkie/2.Long_IDLE/I1.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I2.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I3.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I4.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I5.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I6.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I7.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I8.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I9.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I10.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the sleep animation. */
-  IMAGES_SLEEP = [
-    "graphics/1.Sharkie/2.Long_IDLE/I11.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I11.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I12.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I12.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I13.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I13.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I14.png",
-    "graphics/1.Sharkie/2.Long_IDLE/I14.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the swimming animation. */
-  IMAGES_SWIM = [
-    "graphics/1.Sharkie/3.Swim/1.png",
-    "graphics/1.Sharkie/3.Swim/2.png",
-    "graphics/1.Sharkie/3.Swim/3.png",
-    "graphics/1.Sharkie/3.Swim/4.png",
-    "graphics/1.Sharkie/3.Swim/5.png",
-    "graphics/1.Sharkie/3.Swim/6.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the hurt (poisoned) animation. */
-  IMAGES_HURT_POISONED = [
-    "graphics/1.Sharkie/5.Hurt/1.Poisoned/1.png",
-    "graphics/1.Sharkie/5.Hurt/1.Poisoned/2.png",
-    "graphics/1.Sharkie/5.Hurt/1.Poisoned/3.png",
-    "graphics/1.Sharkie/5.Hurt/1.Poisoned/4.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the hurt (electric shock) animation. */
-  IMAGES_HURT_ELECTRO_SHOCK = [
-    "graphics/1.Sharkie/5.Hurt/2.Electric shock/o1.png",
-    "graphics/1.Sharkie/5.Hurt/2.Electric shock/o2.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the dead (poisoned) animation. */
-  IMAGES_DEAD_POISONED = [
-    "graphics/1.Sharkie/6.dead/1.Poisoned/1.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/2.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/3.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/4.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/5.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/6.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/7.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/8.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/8.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/10.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/11.png",
-    "graphics/1.Sharkie/6.dead/1.Poisoned/12.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the dead (electric shock) animation. */
-  IMAGES_DEAD_ELECTRO_SHOCK = [
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/1.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/2.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/3.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/4.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/5.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/6.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/7.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/8.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/9.png",
-    "graphics/1.Sharkie/6.dead/2.Electro_shock/10.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the bubble attack animation. */
-  IMAGES_ATTACK_BUBBLES = [
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the poisoned bubble attack animation. */
-  IMAGES_ATTACK_POISONED_BUBBLES = [
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
-    "graphics/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
-  ];
-
-  /** @type {Array<string>} The image paths for the fin slap attack animation. */
-  IMAGES_ATTACK_FIN_SLAP = [
-    "graphics/1.Sharkie/4.Attack/Fin slap/1.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/2.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/3.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/4.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/5.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/6.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/7.png",
-    "graphics/1.Sharkie/4.Attack/Fin slap/8.png",
-  ];
   world;
   swimmingSound = new Audio("audio/swimming.mp3");
 
@@ -262,17 +125,17 @@ class Character extends MovableObject {
    * Loads all necessary images for the character's animations.
    */
   loadImagesToConstructor() {
-    this.loadImages(this.IMAGES_IDLE);
-    this.loadImages(this.IMAGES_FALL_ASLEEP);
-    this.loadImages(this.IMAGES_SLEEP);
-    this.loadImages(this.IMAGES_SWIM);
-    this.loadImages(this.IMAGES_HURT_POISONED);
-    this.loadImages(this.IMAGES_HURT_ELECTRO_SHOCK);
-    this.loadImages(this.IMAGES_DEAD_POISONED);
-    this.loadImages(this.IMAGES_DEAD_ELECTRO_SHOCK);
-    this.loadImages(this.IMAGES_ATTACK_BUBBLES);
-    this.loadImages(this.IMAGES_ATTACK_POISONED_BUBBLES);
-    this.loadImages(this.IMAGES_ATTACK_FIN_SLAP);
+    this.loadImages(CHAR_IMAGES_IDLE);
+    this.loadImages(CHAR_IMAGES_FALL_ASLEEP);
+    this.loadImages(CHAR_IMAGES_SLEEP);
+    this.loadImages(CHAR_IMAGES_SWIM);
+    this.loadImages(CHAR_IMAGES_HURT_POISONED);
+    this.loadImages(CHAR_IMAGES_HURT_ELECTRO_SHOCK);
+    this.loadImages(CHAR_IMAGES_DEAD_POISONED);
+    this.loadImages(CHAR_IMAGES_DEAD_ELECTRO_SHOCK);
+    this.loadImages(CHAR_IMAGES_ATTACK_BUBBLES);
+    this.loadImages(CHAR_IMAGES_ATTACK_POISONED_BUBBLES);
+    this.loadImages(CHAR_IMAGES_ATTACK_FIN_SLAP);
   }
 
   /**
@@ -283,80 +146,13 @@ class Character extends MovableObject {
     let deltaTime = this.setTimeInterval(currentTime);
 
     if (deltaTime) {
-      this.handleCollisionsAndSounds();
-      this.handleMovement(deltaTime);
-      this.handleIdleMovement(deltaTime);
+      handleCollisionsAndSounds(this);
+      handleMovement(this, deltaTime);
+      handleIdleMovement(this, deltaTime);
       this.world.cameraX = -this.x + 220;
     }
 
     gameRunning && requestAnimationFrame((time) => this.moveCharacter(time));
-  }
-
-  /**
-   * Handles collisions and plays appropriate sounds.
-   */
-  handleCollisionsAndSounds() {
-    this.checkBarrierCollisions();
-    soundsEnabled && this.playCollisionSound();
-    this.swimmingSound.pause();
-  }
-
-  /**
-   * Handles the character's movement based on keyboard input.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  handleMovement(deltaTime) {
-    if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX && this.canMoveRight) {
-      this.moveRight(deltaTime);
-      this.handleMovementStart("right");
-    }
-    if (this.world.keyboard.LEFT && this.x > this.world.level.levelStartX && this.canMoveLeft) {
-      this.moveLeft(deltaTime);
-      this.handleMovementStart("left");
-    }
-    if (this.world.keyboard.UP && this.y > this.world.level.levelStartY && this.canMoveUp) {
-      this.moveUp(deltaTime);
-      this.handleMovementStart();
-    }
-    if (this.world.keyboard.DOWN && this.y < this.world.level.levelEndY && this.canMoveDown) {
-      this.moveDown(deltaTime);
-      this.handleMovementStart();
-    }
-  }
-
-  /**
-   * Handles the character's idle movement when no input is detected.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  handleIdleMovement(deltaTime) {
-    if (this.idleTime >= 150 && this.y < this.world.level.levelEndY && this.canMoveDown) {
-      if (soundsEnabled) {
-        this.snoringSound.loop = true;
-        this.snoringSound.play();
-      }
-      this.moveDown(deltaTime / 5);
-    }
-  }
-
-  /**
-   * Handles the start of a movement action and resets idle-related states.
-   * @param {string} [direction] - The direction of movement ("right" or "left").
-   */
-  handleMovementStart(direction) {
-    clearInterval(this.gravityInterval);
-    soundsEnabled && this.swimmingSound.play();
-    this.snoringSound.pause();
-    this.idleTime = 0;
-    switch (direction) {
-      case "right":
-        this.otherDirection = false;
-        break;
-      case "left":
-        this.otherDirection = true;
-        break;
-      default:
-        break;
-    }
   }
 
   /**
@@ -467,110 +263,11 @@ class Character extends MovableObject {
   }
 
   /**
-   * Retrieves the appropriate animation images based on the character's current state.
-   * @returns {Array<string>} The array of image paths for the current animation.
-   */
-  getAnimationImages() {
-    if (this.isDead()) return this.getDyingImages();
-    if (this.isHurt()) return this.getHurtImages();
-    if (this.world.keyboard.D) return this.getBubbleAttackImages();
-    if (this.world.keyboard.SPACE) return this.getFinSlapImages();
-    if (this.isMoving()) return this.IMAGES_SWIM;
-    return this.getIdleImages();
-  }
-
-  /**
-   * Retrieves the images for the fin slap attack animation.
-   * Sets the attack damage to 2.
-   * @returns {Array<string>} The array of image paths for the fin slap attack animation.
-   */
-  getFinSlapImages() {
-    this.world.attackDamage = 2;
-    return this.IMAGES_ATTACK_FIN_SLAP;
-  }
-
-  /**
-   * Checks if the character is currently moving based on keyboard input.
-   * @returns {boolean} True if the character is moving, otherwise false.
-   */
-  isMoving() {
-    const { RIGHT, LEFT, UP, DOWN } = this.world.keyboard;
-    return RIGHT || LEFT || UP || DOWN;
-  }
-
-  /**
-   * Retrieves the images for the idle animation based on the idle time.
-   * @returns {Array<string>} The array of image paths for the idle animation.
-   */
-  getIdleImages() {
-    if (this.idleTime >= 150 && this.idleTime < 164) return this.IMAGES_FALL_ASLEEP;
-    if (this.idleTime >= 164) return this.IMAGES_SLEEP;
-    return this.IMAGES_IDLE;
-  }
-
-  /**
    * Updates the enemy type when the character collides with an enemy.
    * @param {Object} enemy - The enemy object the character collided with.
    */
   collisionWithEnemy(enemy) {
     this.enemyType = enemy.enemyType;
-  }
-
-  /**
-   * Retrieves the images for the hurt animation based on the enemy type.
-   * @returns {Array<string>} The array of image paths for the hurt animation.
-   */
-  getHurtImages() {
-    switch (this.enemyType) {
-      case "pufferFish":
-        return this.IMAGES_HURT_POISONED;
-      case "endboss":
-        return this.IMAGES_HURT_POISONED;
-      case "jellyFish":
-        return this.IMAGES_HURT_ELECTRO_SHOCK;
-    }
-  }
-
-  /**
-   * Retrieves the sound effect to play when the character is hurt.
-   * @returns {Audio} The audio object for the hurt sound effect.
-   */
-  getHurtSound() {
-    switch (this.enemyType) {
-      case "pufferFish":
-        return this.posionedSound;
-      case "endboss":
-        return this.posionedSound;
-      case "jellyFish":
-        return this.electricShockSound;
-    }
-  }
-
-  /**
-   * Retrieves the images for the dying animation based on the enemy type.
-   * @returns {Array<string>} The array of image paths for the dying animation.
-   */
-  getDyingImages() {
-    switch (this.enemyType) {
-      case "pufferFish":
-        return this.IMAGES_DEAD_POISONED;
-      case "endboss":
-        return this.IMAGES_DEAD_POISONED;
-      case "jellyFish":
-        return this.IMAGES_DEAD_ELECTRO_SHOCK;
-    }
-  }
-
-  /**
-   * Retrieves the images for the bubble attack animation based on the number of bottles.
-   * @returns {Array<string>} The array of image paths for the bubble attack animation.
-   */
-  getBubbleAttackImages() {
-    if (this.bottles > 0) {
-      return this.IMAGES_ATTACK_POISONED_BUBBLES;
-    } else {
-      return this.IMAGES_ATTACK_BUBBLES;
-    }
   }
 
   /**
@@ -580,7 +277,7 @@ class Character extends MovableObject {
  */
   animate(currentTime) {
     let deltaTime = this.setTimeInterval(currentTime);
-    let imageArray = this.getAnimationImages();
+    let imageArray = getAnimationImages(this);
 
     if (this.animateIntervalReached) {
       this.lastAnimateFrameTime = currentTime;
@@ -588,47 +285,8 @@ class Character extends MovableObject {
       this.stopAttackAnimation(imageArray);
     }
 
-    this.handleDeathAnimation(deltaTime);
+    handleDeathAnimation(this, deltaTime);
     this.animationId = requestAnimationFrame((time) => this.animate(time));
-  }
-
-  /**
-   * Handles the death animation for the character.
-   * Determines the type of death animation based on the enemy type.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  handleDeathAnimation(deltaTime) {
-    if (this.isDead()) {
-      if (this.enemyType === "jellyFish") {
-        this.animateJellyFishDeath(deltaTime);
-      } else {
-        this.animateDefaultDeath(deltaTime);
-      }
-    }
-  }
-
-  /**
-   * Animates the death sequence for the character when killed by a jellyfish.
-   * Moves the character downward and cancels the animation after a delay.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  animateJellyFishDeath(deltaTime) {
-    if (this.y < this.world.level.levelEndY - 30) {
-      this.moveDown(deltaTime / 5);
-    }
-    setTimeout(() => cancelAnimationFrame(this.animationId), 1350);
-  }
-
-  /**
-   * Animates the default death sequence for the character.
-   * Moves the character upward and cancels the animation after a delay.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  animateDefaultDeath(deltaTime) {
-    if (this.y > this.world.level.levelStartY + 100) {
-      this.moveUp(deltaTime / 5);
-    }
-    setTimeout(() => cancelAnimationFrame(this.animationId), 1600);
   }
 
   /**
