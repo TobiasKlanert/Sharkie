@@ -350,11 +350,25 @@ class Endboss extends MovableObject {
       if (!this.isHurt && !this.isDying) {
         this.executeAttack = true;
         this.collisionDamage = 40;
-        this.speed = 200 + Math.random() * 200;
-        this.moveLeft();
+        this.speed = 5 + Math.random() * 5;
+        this.startMovingLeft();
         this.handleAttack();
       }
     }, this.attackTime);
+  }
+
+  startMovingLeft() {
+    if (this.moveLeftInterval) {
+      clearInterval(this.moveLeftInterval); // Clear any existing interval
+    }
+  
+    this.moveLeftInterval = setInterval(() => {
+      if (this.executeAttack) {
+        this.moveLeft();
+      } else {
+        clearInterval(this.moveLeftInterval); // Stop moving when the attack ends
+      }
+    }, 1000 / 60); // 60 FPS for smooth movement
   }
 
   /**
@@ -365,7 +379,6 @@ class Endboss extends MovableObject {
     setTimeout(() => {
       this.executeAttack = false;
       this.collisionDamage = 20;
-      this.moveRight();
       this.getRandomTime();
     }, this.IMAGES_ATTACK.length * 150);
   }
