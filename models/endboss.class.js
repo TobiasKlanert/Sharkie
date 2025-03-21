@@ -359,16 +359,16 @@ class Endboss extends MovableObject {
 
   startMovingLeft() {
     if (this.moveLeftInterval) {
-      clearInterval(this.moveLeftInterval); // Clear any existing interval
+      clearInterval(this.moveLeftInterval);
     }
   
     this.moveLeftInterval = setInterval(() => {
       if (this.executeAttack) {
         this.moveLeft();
       } else {
-        clearInterval(this.moveLeftInterval); // Stop moving when the attack ends
+        clearInterval(this.moveLeftInterval);
       }
-    }, 1000 / 60); // 60 FPS for smooth movement
+    }, 1000 / 60);
   }
 
   /**
