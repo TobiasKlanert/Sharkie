@@ -10,11 +10,11 @@ let dialogOpened = false;
  * @listens DOMContentLoaded
  */
 function initStartScreen() {
-    startScreen = document.getElementById("startScreen");
-    instructionDialog = document.getElementById("instructionsDialog");
-    orientationMessage = document.getElementById("orientationMessage");
-    impressumBtn = document.getElementById("btn-impressum");
-    checkOrientation();
+  startScreen = document.getElementById("startScreen");
+  instructionDialog = document.getElementById("instructionsDialog");
+  orientationMessage = document.getElementById("orientationMessage");
+  impressumBtn = document.getElementById("btn-impressum");
+  checkOrientation();
 }
 
 /**
@@ -28,7 +28,8 @@ function checkOrientation() {
   if (window.innerHeight > window.innerWidth) {
     orientationMessage.style.display = "flex";
     startScreen.style.borderRadius = "25px";
-  } else {
+    dialogOpened = true;
+  } else if (dialogOpened) {
     orientationMessage.style.display = "none";
     startScreen.style.borderRadius = "0";
   }
@@ -42,20 +43,20 @@ function checkOrientation() {
  * @param {HTMLElement} dialog - The dialog element to be toggled.
  */
 function toggleDialog(dialog) {
-    if (!dialogOpened) {
-        dialog.style.display = "flex";
-        impressumBtn.style.display = "none";
-        startScreen.style.borderRadius = "25px";  
-        dialogOpened = true;
-    } else {
-        dialog.style.display = "none";
-        impressumBtn.style.display = "flex";
-        startScreen.style.borderRadius = "0px";  
-        dialogOpened = false;
-    }
+  if (!dialogOpened) {
+    dialog.style.display = "flex";
+    impressumBtn.style.display = "none";
+    startScreen.style.borderRadius = "25px";
+    dialogOpened = true;
+  } else {
+    dialog.style.display = "none";
+    impressumBtn.style.display = "flex";
+    startScreen.style.borderRadius = "0px";
+    dialogOpened = false;
+  }
 }
 
 function showStartScreen(screenType) {
   document.getElementById(screenType).style.display = "none";
-  startScreen.style.display = "flex"; 
+  startScreen.style.display = "flex";
 }
