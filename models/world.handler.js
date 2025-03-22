@@ -79,7 +79,7 @@ function enemyCollisions(collisionDamage, world) {
  */
 function startEnemyDeathSequence(enemy, world) {
   enemy.isDying = true;
-  enemy.getDyingInterval(enemy);
+  getDyingInterval(enemy);
   enemy.loadImages(enemy.enemyDyingImages);
   world.animationInterval = setInterval(() => {
     enemy.playAnimation(enemy.enemyDyingImages);
@@ -90,6 +90,25 @@ function startEnemyDeathSequence(enemy, world) {
   }
   clearInterval(enemy.animationInterval);
 }
+
+  /**
+   * Sets the animation time for the dying animation based on the enemy type.
+   * Adjusts the duration of the dying animation to match the specific enemy.
+   * @param {Object} enemy - The enemy object for which the dying interval is being set.
+   * @param {string} enemy.enemyType - The type of the enemy (e.g., "pufferFish", "jellyFish").
+   */
+  function getDyingInterval(enemy) {
+    switch (enemy.enemyType) {
+      case "pufferFish":
+        this.animationTime = 130;
+        break;
+      case "jellyFish":
+        this.animationTime = 100;
+        break;
+      default:
+        break;
+    }
+  }
 
 /**
  * Cleans up the enemy after its death animation is complete.
