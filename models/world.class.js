@@ -131,7 +131,7 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (enemy.isColliding(bubble)) {
           this.character.attack(enemy);
-          bubble.sound.pause();
+          !bubble.sound.paused && bubble.sound.pause();
           bubble.sound.currentTime = 0;
           if (enemy instanceof Endboss) {
             enemy.isHurt = true;
@@ -189,7 +189,9 @@ class World {
    * @param {Audio} sound - The sound object to be played.
    */
   playSound(sound) {
-    sound.pause();
+    if (!sound.paused) {
+      sound.pause();
+    }
     sound.currentTime = 0;
     sound.play();
   }

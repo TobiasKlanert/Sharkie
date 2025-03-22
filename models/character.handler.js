@@ -4,7 +4,9 @@
 function handleCollisionsAndSounds(character) {
   character.checkBarrierCollisions();
   soundsEnabled && character.playCollisionSound();
-  character.swimmingSound.pause();
+  if (!character.swimmingSound.paused) {
+    character.swimmingSound.pause();
+  }
 }
 
 /**
@@ -55,7 +57,9 @@ function handleMovement(character, deltaTime) {
 function handleMovementStart(character, direction) {
   clearInterval(character.gravityInterval);
   soundsEnabled && character.swimmingSound.play();
-  character.snoringSound.pause();
+  if (!character.snoringSound.paused) {
+    character.snoringSound.pause();
+  }
   character.idleTime = 0;
   switch (direction) {
     case "right":

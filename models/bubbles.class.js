@@ -120,7 +120,9 @@ class Bubble extends DrawableObject {
   checkBubbleRange() {
     this.checkRangeInterval = setInterval(() => {
       if (this.x >= this.startX + 1000) {
-        this.sound.pause();
+        if (!this.sound.paused) {
+          this.sound.pause();
+        }
         this.isActive = false;
         this.clearIntervals();
       }

@@ -63,7 +63,9 @@ function enemyCollisions(collisionDamage, world) {
     world.statusBarLife.IMAGES_LIFE
   );
   if (world.character.isDead(world.character)) {
-    currentMusic.pause();
+    if (!currentMusic.paused) {
+      currentMusic.pause();
+    }
     currentMusic.currentTime = 0;
     setTimeout(() => {
       soundsEnabled && world.gameOverSound.play();
@@ -131,7 +133,9 @@ function cleanupEnemyAfterDeath(enemy, world) {
  * @param {World} world - The game world instance.
  */
 function handleEndbossDeath(world) {
-  currentMusic.pause();
+  if(!currentMusic.paused) {
+    currentMusic.pause();
+  }
   currentMusic.currentTime = 0;
   soundsEnabled && world.winningSound.play();
   stopGame("winningScreen");

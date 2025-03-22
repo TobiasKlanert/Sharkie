@@ -301,7 +301,9 @@ class Endboss extends MovableObject {
    * Pauses the current music, resets it, and plays the endboss music in a loop.
    */
   setEndbossMusic() {
-    currentMusic.pause();
+    if (!currentMusic.paused) {
+      currentMusic.pause();
+    }
     currentMusic.currentTime = 0;
     currentMusic = this.endbossMusic;
     currentMusic.volume = 0.2;
