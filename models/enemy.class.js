@@ -323,8 +323,8 @@ class Enemy extends MovableObject {
       case "pufferFish":
         this.setEnemyAttributes(300, 300, 2, 0.15 + Math.random() * 0.25, {
           top: 30,
-          left: 5,
-          right: 10,
+          left: 15,
+          right: 80,
           bottom: 120,
         });
         break;
