@@ -44,8 +44,8 @@ class Bubble extends DrawableObject {
    * @property {number} bottom - The bottom offset.
    */
   offset = {
-    top: 0,
-    left: 0,
+    top: -37,
+    left: -40,
     right: 0,
     bottom: 0,
   };

@@ -314,10 +314,10 @@ class Enemy extends MovableObject {
     switch (this.enemyType) {
       case "jellyFish":
         this.setEnemyAttributes(150, 150, 1, 1.15 + Math.random() * 0.25, {
-          top: 10,
-          left: 5,
-          right: 10,
-          bottom: 40,
+          top: 20,
+          left: 10,
+          right: 25,
+          bottom: 50,
         });
         break;
       case "pufferFish":
