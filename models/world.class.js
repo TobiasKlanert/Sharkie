@@ -105,7 +105,7 @@ class World {
   checkCharacterCollisions(asset) {
     asset.forEach((element) => {
       if (this.character.isColliding(element)) {
-        this.handleCollision(asset, element);
+        handleCollision(asset, element, this);
       }
     });
   }
@@ -119,42 +119,6 @@ class World {
       this.character.canMoveUp = false;
       this.character.canMoveLeft = false;
       this.character.canMoveRight = false;
-    }
-  }
-
-  /**
-   * Handles collisions between the character and a specific asset.
-   * @param {Array<Object>} asset - The list of assets.
-   * @param {Object} element - The specific asset the character collided with.
-   */
-  handleCollision(asset, element) {
-    switch (asset) {
-      case this.level.enemies:
-        this.handleEnemyCollision(element);
-        break;
-      case this.level.coins:
-        this.collectCoins(element);
-        break;
-      case this.level.bottles:
-        this.collectBottles(element);
-        break;
-      default:
-        break;
-    }
-  }
-
-  /**
-   * Handles collisions between the character and an enemy.
-   * @param {Object} enemy - The enemy the character collided with.
-   */
-  handleEnemyCollision(enemy) {
-    this.character.collisionWithEnemy(enemy);
-    if (this.keyboard.SPACE && this.character.enemyType == "pufferFish") {
-      this.character.executeAttack = true;
-      this.character.attack(enemy);
-      this.killEnemy(enemy);
-    } else if (!this.character.executeAttack) {
-      this.enemyCollisions(enemy.collisionDamage);
     }
   }
 
@@ -173,101 +137,11 @@ class World {
             enemy.isHurt = true;
             enemy.handleHurt();
           }
-          this.killEnemy(enemy);
+          killEnemy(enemy, this);
           this.bubbles = this.bubbles.filter((b) => b !== bubble);
         }
       });
     });
-  }
-
-  /**
-   * Handles collisions between the character and an enemy.
-   * Applies damage to the character and updates the life status bar.
-   * Plays the hurt sound if sounds are enabled.
-   * @param {number} collisionDamage - The amount of damage caused by the collision.
-   */
-  enemyCollisions(collisionDamage) {
-    let hurtSound = getHurtSound(this.character);
-    this.character.hit(collisionDamage);
-    soundsEnabled && hurtSound.play();
-    this.statusBarLife.setPercentage(
-      this.character.energy,
-      this.statusBarLife.IMAGES_LIFE
-    );
-    if (this.character.isDead(this.character)) {
-      currentMusic.pause();
-      currentMusic.currentTime = 0;
-      setTimeout(() => {
-        soundsEnabled && this.gameOverSound.play();
-        stopGame("gameoverScreen");
-      }, 2000);
-    }
-  }
-
-  /**
-   * Handles the logic for killing an enemy.
-   * Starts the death sequence and cleans up the enemy after death.
-   * @param {Object} enemy - The enemy to be killed.
-   */
-  killEnemy(enemy) {
-    if (enemy.health <= 0 && !enemy.isDying) {
-      this.startEnemyDeathSequence(enemy);
-      this.cleanupEnemyAfterDeath(enemy);
-    }
-  }
-
-  /**
-   * Starts the death animation sequence for an enemy.
-   * Stops any ongoing movement or animation intervals for the enemy.
-   * @param {Object} enemy - The enemy to start the death sequence for.
-   */
-  startEnemyDeathSequence(enemy) {
-    enemy.isDying = true;
-    enemy.getDyingInterval(enemy);
-    enemy.loadImages(enemy.enemyDyingImages);
-    this.animationInterval = setInterval(() => {
-      enemy.playAnimation(enemy.enemyDyingImages);
-    }, enemy.animationTime);
-
-    if (enemy.moveInterval) {
-      clearInterval(enemy.moveInterval);
-    }
-    clearInterval(enemy.animationInterval);
-  }
-
-  /**
-   * Cleans up the enemy after its death animation is complete.
-   * Removes the enemy from the level and handles endboss-specific logic.
-   * @param {Object} enemy - The enemy to be cleaned up.
-   */
-  cleanupEnemyAfterDeath(enemy) {
-    setTimeout(() => {
-      clearInterval(this.animationInterval);
-      this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
-      this.character.executeAttack = false;
-      if (this.endboss.isDying) {
-        this.handleEndbossDeath();
-      }
-    }, enemy.enemyDyingImages.length * enemy.animationTime);
-  }
-
-  /**
-   * Handles the logic for when the endboss is defeated.
-   * Stops the current music, plays the winning sound, and shows the winning screen.
-   */
-  handleEndbossDeath() {
-    currentMusic.pause();
-    currentMusic.currentTime = 0;
-    soundsEnabled && this.winningSound.play();
-    stopGame("winningScreen");
-    this.showCollectedCoins();
-  }
-
-  /**
-   * Displays the number of coins collected by the character.
-   */
-  showCollectedCoins() {
-    document.getElementById("collectedCoins").innerHTML = this.character.coins + " / 25";
   }
 
   /**
@@ -290,10 +164,10 @@ class World {
    * @param {Object} barrier - The barrier the character collided with.
    */
   barrierCollisions(barrier) {
-    let fromLeft = this.getBarrierCollisionLeft(barrier);
-    let fromRight = this.getBarrierCollisionRight(barrier);
-    let fromTop = this.getBarrierCollisionTop(barrier);
-    let fromBottom = this.getBarrierCollisionBottom(barrier);
+    let fromLeft = getBarrierCollisionLeft(barrier, this);
+    let fromRight = getBarrierCollisionRight(barrier, this);
+    let fromTop = getBarrierCollisionTop(barrier, this);
+    let fromBottom = getBarrierCollisionBottom(barrier, this);
 
     if (fromLeft) {
       this.character.canMoveRight = false;
@@ -307,114 +181,6 @@ class World {
     if (fromBottom) {
       this.character.canMoveUp = false;
     }
-  }
-
-  /**
-   * Checks if the character collides with the left side of a barrier.
-   * @param {Object} barrier - The barrier to check.
-   * @returns {boolean} True if a collision occurs, otherwise false.
-   */
-  getBarrierCollisionLeft(barrier) {
-    return (
-      this.character.x +
-      this.character.offset.left +
-      (this.character.width - this.character.offset.right) >=
-      barrier.x + barrier.offsetTop.left &&
-      this.character.x +
-      this.character.offset.left +
-      (this.character.width - this.character.offset.right) <
-      barrier.x + barrier.width + barrier.offsetTop.left - 50
-    );
-  }
-
-  /**
-   * Checks if the character collides with the right side of a barrier.
-   * @param {Object} barrier - The barrier to check.
-   * @returns {boolean} True if a collision occurs, otherwise false.
-   */
-  getBarrierCollisionRight(barrier) {
-    return (
-      this.character.x + this.character.offset.left <=
-      barrier.x +
-      barrier.offsetTop.left +
-      (barrier.width - barrier.offsetTop.right) &&
-      this.character.x + this.character.offset.left >
-      barrier.x + barrier.offsetTop.left + 50
-    );
-  }
-
-  /**
-   * Checks if the character collides with the top side of a barrier.
-   * @param {Object} barrier - The barrier to check.
-   * @returns {boolean} True if a collision occurs, otherwise false.
-   */
-  getBarrierCollisionTop(barrier) {
-    return (
-      (this.character.y +
-        this.character.offset.top +
-        (this.character.height - this.character.offset.bottom) >=
-        barrier.y + barrier.offsetTop.top &&
-        this.character.y +
-        this.character.offset.top +
-        (this.character.height - this.character.offset.bottom) <
-        barrier.y + barrier.offsetTop.top + 10) ||
-      (this.character.y +
-        this.character.offset.top +
-        (this.character.height - this.character.offset.bottom) >=
-        barrier.y + barrier.offsetBottom.top &&
-        this.character.y +
-        this.character.offset.top +
-        (this.character.height - this.character.offset.bottom) <
-        barrier.y + barrier.offsetBottom.top + 10)
-    );
-  }
-
-  /**
-   * Checks if the character collides with the bottom side of a barrier.
-   * @param {Object} barrier - The barrier to check.
-   * @returns {boolean} True if a collision occurs, otherwise false.
-   */
-  getBarrierCollisionBottom(barrier) {
-    return (
-      this.character.y + this.character.offset.top <=
-      barrier.y +
-      barrier.offsetTop.top +
-      (barrier.height - barrier.offsetTop.bottom) &&
-      this.character.y + this.character.offset.top >
-      barrier.y +
-      barrier.offsetTop.top +
-      (barrier.height - barrier.offsetTop.bottom) - 10
-    );
-  }
-
-  /**
-   * Handles the logic for collecting coins.
-   * Updates the coin count, plays the coin collection sound, and updates the status bar.
-   * @param {Object} coin - The coin object being collected.
-   */
-  collectCoins(coin) {
-    this.character.countCoins();
-    soundsEnabled && this.playSound(this.character.collectCoinSound);
-    this.statusBarCoins.setPercentage(
-      this.character.coinPercentage,
-      this.statusBarCoins.IMAGES_COINS
-    );
-    this.level.coins = this.level.coins.filter((c) => c !== coin);
-  }
-
-  /**
-   * Handles the logic for collecting bottles.
-   * Updates the bottle count, plays the bottle collection sound, and updates the status bar.
-   * @param {Object} bottle - The bottle object being collected.
-   */
-  collectBottles(bottle) {
-    this.character.countBottles();
-    soundsEnabled && this.playSound(this.character.collectBottleSound);
-    this.statusBarBottles.setPercentage(
-      this.character.bottles,
-      this.statusBarBottles.IMAGES_BOTTLES
-    );
-    this.level.bottles = this.level.bottles.filter((b) => b !== bottle);
   }
 
   /**
