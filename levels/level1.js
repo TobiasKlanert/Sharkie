@@ -40,64 +40,11 @@ function initLevel() {
  */
 function generateEnemies() {
   const enemies = [
-    ...Array.from({ length: 15 }, () => new Enemy()),
+    ...Array.from({ length: 20 }, () => new Enemy()),
     new Endboss(),
   ];
-  adjustEnemyPositions(enemies);
+  Level.adjustEnemyPositions(enemies);
   return enemies;
-}
-
-/**
- * Ensures that all enemies (excluding the Endboss) are at least 500px apart from each other.
- * Adjusts the position of regular enemies if they are too close to each other or the Endboss.
- * @param {Array<Enemy>} enemies - The array of all existing enemies.
- */
-function adjustEnemyPositions(enemies) {
-  const regularEnemies = enemies.filter((enemy) => !(enemy instanceof Endboss));
-  const endboss = enemies.find((enemy) => enemy instanceof Endboss);
-
-  regularEnemies.forEach((enemy, index) => {
-    ensureEnemyDistance(enemy, regularEnemies, index);
-    ensureDistanceFromEndboss(enemy, endboss);
-  });
-}
-
-/**
- * Ensures that the given enemy is at least 500px away from other regular enemies.
- * Repositions the enemy if it is too close to another enemy.
- * @param {Enemy} enemy - The enemy to check.
- * @param {Array<Enemy>} regularEnemies - The array of regular enemies.
- * @param {number} index - The index of the current enemy in the array.
- */
-function ensureEnemyDistance(enemy, regularEnemies, index) {
-  let isTooClose = true;
-
-  while (isTooClose) {
-    isTooClose = false;
-
-    for (let i = 0; i < regularEnemies.length; i++) {
-      if (i !== index) {
-        const otherEnemy = regularEnemies[i];
-        if (Math.abs(enemy.x - otherEnemy.x) < 500) {
-          enemy.x = 1000 + Math.random() * 20000;
-          isTooClose = true;
-          break;
-        }
-      }
-    }
-  }
-}
-
-/**
- * Ensures that the given enemy is at least 500px away from the Endboss.
- * Repositions the enemy if it is too close to the Endboss.
- * @param {Enemy} enemy - The enemy to check.
- * @param {Endboss} endboss - The Endboss instance.
- */
-function ensureDistanceFromEndboss(enemy, endboss) {
-  if (endboss && Math.abs(enemy.x - endboss.x) < 500) {
-    enemy.x = 1000 + Math.random() * 20000;
-  }
 }
 
 /**

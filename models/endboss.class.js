@@ -314,7 +314,7 @@ class Endboss extends MovableObject {
    * The time is between 1000ms (1 second) and 4000ms (4 seconds).
    */
   getRandomTime() {
-    this.attackTime = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000;
+    this.attackTime = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
   }
 
   /**

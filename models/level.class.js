@@ -75,7 +75,10 @@ class Level {
     const barrierData = this.getBarrierData();
     let positions = [];
     return Array.from({ length: 7 }, () => {
-      let { x, y, randomImage } = this.getValidBarrierPosition(barrierData, positions);
+      let { x, y, randomImage } = this.getValidBarrierPosition(
+        barrierData,
+        positions
+      );
       positions.push({ x, y });
       let { width, height } = barrierData[randomImage];
       return new BARRIERS(x, y, width, height, randomImage);
@@ -89,8 +92,16 @@ class Level {
   static getBarrierData() {
     return {
       "graphics/3. Background/Barrier/1.png": { y: 0, width: 750, height: 720 },
-      "graphics/3. Background/Barrier/2.png": { y: 320, width: 872, height: 400 },
-      "graphics/3. Background/Barrier/3.png": { y: 100, width: 200, height: 409 },
+      "graphics/3. Background/Barrier/2.png": {
+        y: 320,
+        width: 872,
+        height: 400,
+      },
+      "graphics/3. Background/Barrier/3.png": {
+        y: 100,
+        width: 200,
+        height: 409,
+      },
     };
   }
 
@@ -119,7 +130,10 @@ class Level {
   static generateCoinGroups(existingBarriers) {
     let positions = [];
     return Array.from({ length: 5 }, () => {
-      let { startX, startY } = this.getValidCoinPosition(positions, existingBarriers);
+      let { startX, startY } = this.getValidCoinPosition(
+        positions,
+        existingBarriers
+      );
       positions.push({ x: startX, y: startY });
       return this.createCoinFormation(startX, startY);
     });
@@ -157,7 +171,9 @@ class Level {
       [0, 45, 90, 135, 180],
     ];
     let formation = formations[Math.floor(Math.random() * formations.length)];
-    return formation.map((yOffset, j) => new COINS(startX + j * 100, startY + yOffset));
+    return formation.map(
+      (yOffset, j) => new COINS(startX + j * 100, startY + yOffset)
+    );
   }
 
   /**
@@ -169,7 +185,11 @@ class Level {
   static generateBottles(existingBarriers, existingCoins) {
     let positions = [];
     return Array.from({ length: 5 }, () => {
-      let { x, y } = this.getValidBottlePosition(positions, existingBarriers, existingCoins);
+      let { x, y } = this.getValidBottlePosition(
+        positions,
+        existingBarriers,
+        existingCoins
+      );
       positions.push({ x, y });
       return new BOTTLES(x);
     });
@@ -183,7 +203,9 @@ class Level {
    * @returns {Object} An object containing the x and y coordinates.
    */
   static getValidBottlePosition(positions, existingBarriers, existingCoins) {
-    let x, y = 300, validPosition;
+    let x,
+      y = 300,
+      validPosition;
     do {
       x = 1000 + Math.random() * 22000;
       validPosition =
@@ -192,5 +214,60 @@ class Level {
         !this.isOverlapping({ x, y }, existingCoins.flat(), 500);
     } while (!validPosition);
     return { x, y };
+  }
+
+  /**
+   * Ensures that all enemies (excluding the Endboss) are at least 500px apart from each other.
+   * Adjusts the position of regular enemies if they are too close to each other or the Endboss.
+   * @param {Array<Enemy>} enemies - The array of all existing enemies.
+   */
+  static adjustEnemyPositions(enemies) {
+    const regularEnemies = enemies.filter(
+      (enemy) => !(enemy instanceof Endboss)
+    );
+    const endboss = enemies.find((enemy) => enemy instanceof Endboss);
+
+    regularEnemies.forEach((enemy, index) => {
+      this.ensureEnemyDistance(enemy, regularEnemies, index);
+      /* this.ensureDistanceFromEndboss(enemy, endboss); */
+    });
+  }
+
+  /**
+   * Ensures that the given enemy is at least 500px away from other regular enemies.
+   * Repositions the enemy if it is too close to another enemy.
+   * @param {Enemy} enemy - The enemy to check.
+   * @param {Array<Enemy>} regularEnemies - The array of regular enemies.
+   * @param {number} index - The index of the current enemy in the array.
+   */
+  static ensureEnemyDistance(enemy, regularEnemies, index) {
+    let isTooClose = true;
+
+    while (isTooClose) {
+      isTooClose = false;
+
+      for (let i = 0; i < regularEnemies.length; i++) {
+        if (i !== index) {
+          const otherEnemy = regularEnemies[i];
+          if (Math.abs(enemy.x - otherEnemy.x) < 500) {
+            enemy.x = 1000 + Math.random() * 23000;
+            isTooClose = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Ensures that the given enemy is at least 500px away from the Endboss.
+   * Repositions the enemy if it is too close to the Endboss.
+   * @param {Enemy} enemy - The enemy to check.
+   * @param {Endboss} endboss - The Endboss instance.
+   */
+  static ensureDistanceFromEndboss(enemy, endboss) {
+    if (endboss && Math.abs(enemy.x - endboss.x) < 500) {
+      enemy.x = 1000 + Math.random() * 20000;
+    }
   }
 }
