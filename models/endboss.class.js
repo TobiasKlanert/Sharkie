@@ -311,10 +311,10 @@ class Endboss extends MovableObject {
 
   /**
    * Generates a random time for the endboss's attack interval.
-   * The time is between 2000ms and 5000ms.
+   * The time is between 1000ms (1 second) and 4000ms (4 seconds).
    */
   getRandomTime() {
-    this.attackTime = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+    this.attackTime = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000;
   }
 
   /**
@@ -347,7 +347,7 @@ class Endboss extends MovableObject {
    */
   attack() {
     this.attackInterval = setInterval(() => {
-      if (!this.isHurt && !this.isDying) {
+      if (!this.isDying) {
         this.executeAttack = true;
         this.collisionDamage = 40;
         this.speed = 5 + Math.random() * 5;
