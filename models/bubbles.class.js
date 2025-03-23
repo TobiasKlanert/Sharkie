@@ -67,11 +67,17 @@ class Bubble extends DrawableObject {
     this.height = 75;
     this.isActive = true;
     this.sound = new Audio("audio/bubble-attack.mp3");
-    soundsEnabled && this.sound.play();
+    if (this.sound && soundsEnabled) {
+      this.sound.play();
+    }
     this.throw(speed);
     this.animate(5);
     this.checkBubbleRange();
-    pushToIntervals([this.throwInterval, this.animationInterval, this.checkRangeInterval]);
+    pushToIntervals([
+      this.throwInterval,
+      this.animationInterval,
+      this.checkRangeInterval,
+    ]);
   }
 
   /**

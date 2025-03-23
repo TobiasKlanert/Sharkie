@@ -57,7 +57,9 @@ function killEnemy(enemy, world) {
 function enemyCollisions(collisionDamage, world) {
   let hurtSound = getHurtSound(world.character);
   world.character.hit(collisionDamage);
-  soundsEnabled && hurtSound.play();
+  if (soundsEnabled && hurtSound) {
+    hurtSound.play();
+  }
   world.statusBarLife.setPercentage(
     world.character.energy,
     world.statusBarLife.IMAGES_LIFE
@@ -68,7 +70,9 @@ function enemyCollisions(collisionDamage, world) {
     }
     currentMusic.currentTime = 0;
     setTimeout(() => {
-      soundsEnabled && world.gameOverSound.play();
+      if (soundsEnabled && world.gameOverSound) {
+        world.gameOverSound.play();
+      }
       stopGame("gameoverScreen");
     }, 2000);
   }
@@ -137,7 +141,9 @@ function handleEndbossDeath(world) {
     currentMusic.pause();
   }
   currentMusic.currentTime = 0;
-  soundsEnabled && world.winningSound.play();
+  if (soundsEnabled && world.winningSound) {
+    world.winningSound.play();
+  }
   stopGame("winningScreen");
   showCollectedCoins(world);
 }

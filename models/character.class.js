@@ -180,7 +180,9 @@ class Character extends MovableObject {
         !this.canMoveUp ||
         !this.canMoveDown)
     ) {
-      this.barrierCollisionSound.play();
+      if (this.barrierCollisionSound) {
+        this.barrierCollisionSound.play();
+      }
     }
   }
 
@@ -192,7 +194,7 @@ class Character extends MovableObject {
       this.idleTime = 0;
     } else if (this.world.keyboard.SPACE) {
       this.idleTime = 0;
-      if (soundsEnabled) {
+      if (soundsEnabled && this.slapSound) {
         this.slapSound.currentTime = 0;
         this.slapSound.play();
       }
@@ -271,10 +273,10 @@ class Character extends MovableObject {
   }
 
   /**
- * Animates the character's actions based on the current state and time.
- * Handles animations, attack sequences, and death animations.
- * @param {number} currentTime - The current timestamp.
- */
+   * Animates the character's actions based on the current state and time.
+   * Handles animations, attack sequences, and death animations.
+   * @param {number} currentTime - The current timestamp.
+   */
   animate(currentTime) {
     let deltaTime = this.setTimeInterval(currentTime);
     let imageArray = getAnimationImages(this);

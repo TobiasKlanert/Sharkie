@@ -184,7 +184,9 @@ class Endboss extends MovableObject {
    */
   handleHurtAnimation() {
     this.playAnimation(ENDBOSS_IMAGES_HURT);
-    soundsEnabled && this.endbossHurtSound.play();
+    if (soundsEnabled && this.endbossHurtSound) {
+      this.endbossHurtSound.play();
+    }
   }
 
   /**
@@ -207,7 +209,7 @@ class Endboss extends MovableObject {
    * Plays the attack animation and sound if enabled.
    */
   handleAttackAnimation() {
-    if (soundsEnabled) {
+    if (soundsEnabled && this.endbossAttackSound) {
       this.endbossAttackSound.volume = 0.2;
       this.endbossAttackSound.play();
     }
@@ -236,11 +238,13 @@ class Endboss extends MovableObject {
     if (!currentMusic.paused) {
       currentMusic.pause();
     }
-    currentMusic.currentTime = 0;
-    currentMusic = this.endbossMusic;
-    currentMusic.volume = 0.2;
-    currentMusic.loop = true;
-    currentMusic.play();
+    if (currentMusic) {
+      currentMusic.currentTime = 0;
+      currentMusic = this.endbossMusic;
+      currentMusic.volume = 0.2;
+      currentMusic.loop = true;
+      currentMusic.play();
+    }
   }
 
   /**

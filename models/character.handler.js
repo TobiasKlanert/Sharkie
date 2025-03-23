@@ -56,7 +56,9 @@ function handleMovement(character, deltaTime) {
  */
 function handleMovementStart(character, direction) {
   clearInterval(character.gravityInterval);
-  soundsEnabled && character.swimmingSound.play();
+  if (soundsEnabled && character.swimmingSound) {
+    character.swimmingSound.play();
+  }
   if (!character.snoringSound.paused) {
     character.snoringSound.pause();
   }
@@ -84,7 +86,7 @@ function handleIdleMovement(character, deltaTime) {
     character.y < character.world.level.levelEndY &&
     character.canMoveDown
   ) {
-    if (soundsEnabled) {
+    if (soundsEnabled && character.snoringSound) {
       character.snoringSound.loop = true;
       character.snoringSound.play();
     }
@@ -108,17 +110,17 @@ function handleDeathAnimation(character, deltaTime) {
   }
 }
 
-  /**
-   * Animates the death sequence for the character when killed by a jellyfish.
-   * Moves the character downward and cancels the animation after a delay.
-   * @param {number} deltaTime - The time elapsed since the last frame.
-   */
-  function animateJellyFishDeath(character, deltaTime) {
-    if (character.y < character.world.level.levelEndY - 30) {
-      character.moveDown(deltaTime / 5);
-    }
-    setTimeout(() => cancelAnimationFrame(character.animationId), 1350);
+/**
+ * Animates the death sequence for the character when killed by a jellyfish.
+ * Moves the character downward and cancels the animation after a delay.
+ * @param {number} deltaTime - The time elapsed since the last frame.
+ */
+function animateJellyFishDeath(character, deltaTime) {
+  if (character.y < character.world.level.levelEndY - 30) {
+    character.moveDown(deltaTime / 5);
   }
+  setTimeout(() => cancelAnimationFrame(character.animationId), 1350);
+}
 
 /**
  * Animates the default death sequence for the character.
