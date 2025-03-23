@@ -93,8 +93,17 @@ class World {
    * Checks the character's position and triggers the end boss encounter if applicable.
    */
   checkCharacterPosition() {
-    if (this.endboss && this.character.x > 23000) {
-      this.endboss.firstContact = true;
+    if (this.endboss) {
+      if (this.character.x > 23000) {
+        this.endboss.firstContact = true;
+      }
+      if (this.endboss.firstContact) {
+        if (this.character.x < this.endboss.x) {
+          this.endboss.moveDirection = "left";
+        } else {
+          this.endboss.moveDirection = "right";
+        }
+      }
     }
   }
 

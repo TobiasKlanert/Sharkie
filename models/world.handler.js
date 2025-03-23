@@ -93,24 +93,24 @@ function startEnemyDeathSequence(enemy, world) {
   clearInterval(enemy.animationInterval);
 }
 
-  /**
-   * Sets the animation time for the dying animation based on the enemy type.
-   * Adjusts the duration of the dying animation to match the specific enemy.
-   * @param {Object} enemy - The enemy object for which the dying interval is being set.
-   * @param {string} enemy.enemyType - The type of the enemy (e.g., "pufferFish", "jellyFish").
-   */
-  function getDyingInterval(enemy) {
-    switch (enemy.enemyType) {
-      case "pufferFish":
-        this.animationTime = 130;
-        break;
-      case "jellyFish":
-        this.animationTime = 100;
-        break;
-      default:
-        break;
-    }
+/**
+ * Sets the animation time for the dying animation based on the enemy type.
+ * Adjusts the duration of the dying animation to match the specific enemy.
+ * @param {Object} enemy - The enemy object for which the dying interval is being set.
+ * @param {string} enemy.enemyType - The type of the enemy (e.g., "pufferFish", "jellyFish").
+ */
+function getDyingInterval(enemy) {
+  switch (enemy.enemyType) {
+    case "pufferFish":
+      this.animationTime = 130;
+      break;
+    case "jellyFish":
+      this.animationTime = 100;
+      break;
+    default:
+      break;
   }
+}
 
 /**
  * Cleans up the enemy after its death animation is complete.
@@ -133,7 +133,7 @@ function cleanupEnemyAfterDeath(enemy, world) {
  * @param {World} world - The game world instance.
  */
 function handleEndbossDeath(world) {
-  if(!currentMusic.paused) {
+  if (!currentMusic.paused) {
     currentMusic.pause();
   }
   currentMusic.currentTime = 0;

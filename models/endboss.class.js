@@ -86,6 +86,12 @@ class Endboss extends MovableObject {
   executeAttack = false;
 
   /**
+   * Indicates wether the endboss is moving left or right
+   * @type {string}
+   */
+  moveDirection;
+
+  /**
    * The interval ID for the animation loop.
    * @type {number}
    */
@@ -116,85 +122,11 @@ class Endboss extends MovableObject {
   animationTime = 200;
 
   /**
-   * An array of image paths for the endboss's introduction animation.
-   * @type {string[]}
-   */
-  IMAGES_INTRODUCE = [
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/1.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/2.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/3.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/4.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/5.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/6.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/7.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/8.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/9.png",
-    "graphics/2.Enemy/3 Final Enemy/1.Introduce/10.png",
-  ];
-
-  /**
-   * An array of image paths for the endboss's floating animation.
-   * @type {string[]}
-   */
-  IMAGES_FLOATING = [
-    "graphics/2.Enemy/3 Final Enemy/2.floating/1.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/2.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/3.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/4.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/5.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/6.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/7.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/8.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/9.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/10.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/11.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/12.png",
-    "graphics/2.Enemy/3 Final Enemy/2.floating/13.png",
-  ];
-
-  /**
-   * An array of image paths for the endboss's attack animation.
-   * @type {string[]}
-   */
-  IMAGES_ATTACK = [
-    "graphics/2.Enemy/3 Final Enemy/Attack/1.png",
-    "graphics/2.Enemy/3 Final Enemy/Attack/2.png",
-    "graphics/2.Enemy/3 Final Enemy/Attack/3.png",
-    "graphics/2.Enemy/3 Final Enemy/Attack/4.png",
-    "graphics/2.Enemy/3 Final Enemy/Attack/5.png",
-    "graphics/2.Enemy/3 Final Enemy/Attack/6.png",
-  ];
-
-  /**
-   * An array of image paths for the endboss's hurt animation.
-   * @type {string[]}
-   */
-  IMAGES_HURT = [
-    "graphics/2.Enemy/3 Final Enemy/Hurt/1.png",
-    "graphics/2.Enemy/3 Final Enemy/Hurt/2.png",
-    "graphics/2.Enemy/3 Final Enemy/Hurt/3.png",
-    "graphics/2.Enemy/3 Final Enemy/Hurt/4.png",
-  ];
-
-  /**
-   * An array of image paths for the endboss's death animation.
-   * @type {string[]}
-   */
-  IMAGES_DEAD = [
-    "graphics/2.Enemy/3 Final Enemy/Dead/0.png",
-    "graphics/2.Enemy/3 Final Enemy/Dead/1.png",
-    "graphics/2.Enemy/3 Final Enemy/Dead/2.png",
-    "graphics/2.Enemy/3 Final Enemy/Dead/3.png",
-    "graphics/2.Enemy/3 Final Enemy/Dead/4.png",
-    "graphics/2.Enemy/3 Final Enemy/Dead/5.png",
-  ];
-
-  /**
    * The images used for the endboss's death animation.
    * Defaults to the `IMAGES_DEAD` array.
    * @type {string[]}
    */
-  enemyDyingImages = this.IMAGES_DEAD;
+  enemyDyingImages = ENDBOSS_IMAGES_DEAD;
 
   /**
    * The audio file for the endboss's background music.
@@ -219,11 +151,11 @@ class Endboss extends MovableObject {
    * Loads all necessary images and starts the animation and attack processes.
    */
   constructor() {
-    super().loadImage(this.IMAGES_INTRODUCE[0]);
-    this.loadImages(this.IMAGES_INTRODUCE);
-    this.loadImages(this.IMAGES_FLOATING);
-    this.loadImages(this.IMAGES_HURT);
-    this.loadImages(this.IMAGES_ATTACK);
+    super().loadImage(ENDBOSS_IMAGES_INTRODUCE[0]);
+    this.loadImages(ENDBOSS_IMAGES_INTRODUCE);
+    this.loadImages(ENDBOSS_IMAGES_FLOATING);
+    this.loadImages(ENDBOSS_IMAGES_HURT);
+    this.loadImages(ENDBOSS_IMAGES_ATTACK);
     this.x = 24000;
     this.animate();
     this.getRandomTime();
@@ -251,7 +183,7 @@ class Endboss extends MovableObject {
    * Plays the hurt animation and sound if enabled.
    */
   handleHurtAnimation() {
-    this.playAnimation(this.IMAGES_HURT);
+    this.playAnimation(ENDBOSS_IMAGES_HURT);
     soundsEnabled && this.endbossHurtSound.play();
   }
 
@@ -262,11 +194,11 @@ class Endboss extends MovableObject {
   handleStateAnimation(i) {
     if (i < 10 && this.firstContact) {
       soundsEnabled && this.setEndbossMusic();
-      this.playAnimation(this.IMAGES_INTRODUCE);
+      this.playAnimation(ENDBOSS_IMAGES_INTRODUCE);
     } else if (i >= 10 && this.executeAttack) {
       this.handleAttackAnimation();
     } else if (i >= 10) {
-      this.playAnimation(this.IMAGES_FLOATING);
+      this.playAnimation(ENDBOSS_IMAGES_FLOATING);
     }
   }
 
@@ -279,7 +211,7 @@ class Endboss extends MovableObject {
       this.endbossAttackSound.volume = 0.2;
       this.endbossAttackSound.play();
     }
-    this.playAnimation(this.IMAGES_ATTACK);
+    this.playAnimation(ENDBOSS_IMAGES_ATTACK);
   }
 
   /**
@@ -326,7 +258,7 @@ class Endboss extends MovableObject {
   handleHurt() {
     setTimeout(() => {
       this.isHurt = false;
-    }, this.IMAGES_HURT.length * 150);
+    }, ENDBOSS_IMAGES_HURT.length * 150);
   }
 
   /**
@@ -353,7 +285,7 @@ class Endboss extends MovableObject {
         this.executeAttack = true;
         this.collisionDamage = 40;
         this.speed = 5 + Math.random() * 5;
-        this.startMovingLeft();
+        this.moveEndboss();
         this.handleAttack();
       }
     }, this.attackTime);
@@ -364,18 +296,36 @@ class Endboss extends MovableObject {
    * The movement continues as long as the `executeAttack` flag is true.
    * Stops the movement when the attack state ends.
    */
-  startMovingLeft() {
-    if (this.moveLeftInterval) {
-      clearInterval(this.moveLeftInterval);
+  moveEndboss() {
+    if (this.moveInterval) {
+      clearInterval(this.moveInterval);
     }
-
-    this.moveLeftInterval = setInterval(() => {
+    this.moveInterval = setInterval(() => {
       if (this.executeAttack) {
-        this.moveLeft();
+        this.getEndbossMovement();
       } else {
-        clearInterval(this.moveLeftInterval);
+        clearInterval(this.moveInterval);
       }
     }, 1000 / 60);
+  }
+
+  /**
+   * Determines the movement direction of the endboss and updates its position.
+   * Moves the endboss to the left or right based on the `moveDirection` property.
+   * Also updates the `otherDirection` flag to reflect the current direction.
+   */
+  getEndbossMovement() {
+    switch (this.moveDirection) {
+      case "left":
+        this.moveLeft();
+        this.otherDirection = false;
+        break;
+      case "right":
+        this.moveRight();
+        this.otherDirection = true;
+      default:
+        break;
+    }
   }
 
   /**
@@ -387,6 +337,6 @@ class Endboss extends MovableObject {
       this.executeAttack = false;
       this.collisionDamage = 20;
       this.getRandomTime();
-    }, this.IMAGES_ATTACK.length * 150);
+    }, ENDBOSS_IMAGES_ATTACK.length * 150);
   }
 }
