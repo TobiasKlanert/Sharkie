@@ -239,7 +239,7 @@ class Enemy extends MovableObject {
     super().loadImage(
       "graphics/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png"
     );
-    this.x = 1000 + Math.random() * 20000;
+    this.x = 1000 + Math.random() * 23000;
     this.y = Math.random() * 450;
     let randomEnemy = this.randomizeEnemy();
     this.getAnimationTime();
@@ -365,14 +365,20 @@ class Enemy extends MovableObject {
   }
 
   /**
-   * Moves the enemy to the left.
+   * Moves the enemy to the left and adjusts its vertical position.
+   * Ensures that the `y` position is never less than 50.
    */
   moveEnemy() {
     let time = 0;
     this.moveInterval = setInterval(() => {
       this.moveLeft();
       if (this.enemyType === "jellyFish") {
-        this.y += Math.cos(time) * Math.random() * 10;
+        this.y += Math.cos(time) * 5; // Adjust vertical movement
+        if (this.y < 50) {
+          this.y = 50; // Ensure y is not less than 50
+        } else if (this.y > 450) {
+          this.y = 450;
+        }
         time += Math.random() * 0.1;
       }
     }, 1000 / 60);
