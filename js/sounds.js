@@ -49,9 +49,7 @@ let sounds = {};
 preloadSounds()
   .then((loadedSounds) => {
     sounds = loadedSounds;
-    console.log("All sounds loaded:", sounds);
   })
   .catch((error) => {
     console.error(error);
-    alert("Failed to load all sounds. Please try again.");
   });
