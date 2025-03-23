@@ -66,7 +66,7 @@ class Bubble extends DrawableObject {
     this.width = 75;
     this.height = 75;
     this.isActive = true;
-    this.sound = new Audio("audio/bubble-attack.mp3");
+    this.sound = sounds.bubbleAttackSound;
     if (this.sound && soundsEnabled) {
       this.sound.play();
     }

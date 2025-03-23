@@ -45,10 +45,10 @@ class World {
   attackDamage = 1;
 
   /** @type {Audio} The sound effect for the game over screen. */
-  gameOverSound = new Audio("audio/game-over.mp3");
+  gameOverSound = sounds.gameOverSound;
 
   /** @type {Audio} The sound effect for the winning screen. */
-  winningSound = new Audio("audio/winning-music.mp3");
+  winningSound = sounds.winningMusic;
 
   /**
    * Initializes the game world.

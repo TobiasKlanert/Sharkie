@@ -15,6 +15,7 @@ function initStartScreen() {
   orientationMessage = document.getElementById("orientationMessage");
   impressumBtn = document.getElementById("btn-impressum");
   checkOrientation();
+  preloadSounds();
 }
 
 /**

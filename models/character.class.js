@@ -81,28 +81,28 @@ class Character extends MovableObject {
   rotation = 0;
 
   world;
-  swimmingSound = new Audio("audio/swimming.mp3");
+  swimmingSound = sounds.characterSwimmingSound;
 
   /** @type {Audio} The sound effect for snoring. */
-  snoringSound = new Audio("audio/snoring.mp3");
+  snoringSound = sounds.characterSnoringSound;
 
   /** @type {Audio} The sound effect for the fin slap attack. */
-  slapSound = new Audio("audio/fin-slap.mp3");
+  slapSound = sounds.finSlapSound;
 
   /** @type {Audio} The sound effect for an electric shock. */
-  electricShockSound = new Audio("audio/electric-shock.mp3");
+  electricShockSound = sounds.electricShockSound;
 
   /** @type {Audio} The sound effect for being poisoned. */
-  posionedSound = new Audio("audio/poisoned.mp3");
+  poisonedSound = sounds.poisonedSound;
 
   /** @type {Audio} The sound effect for collecting a coin. */
-  collectCoinSound = new Audio("audio/collect-coins.mp3");
+  collectCoinSound = sounds.collectCoinsSound;
 
   /** @type {Audio} The sound effect for collecting a bottle. */
-  collectBottleSound = new Audio("audio/collect-bottle.mp3");
+  collectBottleSound = sounds.collectBottleSound;
 
   /** @type {Audio} The sound effect for colliding with a barrier. */
-  barrierCollisionSound = new Audio("audio/collision.mp3");
+  barrierCollisionSound = sounds.collisionSound;
 
   /**
    * Initializes a new instance of the Character class.

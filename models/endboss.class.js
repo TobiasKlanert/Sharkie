@@ -132,19 +132,19 @@ class Endboss extends MovableObject {
    * The audio file for the endboss's background music.
    * @type {HTMLAudioElement}
    */
-  endbossMusic = new Audio("audio/endboss-music.mp3");
+  endbossMusic = sounds.endbossMusic;
 
   /**
    * The audio file for the endboss's attack sound.
    * @type {HTMLAudioElement}
    */
-  endbossAttackSound = new Audio("audio/endboss-attack.mp3");
+  endbossAttackSound = sounds.endbossAttackSound;
 
   /**
    * The audio file for the endboss's hurt sound.
    * @type {HTMLAudioElement}
    */
-  endbossHurtSound = new Audio("audio/poisoned.mp3");
+  endbossHurtSound = sounds.poisonedSound;
 
   /**
    * Creates a new instance of the endboss.

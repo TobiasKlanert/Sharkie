@@ -205,9 +205,9 @@ function getHurtImages(character) {
 function getHurtSound(character) {
   switch (character.enemyType) {
     case "pufferFish":
-      return character.posionedSound;
+      return character.poisonedSound;
     case "endboss":
-      return character.posionedSound;
+      return character.poisonedSound;
     case "jellyFish":
       return character.electricShockSound;
   }
