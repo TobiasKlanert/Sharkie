@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharkie</title>
+
+    <link rel="icon" type="image/png" href="graphics/1.Sharkie/1.IDLE/1.png" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="./js/script.js"></script>
+    <script src="./js/sounds.js"></script>
+    <script src="./models/drawable-object.class.js"></script>
+    <script src="./models/movable-object.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/character.handler.js"></script>
+    <script src="./models/character.images.js"></script>
+    <script src="./models/enemy.class.js"></script>
+    <script src="./models/light.class.js"></script>
+    <script src="./models/status-bar.class.js"></script>
+    <script src="./models/world.class.js"></script>
+    <script src="./models/world.handler.js"></script>
+    <script src="./models/background-object.class.js"></script>
+    <script src="./models/keyboard.class.js"></script>
+    <script src="./models/barrier.class.js"></script>
+    <script src="./models/coins.class.js"></script>
+    <script src="./models/bottles.class.js"></script>
+    <script src="./models/level.class.js"></script>
+    <script src="./models/endboss.class.js"></script>
+    <script src="./models/endboss.images.js"></script>
+    <script src="./models/bubbles.class.js"></script>
+    <script src="./levels/level1.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/events.js"></script>
+    <script src="./js/templates.js"></script>
+  </head>
+  <body>
+    <div id="startScreen" class="startScreen">
+      <div class="leftSide">
+        <h1 class="responsive-title">Sharkie</h1>
+        <img
+          src="graphics/6.Botones/Tittles/sharkie.png"
+          alt="Sharkie"
+          class="responsive-img"
+        />
+        <button
+          onclick="toggleDialog(instructionDialog)"
+          class="menu-button margin-bottom-30px"
+        >
+          Game Instructions
+        </button>
+        <button
+          class="menu-button margin-bottom-60px font-size-48px"
+          onclick="startGame()"
+        >
+          Start
+        </button>
+      </div>
+      <div class="rightSide">
+        <h1>Sharkie</h1>
+        <table>
+          <tr>
+            <td class="tableIMG">
+              <img
+                src="graphics/6.Botones/Key/arrow keys.png"
+                alt="Arrow Keys"
+              />
+            </td>
+            <td><h2>Move Shark</h2></td>
+          </tr>
+          <tr>
+            <td class="tableIMG">
+              <img
+                src="graphics/6.Botones/Key/D key.png"
+                alt="D Key"
+                class="d-key"
+              />
+            </td>
+            <td><h2>Bubble Attack</h2></td>
+          </tr>
+          <tr>
+            <td class="tableIMG">
+              <img
+                src="graphics/6.Botones/Key/Space Bar key.png"
+                alt="Space Bar"
+              />
+            </td>
+            <td><h2>Fin Slap</h2></td>
+          </tr>
+        </table>
+      </div>
+      <dialog id="instructionsDialog">
+        <h2>Sharkie’s Adventure: Game Instructions</h2>
+        <div class="dialog-body">
+          <div class="box">
+            <p class="instruction-header">1. Move Sharkie</p>
+            <p>
+              Use the arrow keys to move Sharkie through the underwater world.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">2. Sharkie’s Attacks</p>
+            <ul>
+              <li>
+                <span class="highlight">Fin Slap</span>: A strong fin attack
+                that can be used against pufferfish.
+              </li>
+              <li>
+                <span class="highlight">Bubble Trap</span>: A bubble-based
+                attack that traps and disables jellyfish.
+              </li>
+            </ul>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">3. Defeating Enemies</p>
+            <ul>
+              <li>
+                Pufferfish can only be defeated using
+                <span class="highlight">Fin Slap</span>.
+              </li>
+              <li>
+                Jellyfish can only be defeated using
+                <span class="highlight">Bubble Trap</span>.
+              </li>
+            </ul>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">4. Collect Poison Bottles</p>
+            <p>
+              Find and collect poison bottles to
+              <span class="highlight">boost your Bubble Trap</span>. They will
+              make your bubble attack stronger and more effective.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">
+              5. Save Poison Bottles for the Final Boss
+            </p>
+            <p>
+              Don’t use all your poison bottles too early!
+              <span class="highlight">Save them for the final boss</span> to
+              increase your chances of victory.
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">6. The Final Boss</p>
+            <p>
+              The final boss can only be defeated using
+              <span class="highlight">Bubble Trap</span>.
+            </p>
+            <p>
+              <span class="highlight">Poisoned bubbles</span> are
+              <span class="highlight">twice as effective</span> against the
+              final boss, so make sure to collect enough poison bottles to
+              maximize your attack power!
+            </p>
+          </div>
+
+          <div class="box">
+            <p class="instruction-header">7. Collect Coins</p>
+            <p>
+              Collect coins scattered throughout the game to
+              <span class="highlight">beat the high score</span> and become the
+              best player in Sharkie’s world!
+            </p>
+          </div>
+        </div>
+        <button class="close-btn" onclick="toggleDialog(instructionDialog)">
+          Close
+        </button>
+      </dialog>
+    </div>
+    <div id="winningScreen" class="gameoverScreen winning-background">
+      <h1 class="responsive-title">¡You Win!</h1>
+      <h2 class="coins">
+        <img src="graphics/4. Marcadores/1. Coins/1.png" alt="coin" /><span
+          id="collectedCoins"
+        ></span>
+      </h2>
+      <div class="buttons new-game">
+        <button class="menu-button" onclick="startGame()">New Game</button>
+        <button class="menu-button" onclick="showStartScreen('winningScreen')">
+          Home
+        </button>
+      </div>
+    </div>
+    <div id="gameoverScreen" class="gameoverScreen gameover-background">
+      <div class="game-over">
+        <img src="graphics/1.Sharkie/6.dead/1.Poisoned/12.png" alt="" />
+        <h1>Game Over</h1>
+        <div class="buttons">
+          <button class="menu-button" onclick="startGame()">Try Again</button>
+          <button
+            class="menu-button"
+            onclick="showStartScreen('gameoverScreen')"
+          >
+            Home
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="game" class="game">
+      <div id="topPanel" class="top-panel">
+        <button onclick="toggleSound(this)" id="btnSounds" class="game-button">
+          <svg
+            width="60"
+            height="60"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polygon
+              points="20,30 40,30 60,10 60,90 40,70 20,70"
+              fill="currentColor"
+            />
+            <path
+              d="M70 30 Q85 50 70 70"
+              stroke="currentColor"
+              stroke-width="8"
+              fill="none"
+            />
+            <path
+              d="M80 20 Q100 50 80 80"
+              stroke="currentColor"
+              stroke-width="6"
+              fill="none"
+            />
+          </svg>
+        </button>
+
+        <button
+          onclick="toggleFullscreen()"
+          id="btnFullscreen"
+          class="game-button"
+        >
+          <svg
+            width="60"
+            height="60"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="currentColor"
+            stroke-width="12"
+            fill="none"
+          >
+            <polyline points="10,30 10,10 30,10" />
+            <polyline points="70,10 90,10 90,30" />
+            <polyline points="10,70 10,90 30,90" />
+            <polyline points="70,90 90,90 90,70" />
+          </svg>
+        </button>
+
+        <button
+          onclick="stopGame('startScreen')"
+          id="btnStop"
+          class="game-button"
+        >
+          <svg width="60" height="60" viewBox="0 0 24 24">
+            <line
+              x1="2"
+              y1="2"
+              x2="22"
+              y2="22"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+            <line
+              x1="2"
+              y1="22"
+              x2="22"
+              y2="2"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+          </svg>
+        </button>
+      </div>
+      <canvas id="canvas" width="1280" height="720"></canvas>
+      <div id="bottomPanel" class="bottom-panel">
+        <div class="touch-controls">
+          <button class="game-button" id="btnLeft">
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 50 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <polygon points="35,5 5,25 35,45" fill="currentColor" />
+            </svg>
+          </button>
+          <div>
+            <button class="game-button" id="btnUp">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polygon points="5,35 25,5 45,35" fill="currentColor" />
+              </svg>
+            </button>
+            <button class="game-button" id="btnDown">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polygon points="5,15 25,45 45,15" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+          <button class="game-button" id="btnRight">
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 50 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <polygon points="15,5 45,25 15,45" fill="currentColor" />
+            </svg>
+          </button>
+        </div>
+        <div class="touch-controls">
+          <button class="game-button bigger-btn" id="btnBubble">
+            <svg
+              width="100"
+              height="100"
+              viewBox="0 0 50 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="8" cy="20" r="8" fill="currentColor" opacity="0.6" />
+              <circle cx="18" cy="32" r="8" fill="currentColor" opacity="0.8" />
+              <circle cx="35" cy="25" r="13" fill="currentColor" opacity="1" />
+            </svg>
+          </button>
+          <button class="game-button bigger-btn" id="btnSlap">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="100"
+              height="100"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2l2.5 4.5L20 5l-2.5 4.5L22 12l-4.5 2.5L20 19l-5.5-1.5L12 22l-2.5-4.5L4 19l2.5-4.5L2 12l4.5-2.5L4 5l5.5 1.5L12 2z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <dialog id="impressumDialog" class="no-border-radius">
+      <h1>Imprint</h1>
+      <div class="dialog-body impressum">
+        <p><strong>Information according to § 5 TMG</strong></p>
+        <p>
+          <strong>Tobias Klanert</strong><br />
+          C.-Chr.-Agthe-Str. 12<br />
+          06333 Hettstedt<br />
+          Germany
+        </p>
+
+        <p>
+          <strong>Contact:</strong><br />
+          Email:
+          <a href="mailto:tobias.klanert@t-online.de"
+            >tobias.klanert@t-online.de</a
+          >
+        </p>
+
+        <h2>Responsible for content according to § 55 Abs. 2 RStV:</h2>
+        <p>
+          Tobias Klanert<br />
+          C.-Chr.-Agthe-Str. 12, 06333 Hettstedt, Germany
+        </p>
+
+        <h2>Project Information</h2>
+        <p>
+          The game <strong>"Sharkie"</strong> was created as part of a training
+          program and is intended solely as part of my portfolio for job
+          applications. The graphics used in the game were provided by the
+          training provider
+          <a target="_blank" href="https://developerakademie.com/"
+            >Developer Akademie</a
+          >.
+        </p>
+
+        <h2>Audio Credits</h2>
+        <p>
+          The game uses sounds from
+          <a href="https://freesound.org/" target="_blank">Freesound.org</a>
+          (CC0 license).
+        </p>
+
+        <h2>Liability for Content</h2>
+        <p>
+          As a service provider, I am responsible for my own content on these
+          pages in accordance with general laws (§ 7 Abs.1 TMG). However,
+          according to §§ 8 to 10 TMG, I am not obligated to monitor transmitted
+          or stored third-party information or to investigate circumstances that
+          indicate illegal activity.
+        </p>
+        <p>
+          Obligations to remove or block the use of information under general
+          laws remain unaffected. However, liability in this regard is only
+          possible from the time of knowledge of a specific legal violation. If
+          I become aware of any such legal violations, I will remove the content
+          immediately.
+        </p>
+
+        <h2>Liability for Links</h2>
+        <p>
+          My portfolio may contain links to external websites over which I have
+          no control. Therefore, I cannot assume any liability for this external
+          content. The respective provider or operator of the pages is always
+          responsible for the content of the linked pages.
+        </p>
+
+        <h2>Copyright</h2>
+        <p>
+          The content and works created by me on these pages are subject to
+          copyright law. The reproduction, editing, distribution, and any kind
+          of use outside the limits of copyright law require my consent or that
+          of the respective rights holder.
+        </p>
+      </div>
+      <button class="close-btn" onclick="toggleDialog(impressumDialog)">
+        Close
+      </button>
+    </dialog>
+    <dialog id="orientationMessage" class="no-border-radius">
+      <h2>Please rotate your device to play the game</h2>
+    </dialog>
+    <button
+      id="btn-impressum"
+      class="btn-impressum"
+      onclick="toggleDialog(impressumDialog)"
+    >
+      Imprint
+    </button>
+  </body>
+</html>

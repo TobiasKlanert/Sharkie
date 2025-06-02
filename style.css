@@ -1,0 +1,581 @@
+@font-face {
+  font-family: "LuckiesGuy";
+  src: url("graphics/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7fffe0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #531a82;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "LuckiesGuy";
+  background-image: url("graphics/3. Background/Layers/5. Water/D1.png");
+  background-size: cover;
+  color: white;
+  height: 100vh;
+}
+
+canvas {
+  background-color: black;
+  display: none;
+}
+
+h1,
+h2 {
+  color: white;
+}
+
+h1 {
+  font-size: 96px;
+  margin-top: 100px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+td {
+  padding: 10px;
+  text-align: start;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #7fffe0;
+}
+
+a:hover {
+  color: #531a82;
+}
+
+.d-none {
+  display: none;
+}
+
+.relative {
+  position: relative;
+}
+
+.top-absolute {
+  position: absolute;
+  top: 20px;
+}
+
+.bottom-absolute {
+  position: absolute;
+  bottom: 20px;
+}
+
+.margin-top-30px {
+  margin-top: 30px;
+}
+
+.margin-bottom-30px {
+  margin-bottom: 30px;
+}
+
+.margin-bottom-60px {
+  margin-bottom: 60px;
+}
+
+.font-size-48px {
+  font-size: 40px !important;
+}
+
+.tableIMG {
+  text-align: center;
+}
+
+.game {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-panel {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding: 10px 20px 10px 20px;
+  z-index: 99;
+}
+
+.bottom-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding: 10px 20px 10px 20px;
+  z-index: 99;
+}
+
+.touch-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.touch-controls div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.startScreen {
+  position: relative;
+  background: url("graphics/3. Background/Mesa de trabajo 1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  max-height: 720px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.gameoverScreen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  max-height: 720px;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.winning-background {
+  background: url("graphics/6.Botones/Tittles/You win/Mesa de trabajo 1.png"), url("graphics/3. Background/Dark/1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.gameover-background {
+  background: url("graphics/3. Background/Dark/1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.new-game {
+  position: absolute;
+  bottom: 50px;
+  z-index: 98;
+  font-size: 32px !important;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.coins {
+  position: absolute;
+  bottom: 140px;
+  z-index: 98;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coins img {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.game-over {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over img {
+  position: absolute;
+  left: 0;
+  top: -100px;
+  width: 500px;
+}
+
+.game-over button {
+  font-size: 32px;
+}
+
+.leftSide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.rightSide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rightSide img {
+  max-width: 250px;
+  max-height: 150px;
+}
+
+.d-key {
+  width: 75px;
+}
+
+.menu-button {
+  background-color: #7fffe0;
+  font-family: "LuckiesGuy";
+  font-size: 24px;
+  color: #531a82;
+  width: 250px;
+  height: 81px;
+  border: 4px solid white;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.menu-button:hover {
+  background-color: #531a82;
+  color: white;
+}
+
+.game-button {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: #7fffe0;
+  color: #531a82;
+  width: 60px;
+  height: 60px;
+  border: 4px solid white;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.game-button:hover {
+  background-color: #531a82;
+  color: white;
+}
+
+.bigger-btn {
+  width: 100px;
+  height: 100px;
+}
+
+#orientationMessage {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #3eb1cf 0%, #6625af 100%);
+  border: 2px solid white;
+  border-radius: 25px;
+  font-size: 1.2em;
+  color: white;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 99;
+}
+
+.no-border-radius {
+  border-radius: 0;
+}
+
+.dialog-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.instruction-header {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #7fffe0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.box {
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  box-shadow: inset 0px 0px 10px rgba(127, 255, 224, 0.2);
+}
+
+.highlight {
+  color: #7fffe0;
+  font-weight: bold;
+}
+
+.close-btn {
+  width: 180px;
+  height: 58px;
+  font-family: "LuckiesGuy";
+  font-size: 24px;
+  background: #7fffe0;
+  color: #531a82;
+  border: 3px solid white;
+  border-radius: 20px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 20px;
+}
+
+.close-btn:hover {
+  background: #531a82;
+  color: white;
+}
+
+.impressum {
+  font-family: Arial, sans-serif;
+}
+
+.btn-impressum {
+  position: absolute;
+  bottom: 3%;
+  font-family: "LuckiesGuy";
+  font-size: 18px;
+  color: white;
+}
+
+.btn-impressum:hover {
+  text-decoration: underline;
+}
+
+.responsive-title {
+  display: none;
+}
+
+.responsive-img {
+  display: none;
+  width: 200px;
+  transform: rotate(-45deg);
+  margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 1280px) {
+  canvas {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1000px), (max-height: 800px) {
+  .startScreen {
+    background-image: url("graphics/3. Background/Dark/1.png");
+    flex-direction: column;
+  }
+
+  .rightSide {
+    display: none;
+  }
+
+  .responsive-title {
+    display: block;
+    margin-bottom: 100px;
+  }
+
+  .responsive-img {
+    display: block;
+  }
+
+  .winning-background {
+    background-image: url("graphics/6.Botones/Tittles/You win/confetti.PNG"), url("graphics/3. Background/Dark/1.png");
+  }
+}
+
+@media only screen and (max-width: 510px) {
+  h1 {
+    font-size: 52px;
+  }
+
+  dialog {
+    padding: 5px 5px 10px 10px;
+  }
+
+  .dialog-body {
+    padding: 5px;
+  }
+
+  .close-btn {
+    margin-top: 10px;
+  }
+
+  .game-over img {
+    width: 400px;
+    top: 0;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  h1 {
+    font-size: 52px;
+    margin-top: 0;
+  }
+
+  dialog {
+    border-radius: 0;
+  }
+
+  .startScreen {
+    max-height: 100vh;
+  }
+
+  .buttons button{
+    width: 100px;
+    height: 50px;
+    font-size: 12px;
+  }
+
+  .menu-button {
+    width: 200px;
+    height: 65px;
+    font-size: 18px;
+  }
+
+  .font-size-48px {
+    font-size: 32px !important;
+  }
+  
+  .responsive-img {
+    display: none;
+  }
+
+  .responsive-title {
+    margin-top: 10px;
+  }
+
+  .close-btn {
+    width: 124px;
+    height: 40px;
+  }
+
+  .game-over img {
+    display: none;
+  }
+
+  .coins img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .coins span {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-height: 820px) {
+  canvas {
+    height: calc(100vh - 100px);
+  }
+}
+
+@media only screen and (max-height: 720px) {
+  h2 {
+    margin-top: 0;
+  }
+
+  dialog {
+    height: 100vh;
+  }
+
+  .dialog-body {
+    padding: 0 20px;
+  }
+
+  .btn-impressum {
+    bottom: 10px;
+  }
+
+  .game-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .bigger-btn {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .coins {
+    bottom: 100px;
+  }
+}
