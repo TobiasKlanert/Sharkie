@@ -193,7 +193,9 @@ a:hover {
 }
 
 .winning-background {
-  background: url("graphics/6.Botones/Tittles/You win/Mesa de trabajo 1.png"), url("graphics/3. Background/Dark/1.png");
+  background:
+    url("graphics/6.Botones/Tittles/You win/Mesa de trabajo 1.png"),
+    url("graphics/3. Background/Dark/1.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -383,31 +385,30 @@ dialog {
   font-weight: bold;
 }
 
-.close-btn {
-  width: 180px;
-  height: 58px;
+.legals-return-button {
+  position: absolute;
+  right: 64px;
   font-family: "LuckiesGuy";
-  font-size: 24px;
-  background: #7fffe0;
-  color: #531a82;
-  border: 3px solid white;
-  border-radius: 20px;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 20px;
-}
-
-.close-btn:hover {
-  background: #531a82;
+  font-size: 18px;
   color: white;
 }
 
-.impressum {
-  font-family: Arial, sans-serif;
+.legals-return-button:hover {
+  text-decoration: underline;
 }
 
-.btn-impressum {
+.legal-page {
+  font-family: Arial, sans-serif;
+  display: inline-block;
+  height: auto;
+  overflow: auto;
+  padding: 64px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.legals-link {
   position: absolute;
   bottom: 3%;
   font-family: "LuckiesGuy";
@@ -415,8 +416,9 @@ dialog {
   color: white;
 }
 
-.btn-impressum:hover {
+.legals-link:hover {
   text-decoration: underline;
+  color: white;
 }
 
 .responsive-title {
@@ -456,7 +458,9 @@ dialog {
   }
 
   .winning-background {
-    background-image: url("graphics/6.Botones/Tittles/You win/confetti.PNG"), url("graphics/3. Background/Dark/1.png");
+    background-image:
+      url("graphics/6.Botones/Tittles/You win/confetti.PNG"),
+      url("graphics/3. Background/Dark/1.png");
   }
 }
 
@@ -471,10 +475,6 @@ dialog {
 
   .dialog-body {
     padding: 5px;
-  }
-
-  .close-btn {
-    margin-top: 10px;
   }
 
   .game-over img {
@@ -497,7 +497,7 @@ dialog {
     max-height: 100vh;
   }
 
-  .buttons button{
+  .buttons button {
     width: 100px;
     height: 50px;
     font-size: 12px;
@@ -512,18 +512,13 @@ dialog {
   .font-size-48px {
     font-size: 32px !important;
   }
-  
+
   .responsive-img {
     display: none;
   }
 
   .responsive-title {
     margin-top: 10px;
-  }
-
-  .close-btn {
-    width: 124px;
-    height: 40px;
   }
 
   .game-over img {
@@ -559,7 +554,7 @@ dialog {
     padding: 0 20px;
   }
 
-  .btn-impressum {
+  .legals-link {
     bottom: 10px;
   }
 

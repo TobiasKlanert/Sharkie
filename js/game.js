@@ -56,7 +56,7 @@ function initCanvas() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("gameoverScreen").style.display = "none";
   document.getElementById("winningScreen").style.display = "none";
-  document.getElementById("btn-impressum").style.display = "none";
+  document.getElementById("legals-link").style.display = "none";
   document.getElementById("game").style.display = "flex";
   document.getElementById("canvas").style.display = "block";
 }
@@ -166,7 +166,7 @@ function stopSounds() {
 function changeScreen(screenType) {
   document.getElementById("game").style.display = "none";
   document.getElementById(screenType).style.display = "flex";
-  document.getElementById("btn-impressum").style.display = "flex";
+  document.getElementById("legals-link").style.display = "flex";
 }
 
 /**
